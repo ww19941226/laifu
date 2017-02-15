@@ -1,0 +1,172 @@
+/*by w_w*/
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    min-width: 90em;
+}
+/*头部，首页和注册的超链接*/
+.head{
+    float: right;
+    margin-right: 6.25em;
+    padding: 0.625em 0;
+}
+.head>a{
+    padding: 0.625em;
+    text-decoration: none;
+    color: #666;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 1.2em;
+}
+.head>a:hover{
+    color: #47CFE7;
+}
+
+/*莱福通行证那一块的修饰*/
+.news{
+    clear: both;
+    width: 100%;
+    height: 6.25em;
+    background-color: #38A4B7;
+    color: white;
+    line-height: 6.25em;
+}
+.news>p{
+    margin-left: 4.14em;
+    font-size: 2.6em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+
+/*登陆主体部分*/
+.l_content{
+    width: 90em;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 8em;
+}
+/*左边logo*/
+.l_content>img{
+    width: 30em;
+    margin-left: 12em;
+    /*border: 3px solid #cccccc;*/
+    border-radius: 1em;
+    padding-top: 6.428em;
+    padding-bottom: 6.428em;
+    float: left;
+    margin-bottom: 8em;
+}
+/*右边登陆*/
+.l_login{
+    margin-left: 48em;
+    height: 30em;
+    padding-left: 5em;
+    padding-top: 3em;
+}
+/*登陆字样*/
+.l_login>.l_r>a{
+    font-size: 2em;
+    color: #666666;
+    text-decoration: none;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    padding: 0 2em 0.2em 0;
+    border-bottom: 5px solid #38A4B7;
+}
+/*form表单*/
+.l_login>.l_form>.phone{
+    margin-top: 5em;
+}
+
+/*账号*/
+.l_login>.l_form>.phone>label{
+    float: left;
+    font-size: 1.7em;
+    font-weight: lighter;
+    line-height: 1.7em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+.l_login>.l_form>.phone>input{
+    height:2.2em;
+    width: 19em;
+    float: left;
+    font-size: 1.2em;
+    padding-left: 0.2em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+
+/*密码*/
+.l_login>.l_form>.password>label{
+    float: left;
+    font-size: 1.7em;
+    font-weight: lighter;
+    line-height: 1.7em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+.l_login>.l_form>.password>input{
+    height:2.2em;
+    width: 19em;
+    float: left;
+    font-size: 1.2em;
+    padding-left: 0.2em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+/*验证码*/
+.l_login>.l_form>.yanzhengma>label{
+	float: left;
+    font-size: 1.7em;
+    font-weight: lighter;
+    line-height: 1.7em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+.l_login>.l_form>.yanzhengma>input{
+    height:2.2em;
+    width: 7em;
+    float: left;
+    font-size: 1.2em;
+    padding-left: 0.2em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+.l_login>.l_form>.yanzhengma>span{
+    height:40px;
+    width: 4em;
+    float: left;
+    font-size: 1.8em;
+    padding-left: 0.6em;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    border:1px solid #ddd;
+    background-image:url("../images/huawen/h1.png");
+}
+/* 验证码错误提示信息 */
+.showmsg{
+	color:red;
+	font-family: \5fae\8f6f\96c5\9ed1;
+	margin-left:15em;
+}
+
+
+/*忘记密码*/
+.l_login>.l_form>.yanzhengma>a{
+	float:left;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-top: 1em;
+    margin-left: 0.8em;
+}
+/*登陆按钮*/
+.l_login>.l_form>input{
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 1.7em;
+    color: white;
+    background-color: #38A4B7;
+    width: 10em;
+    height: 1.7em;
+    border: 0;
+    margin-left: 8.3em;
+    cursor: pointer;
+}
+.l_login>.l_form>input:hover{
+    background-color: #2F8594;
+}

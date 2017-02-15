@@ -1,0 +1,38 @@
+/*by w_w*/
+
+
+
+/*主题内容*/
+.A_content{
+    width: 100%;
+    min-width: 62.5em;
+}
+
+/*1.APP下载*/
+.A_content>.Appdownload{
+    width: 100%;
+    overflow-x: hidden;
+}
+.A_content>.Appdownload>img{
+    width: 120em;
+}
+
+/*2.APP特色功能*/
+.A_content>.Apptesediv{
+    width: 100%;
+    overflow-x: hidden;
+}
+.A_content>.Apptesediv>img{
+    width: 120em;
+}
+
+/*让图片处在小屏幕能缩小*/
+@media screen and (max-width: 1440px){
+    .A_content>.Appdownload>img{
+        width: 90em;
+    }
+    .A_content>.Apptesediv>img{
+        width: 90em;
+    }
+}
+

@@ -1,0 +1,433 @@
+/*
+   物业管理，小区管理，系统管理的主要样式
+   author: raindrops
+   version:1.0
+*/
+/*左浮动*/
+.fl{
+    float: left;
+}
+/*右浮动*/
+.fr{
+    float: right;
+}
+/*容器*/
+.container{
+    width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+/*请浮动*/
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.clearfix {
+    zoom: 1;
+}
+
+/*灰色背景*/
+.grey{
+    background: #EEEEEE;
+}
+/*property.html*/
+/* 导航 */
+.nav{
+    background: #FFFFFF;
+    width: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 99;
+
+}
+.nav .nav-left-box,.nav .nav-right-box{
+    line-height: 70px;
+    height:70px;
+}
+.nav-left-box{
+    width: 15%;
+    text-align: center;
+    background: #37424F;
+}
+
+.nav-right-box{
+    box-shadow: 0 1px 1px #23262A;
+}
+.nav a{
+    padding: 0 30px;
+    width: 70px;
+    height: 70px;
+    display: block;
+    color: #666666;
+
+}
+/* logo */
+.laifu{
+    color: #f3f3f3;
+    font-size: 1.6em;
+}
+.nav-item-img{
+    position: relative;
+    text-align: center;
+}
+/* 头像 */
+.info-left h3{
+    color:#999;
+    margin-bottom: 10px;
+}
+.nav-item-img a:hover{
+    background:#5FAFE4;
+}
+.nav-item-img img{
+    margin-top: 10px;
+    height:45px;
+    width:45px;
+    border-radius: 45px;
+}
+.nav-item-hid {
+    position: absolute;
+    text-align: center;
+    display: block;
+    display:none;
+}
+.nav-item-hid a{
+    text-align: center;
+    background: #5FAFE4;
+    border-top: 1px #FFFFFF solid;
+    color: #FFF;
+    height: 40px;
+    z-index: 999999;
+    line-height: 40px;
+}
+
+
+/*property_infor.html*/
+/*左边内容*/
+.pro-content-left{
+    position: absolute;
+    top:70px;
+    left: 0;
+    width: 15%;
+    background: #293038;
+    z-index: 55;
+}
+.pro-content-left .ul-top{
+    margin-top: 70px;
+}
+/* .pro-content-left-bg{
+	position: fixed;
+	top:0;
+    left: 0;
+    height:100%;
+    width: 15%;
+    background: #293038;
+    z-index: 1;
+} */
+/*a  upload */
+
+
+
+.info-upload {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.info-upload input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.info-upload:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+
+.pro-content-left ul a{
+    height: 50px;
+    cursor: pointer;
+    line-height: 50px;
+    background: #37424F;
+    text-align: center;
+    color: #f3f3f3;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #293038;
+}
+.hideUl li a{
+	background: #23262a;
+	border-bottom: 1px solid #293038;
+}
+.pro-content-right{
+    margin-left: 15%;
+    margin-top: 70px;
+    width: 85%;
+}
+
+
+.pro-info-content,.pro-complains-content{
+    padding: 5% 0;
+    margin-top: 1%;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #FFFFFF;
+}
+
+.info-left{
+    margin-top:10%;
+   margin-left: 13%;
+   margin-right: 7%;
+}
+.info-pic img{
+    border-radius: 20px;
+    width:250px;
+    height: 250px;
+}
+.info-edit a{
+    border-bottom: 1px solid #FFFFFF;
+    width:250px;
+    height:50px;
+    display: block;
+    line-height: 50px;
+    color: #FFF;
+    background: #5FAFE4;
+    text-align: center;
+}
+.info-right{
+    width:40%;
+    margin-left: 50px;
+}
+.info-rows{
+    margin-top:50px;
+    color:#333333;
+}
+.info-row .sex input ,.new-pwd .sex input{
+    width:18px;
+    height: 18px;
+}
+.info-row .sex img ,.new-pwd .sex img{
+    width: 20px;
+    height: 20px;
+}
+
+.sex-box{
+    margin-right: 15px;
+    line-height:50px;
+}
+.female{
+    color:#d9534f;
+}
+.info-row .sex{
+    margin:50px 0;
+}
+.info-row .sex span{
+
+    margin-right: 20px;
+}
+.info-row{
+    margin:10px 0;
+}
+.info-row span{
+    text-indent: 5px;
+    padding-left: 5px;
+    line-height: 50px;
+    font-family: "Microsoft YaHei" ;
+    font-size:1em;
+}
+
+.info-row input{
+    font-family: "Microsoft YaHei" ;
+    color: #6E6E6E;
+    font-size: 15px;
+    height:20px;
+    border: none;
+    width:100%;
+    padding: 10px 5px;
+    background: #EEEEEE;
+}
+
+.info-rows h1{
+    font-size: 25px;
+    padding: 10px 0;
+    border-left: 5px solid #5FAFE4;
+}
+
+/* property_complains.html */
+.complains-box{
+    margin-left:5%;
+}
+.complains-box{
+    min-height: 800px;
+    color:#666;
+}
+.complains-box h1{
+    padding: 15px 0;
+    text-indent: 2px;
+    border-left: 5px solid #5FAFE4;
+    font-size: 25px;
+    margin-bottom: 5%;
+}
+
+.complains-box{
+    width: 95%;
+}
+.complains-box table{
+    width: 95%;
+    text-align: center;
+}
+.complains-box table a{
+    color:#31b0d5;
+    margin: 10px;
+}
+.complains-box table th{
+    color: #333333;
+    background: #EEEEEE;
+    line-height: 50px;
+    border-left:1px solid #666;
+    border-top:1px solid #666;
+    border-right:1px solid #666;
+    height: 50px;
+}
+.complains-box table td{
+    line-height: 50px;
+    height: 50px;
+    border:1px solid #666;
+}
+.page a{
+    margin:0 5px;
+    border: 1px #eeeeee solid;
+    color:#31b0d5;
+    padding: 10px 15px;
+}
+.page input{
+    border: 1px #eeeeee solid;
+    text-align: center;
+    line-height: 12px;
+    height: 12px;
+    width: 35px;
+    padding: 12px 2px 9px 0;
+}
+.complains-page{
+    margin-left: 5%;
+}
+.complains-excel a{
+    display: inline-block;
+    background: #31b0d5;
+    margin:15px 0;
+    border: 1px #eeeeee solid;
+    color:#FFF;
+    padding: 10px 15px;
+}
+.complains-excel{
+    margin-right: 10px;
+}
+
+/*password_update.html*/
+
+.password-content{
+    min-height: 600px;
+    width:60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.password-content h1 {
+    margin-top: 10%;
+    font-size: 25px;
+    text-indent: 10%;
+    padding: 10px 0;
+    border-bottom: 5px solid #5FAFE4;
+    margin-bottom: 5%;
+}
+.new-pwd{
+    font-family: "Microsoft YaHei" ;
+}
+.new-pwd label{
+    display: block;
+    margin: 10px 0;
+}
+.new-pwd-box{
+    width:60%;
+    margin:120px 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+.new-pwd textarea{
+    font-size:16px;
+    width:100%;
+    text-indent: 5px;
+    color:#666;
+    border: 1px solid #5FAFE4;
+    height:200px;
+}
+.new-pwd input[type=password],.new-pwd input[type=text]{
+    border: 1px solid #5FAFE4;
+    font-size:16px;
+    width:100%;
+    height:30px;
+    text-indent: 5px;
+    color:#666;
+}
+.new-pwd select{
+    border: 1px solid #5FAFE4;
+    font-size: 18px;
+    padding: 5px 10px;
+}
+.new-pwd input[type=submit]{
+    cursor: pointer;
+    margin-top:20px;
+    width:20%;
+    height:40px;
+    background: #5FAFE4;
+    color: #FFF;
+    border: none;
+}
+
+/* complains_detail.html */
+.detail-content{
+    line-height: 25px;
+    padding: 15px;
+    border: 1px solid #5FAFE4;
+}
+.detail-box{
+    width: 80%;
+}
+/* repair_detail.html */
+.new-notify-btn{
+    margin-right:20px ;
+    display: inline-block;
+    text-align: center;
+    margin-top: 30px;
+    background: #5FAFE4;
+    color: #FFF;
+    padding: 10px 17px;
+}
+
+/*user_detail.html*/
+.new-pwd-img .detail-content{
+    text-align: center;
+}
+.new-pwd img{
+    width:40%;
+    height:40%;
+}
+
+/*failcomm_detail*/
+.failpass{
+    color:red;
+}

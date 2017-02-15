@@ -1,0 +1,588 @@
+/*
+* author:Raindrops
+* version:1.0
+*/
+
+/*全局的css样式*/
+
+/*字体*/
+/*左浮动*/
+.fl{
+    float: left;
+}
+/*右浮动*/
+.fr{
+    float: right;
+}
+/*清理浮动*/
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.clearfix {
+    zoom: 1;
+}
+/*容器*/
+.container{
+    width:1200px;
+    margin-left: auto;
+    margin-right:auto;
+}
+.middle-container{
+    width:1000px;
+    margin-left: auto;
+    margin-right:auto;
+}
+.little-container{
+    width:705px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* index.html */
+/*头部容器*/
+
+.header-container{
+    width: 900px;
+    margin-left: auto;
+    margin-right:auto;
+}
+.logo{
+    position: relative;
+    z-index: 99;
+    /*background: #EEEEEE;*/
+    color:#666666;
+    width:151px;
+    text-align: center;
+}
+.logo-header{
+    margin-left: auto;
+    margin-right:auto;
+}
+.logo-img{
+    margin: 60px 0 0 0;
+    height: 100%;
+}
+.logo-img img{
+    width: 100%;
+    height:100%;
+}
+.logo-middle{
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+.logo-middle span{
+    display: inline-block;
+    width: 100px;
+    font-size: 60px;
+}
+.logo-middle p{
+    text-align: left;
+    display: inline-block;
+    width: 20px;
+}
+.logo-bottom{
+    background: #DDDDDD;
+    margin-left: auto;
+    margin-right:auto;
+    padding: 10px 0;
+    border-top: 1px dotted #DDDDDD;
+    border-bottom: 1px dotted #DDDDDD;
+}
+/* 电话 */
+.header-phone{
+    padding: 105px 0 40px 0;
+    height: 60px;
+}
+.header-phone i{
+    font-size: 14px;
+    color: #999;
+    font-family: 宋体;
+}
+.header-phone em{
+    margin-left: 50px;
+    line-height: 40px;
+}
+.header-phone span{
+    margin-left: 50px;
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-repeat: no-repeat;
+    background-image: url("../images/icon/phone.png");
+    background-size: 100%;
+}
+.header-phone p{
+    color: #666666;
+    font-family: "Microsoft Yahei","PingHei" ,"sans-serif";
+    text-indent: 5px;
+    line-height: 10px;
+}
+
+/* header-right */
+.header-right{
+    text-align: left;
+    width:280px;
+    margin-top: 38px;
+}
+.nav li{
+    margin: 10px 0;
+}
+.nav li{
+    font-family: "Microsoft Yahei","PingHei" ,"sans-serif";
+    display: inline-block;
+    width: 140px;
+}
+
+.nav a{
+    font-size: 12px;
+    padding: 5px 10px;
+    color: #555555;
+}
+.nav-btn,.nav-btn:hover {
+    font-size: 14px!important;
+    color: #FFFFFF!important;
+    background: #545E4B;
+}
+
+/* nav-fix */
+.nav-fix{
+    display: none;
+    height: 60px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #EEEEEE;
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+    width: 100%;
+}
+.nav-fix .nav{
+    height: 60px;
+}
+.nav-fix li,.nav-fix li a{
+    width: 90px;
+    margin: 0;
+    height: 60px;
+    line-height: 60px;
+}
+
+/*advert*/
+.advert{
+    position: static;
+    z-index: 0;
+    padding-top: 0;
+    margin-bottom: 0px;
+    background: #f5f5f5;
+}
+.img-container{
+    width: 100%;
+    margin: 0 auto;
+}
+.img-box{
+    margin: 0 auto;
+    width:100%;
+   /* max-width: 1450px;*/
+    z-index: 0;
+    position: relative;
+}
+
+/* intro */
+
+.intro{
+    margin-top: -60px;
+    padding-top:65px;
+}
+.platform h2,
+.service h2,
+.notify h2,
+.intro h2{
+    border-top: 1px solid #EEEEEE;
+    border-bottom: 1px solid #EEEEEE;
+    line-height: 65px;
+    height: 65px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+.platform h2 p,
+.service h2 p,
+.notify h2 p,
+.intro h2 p{
+    font-family: "Microsoft Yahei","PingHei" ,"sans-serif";
+    font-weight: bold;
+    display: inline-block;
+    font-size: 22px;
+
+
+}
+.platform h2 span,
+.service h2 span,
+.notify h2 span,
+.intro h2 span{
+    left:0;
+    position: relative;
+    top:10px;
+    display: inline-block;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background-image: url("../images/icon/intro.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.notify h2 span{
+    background-image: url("../images/icon/notify.png");
+}
+.service h2 span{
+    background-image: url("../images/icon/service.png");
+}
+.platform h2 span{
+    background-image: url("../images/icon/platform.png");
+}
+.service h3,
+.intro h3{
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 22px;
+}
+.intro{
+    font-size: 16px;
+    line-height: 24px;
+}
+.intro-pic{
+    margin-top: 60px;
+}
+.intro-pic img{
+    width: 100%;
+    height: 100%;
+}
+.pic-left{
+    width: 354px;
+    height:500px;
+    margin-right: 1px;
+}
+.pic-top{
+    margin-bottom: 1px;
+}
+.pic-top,.pic-bottom{
+    width: 350px;
+    height:249px;
+}
+
+/* notify */
+.notify{
+    margin-top: 60px;
+    padding-top:65px;
+    padding-bottom: 65px;
+}
+.notify-left{
+    margin-left: 70px;
+    width: 400px;
+}
+.notify-right h5{
+    line-height: 30px;
+    margin-top: 30px;
+}
+.notify-left li{
+    height: 400px;
+    width: 400px;
+}
+.notify-left li img{
+    width: 100%;
+    height: 100%;
+}
+.notify-right{
+    margin-left: 30px;
+    width: 700px;
+}
+.notify-right li{
+    position: relative;
+    margin-top: -1px;
+    width: 100%;
+    height: 110px;
+    border-top: solid 1px #FFFFFF;
+    border-bottom: solid 2px #FFFFFF;
+}
+.notify-right li:hover {
+    z-index: 999999;
+    border-top: solid 1px #FFFFFF;
+    border-bottom: solid 2px #ea3f18;
+}
+
+.notify-date{
+    width: 140px;
+    height: 100px;
+    text-align: center;
+}
+.notify-date span{
+    display: inline-block;
+    padding-top: 35px;
+    font-size: 25px;
+}
+.notify-date p{
+    color: #BBBBBB;
+}
+.notify-message{
+    padding-top: 15px;
+}
+.notify-message-title h4{
+    font-family: "Microsoft Yahei","PingHei" ,"sans-serif";
+    line-height: 35px;
+    font-size: 20px;
+}
+.notify-message-content p{
+    font-family: "Microsoft Yahei","PingHei" ,"sans-serif";
+    line-height: 25px;
+    color: #888888;
+}
+.notify-btn {
+    width: 100px;
+    height: 80px;
+    text-align: center;
+}
+.notify-btn span{
+    margin-top: 25px;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url("../images/icon/notifydetail.png") no-repeat;
+    background-size: 100%;
+}
+.notify-btn span:hover{
+    background-image: url("../images/icon/notifydetailhover.png");
+}
+/* service */
+.service-show{
+    margin-top: 50px;
+}
+.service-show li{
+    margin: 50px 0 ;
+}
+.show-left{
+    margin-top: 38px;
+    width:352px;
+    height:auto;
+}
+.show-left span{
+    line-height: 70px;
+    text-align: center  ;
+    font-weight: bold;
+    color: #FFFFFF;
+    width: 70px;
+    height: 70px;
+    display: block;
+    background : no-repeat url("../images/icon/sisangle.png");
+    background-size: 100% ;
+}
+.show-left em{
+    border-bottom:1px solid #AAAAAA ;
+    line-height: 70px;
+    display: block;
+    height: 70px;
+    font-weight: bold;
+    text-indent: 15px;
+    font-size: 23px;
+}
+.show-left p{
+    padding: 20px 0;
+    padding-left:5px ;
+    border-left:1px dashed #888888 ;
+    margin-left: 34px;
+}
+.show-img{
+    width:236px;
+    height:157px;
+}
+.show-img img{
+    width: 100%;
+    height: 100%;
+}
+.show-right{
+    display: inline-block;
+}
+/* platform */
+.platform-show li{
+    width: 200px;
+    margin-left: 100px;
+}
+.platform{
+    background: #EEEEEE;
+    margin-top: 60px;
+    padding-top:65px;
+    padding-bottom: 65px;
+}
+.platform-img{
+    width:200px;
+    height: 200px;
+}
+.platform-img img{
+    border-radius:200px ;
+    width: 100%;
+    height: 100%;
+}
+.platform-content{
+    margin-top: 20px;
+}
+.platform-content h4{
+    line-height: 30px;
+    font-size: 23px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.platform-btn{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.platform-btn a{
+    color: #FFFFFF;
+    padding: 10px 20px;
+    background: #545E4B;
+}
+
+/* footer */
+footer{
+    background: #545E4B;
+    height: 150px;
+}
+.footer-main{
+    color: #BBBBBB;
+    padding-top: 70px;
+    width: 1000px;
+    margin:0 auto;
+
+}
+
+/* login.html */
+.nav-login{
+    height: 60px;
+    background: #FFFFFF;
+    position: relative;
+    z-index: 999999;
+    width: 100%;
+}
+.nav-login .nav{
+    height: 60px;
+}
+.nav-login li,.nav-fix li a{
+    width: 90px;
+    margin: 0;
+    height: 60px;
+    line-height: 60px;
+}
+
+/* login */
+.login{
+
+    padding-top: 60px;
+    margin-bottom: 0px;
+    padding-bottom: 60px;
+    background-image: url('/LaiFuCommunity/images/top_blank_login.png');
+    background-size:100%
+}
+.login-top h1{
+    font-size: 30px;
+    line-height: 50px;
+    color: #536C4B;
+}
+.login-top span{
+    display: block;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    background: url("../images/icon/logintop.png") no-repeat;
+    background-size: 100%;
+}
+#yzmimage{
+	font-size:22px;
+	color:#6cd633;
+	font-weight:bold;
+	font-family: \5fae\8f6f\96c5\9ed1;
+}
+.login-top{
+    padding-top: 100px;
+}
+.login-content table{
+    width: 100%;
+    margin-top: 30px;
+    background: #FFFFFF;
+}
+.login-content table td{
+    text-indent: 15px;
+    border: 1px solid #EEEEEE;
+    line-height: 50px;
+}
+.login-content table td input{
+    border: 1px solid #EEEEEE;
+    width:50%;
+    height: 28px;
+    text-indent: 10px;
+    font-size: 16px;
+}
+.table-error{
+    width:30%;
+    display: inline-block;
+    border-radius: 5px;
+    line-height: 25px;
+    height: 25px;
+    padding: 0px 5%;
+    margin-left: 16px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.validateImg{
+    margin: 20px 0;
+    width:80px;
+    height:40px;
+}
+.validate {
+    width: 100%;
+}
+.validateImg img{
+    width: 100%;
+    height: 100%;
+}
+.validatebox{
+    width: 100%;
+}
+.validatebox a{
+    line-height: 80px;
+    margin-left: 40px;
+}
+.validate-error{
+    margin-top: 27px;
+    width: 20%;
+}
+
+.login-btn{
+    margin-top: 40px;
+    padding-bottom: 60px;
+    text-align: center;
+}
+.login-btn input{
+    cursor: pointer;
+    width:200px;
+    color:#FFFFFF;
+    background: #536C4B;
+    border: none;
+    font-size:18px;
+    padding:9px 18px ;
+    font-family:\5fae\8f6f\96c5\9ed1;
+}
+.login-footer{
+    margin-top: -60px;
+}
+.location{
+	padding-top:30px;
+}
+.location a{
+    color: #66b3ff;
+    text-decoration:underline;
+    font-size: 18px;
+    font-family:\5fae\8f6f\96c5\9ed1;
+    font-weight:bold;
+}

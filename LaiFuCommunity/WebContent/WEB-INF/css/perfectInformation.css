@@ -1,0 +1,116 @@
+body{
+    text-align: center;
+
+}
+.outer{
+    padding: 3em 1em 1em 1em;
+    width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    font-size: 25px;
+    font-weight: lighter;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+
+/*用户昵称等信息*/
+.user_info{
+    width: 500px;
+    float: left;
+}
+.user_info>div{
+    margin-top: 20px;
+}
+.user_info>div>input{
+    width: 350px;
+    height: 40px;
+    font-size: 25px;
+    padding-left: 5px;
+    font-family: \5fae\8f6f\96c5\9ed1;
+}
+.user_info>div.user_sex>input{
+    width: 20px;
+    height: 20px;
+}
+
+
+/*用户头像*/
+.user_head{
+    float: left;
+    width: 250px;
+    padding-top: 0em;
+    margin-left: 50px;
+}
+.user_head>img{
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+/*身份证号码等*/
+.user_card{
+    clear: both;
+    margin-top: 320px;
+}
+.user_card>input{
+    height: 40px;
+    width: 685px;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 25px;
+    padding-left: 5px;
+}
+
+
+/*小区楼房房号信息*/
+.user_address{
+    margin-top: 20px;
+}
+.user_address>input{
+    width: 211px;
+    height: 40px;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 25px;
+    padding-left:5px;
+}
+
+/*验证码和提交按钮*/
+.yzm_submit{
+    float: right;
+    margin-right: 10px;
+    margin-top: 35px;
+}
+.yzm_submit>span{
+    height: 35px;
+    font-weight:normal;
+    background-image: url("../images/huawen/h1.png");
+    padding: 3px;
+    border:1px solid #cccccc;
+    cursor: pointer;
+}
+.yzm_submit>input:nth-child(2){
+    width: 150px;
+    height: 40px;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 25px;
+    padding-left: 5px;
+    margin-right: 35px;
+}
+.yzm_submit>input:nth-child(3){
+    background-color: #0062AB;
+    border: 0;
+    border-radius: 2px;
+    height: 40px;
+    width: 100px;
+    color: #ffffff;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-size: 20px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.yzm_submit>input:nth-child(3):hover{
+    background-color: #0099CC;
+}

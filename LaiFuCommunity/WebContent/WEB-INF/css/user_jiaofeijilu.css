@@ -1,0 +1,36 @@
+/*by w_w*/
+
+body{
+    text-align: center;
+}
+
+/*选择年份和缴费类型查询*/
+.gongneng{
+    margin-top: 6.25em;
+    line-height: 2em;
+}
+.gongneng>select{
+    font-size: 1.5em;
+}
+.gongneng>select>option{
+    font-size: 1.2em;
+}
+.gongneng>button{
+    width: 7em;
+    height: 2em;
+    background-color: #47CFE7;
+    color: #ffffff;
+    font-family: \5fae\8f6f\96c5\9ed1;
+    font-weight: bold;
+    cursor: pointer;
+    border: 0;
+    font-size: 1.2em;
+}
+.gongneng>button:hover{
+    background-color:#3AAABD;
+}
+
+/*柱状图*/
+.chart{
+    margin-top: 5em;
+}
