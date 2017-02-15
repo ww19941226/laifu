@@ -1,4 +1,4 @@
-/*ËÑË÷*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .search_div{
     width: 1200px;
     height: 80px;
@@ -10,21 +10,18 @@
     height: 73px;
 }
 .search{
-    margin-left: 90px;
+    margin-left: 80px;
     margin-top: 30px;
-    background: url("../images/head.png") 0 -73px no-repeat;
-    width: 518px;
-    height: 45px;
 }
 .house{
-    margin-left: 110px;
+    margin-left: 80px;
     background: url("../images/head.png") 0 -123px no-repeat;
     width: 200px;
     height: 96px;
 }
 
 
-/*¹ú¼ÒÏÔÊ¾ÁÐ±í*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ð±ï¿½*/
 .bg { background:#f7f7f7; padding-bottom:20px; }
 .wrap { width:1200px; margin:0 auto; position:relative; }
 
@@ -61,7 +58,7 @@
 .area14 { top:160px; left:1000px; }
 
 
-/*ÈÈÂôºÍÐÂµ½*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½*/
 .hot_new{
     width: 1200px;
     margin: 30px auto 0;
