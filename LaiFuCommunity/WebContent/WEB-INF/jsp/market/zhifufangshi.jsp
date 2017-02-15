@@ -15,7 +15,12 @@
 <%@ include file="head.jsp" %>
 <div class="search_div">
     <div class="chaoshilogo fl"></div>
-    <div class="search fl"></div>
+    <div class="search fl">
+    	<form action="">
+    		<input name="searchText" style="font-size:18px;border:3px solid #59cf2b;padding-left: 10px;width:418px;height:43px;" type="text" placeholder="搜索……">
+    		<input style="cursor:pointer;margin-left:-6px;color:#fff;font-size:18px;border:0;background-color:#59cf2b;width:108px;height:49px;" type="submit" value="搜索"/>
+    	</form>
+    </div>
     <div class="house fl"></div>
     <div class="cf"></div>
 </div>
