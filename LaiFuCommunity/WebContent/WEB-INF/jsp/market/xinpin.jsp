@@ -108,7 +108,7 @@
      </c:forEach>
      </div>
         <div class="cf"></div>
-        <div class="page xinpin_page">
+        <div class="page xinpin_page" style="text-align: center;">
     <common:pageV3 url="/market/newProducts"></common:pageV3>
     </div>
    

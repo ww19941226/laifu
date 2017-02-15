@@ -57,7 +57,7 @@
                   
                           </c:forEach>
                     </div> 
-                    </c:forEach>
+                </c:forEach>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
     <div class="cf"></div>
 </div>
 
-<div class="index_cuxiao_outer">
+<div class="index_cuxiao_outer" style="margin-top: 70px">
     <div class="index_cuxiao_img fl">
         <a href="${pageContext.request.contextPath}/remai.html">
             <img src="${pageContext.request.contextPath}/images/remai.png">
@@ -158,7 +158,7 @@
     <div class="cf"></div>
 </div>
 
-<div class="index_cuxiao_outer">
+<div class="index_cuxiao_outer" style="margin-top: 100px">
     <div class="index_cuxiao_img fl">
         <a href="<c:url value='/market/newProducts/'/>">
             <img src="${pageContext.request.contextPath}/images/xinpin.png">
@@ -183,7 +183,7 @@
     <div class="cf"></div>
 </div>
 
-<div class="index_cuxiao_outer">
+<div class="index_cuxiao_outer" style="margin-top: 30px">
     <div class="index_cuxiao_img fl">
         <a href="<c:url value='/market/jinkou/'/>">
             <img src="${pageContext.request.contextPath}/images/jinkou.png">

@@ -111,12 +111,10 @@
    </c:forEach>
     </div>
      <div class="cf"></div>
-    <div class="page cuxiao_page">
+    </div>
+</div>
+<div class="page cuxiao_page" style="text-align:center;">
     <common:pageV3 url="/market/cuxiao"></common:pageV3>
-    </div>
-        <div class="cf"></div>
-
-    </div>
 </div>
 <!-- <iframe src="footer.html" style="width: 100%;height: 550px;border: 0;"></iframe> -->
 <%@ include file="footer.jsp" %>
