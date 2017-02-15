@@ -69,8 +69,8 @@
         <a class="fr" href="热卖进口商品查看更多" style="line-height: 50px;">》更多</a>
     </div>
     <!--热卖进口商品20条数据-->
-    <c:forEach  items="${ jinkouHotList}" var="jk">
     <div class="hot_content">
+    	<c:forEach  items="${ jinkouHotList}" var="jk">
         <div class="hot_content_content fl">
             <a href="商品详情" target="_blank">
              <img src="${pageContext.request.contextPath}/${jk.product_photo1}">
@@ -81,7 +81,7 @@
                 <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
             </div>
         </div>
-             </c:forEach>
+        </c:forEach>
         <div class="cf"></div>
 
     </div>
@@ -90,9 +90,8 @@
         <a class="fr" href="新到进口商品查看更多" style="line-height: 50px;">》更多</a>
     </div>
     <!--新到进口商品20条数据-->
-    <c:forEach items="${jinkoNewList}" var="jkn">
     <div class="hot_content">
-    <div class="hot_content">
+    	<c:forEach items="${jinkoNewList}" var="jkn">
         <div class="hot_content_content fl">
             <a href="商品详情" target="_blank">
                 <img src="${pageContext.request.contextPath}/${jkn.product_photo1}">
