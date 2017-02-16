@@ -111,4 +111,12 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		return PageUtil.getPage(countInteger, pn, products, i);
 	}
 
+	@Override
+	public Page<Product> getSearchProducts(String hqlString, int pn, int i) {
+		// TODO Auto-generated method stub
+		Integer count = productDao.countAll("select count(*)" + hqlString);
+		List<Product> products = productDao.listAll(hqlString, pn, i);
+		return PageUtil.getPage(count, pn, products, i);
+	}
+
 }

@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.laifu.common.pagination.Page;
 import com.laifu.module.entity.Category;
@@ -54,6 +56,19 @@ public class MarketController {
 	}
 
 	/*
+	 * 跳转到进口页面
+	 */
+	@RequestMapping(value = "/market/jinkou", method = { RequestMethod.GET })
+	private String gotojinkou(HttpServletRequest request) throws Exception {
+		List<Product> pList = marketManagerService.getHotJinkou();
+		List<Product> pList2 = marketManagerService.getNewJinkou();
+		System.out.println(pList2);
+		request.setAttribute("jinkouHotList", pList);
+		request.setAttribute("jinkoNewList", pList2);
+		return "market/jinkou";
+	}
+
+	/*
 	 * 跳转到新品页面
 	 */
 	@RequestMapping(value = "/market/newProducts", method = { RequestMethod.GET })
@@ -66,16 +81,21 @@ public class MarketController {
 	}
 
 	/*
-	 * 跳转到进口页面
+	 * 搜索 功能页面
 	 */
-	@RequestMapping(value = "/market/jinkou", method = { RequestMethod.GET })
-	private String gotojinkou(HttpServletRequest request) throws Exception {
-		List<Product> pList = marketManagerService.getHotJinkou();
-		List<Product> pList2 = marketManagerService.getNewJinkou();
-		System.out.println(pList2);
-		request.setAttribute("jinkouHotList", pList);
-		request.setAttribute("jinkoNewList", pList2);
+	@RequestMapping(value = "/market/search/", method = { RequestMethod.POST })
+	private String gotosearch(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam String searchText)
+			throws Exception {
+		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hqlString = "from Product where product_name like '%"
+				+ searchText + "%' order by product_id,product_deal desc ";
+		Page<Product> page = marketManagerService.getSearchProducts(hqlString,
+				pn, 10);
+		request.setAttribute("page", page);
+		System.out.println(page.getItems());
 		return "market/jinkou";
+
 	}
 
 	/****************** 帮助中心的页面跳转 **********************************************************************************/

@@ -19,7 +19,7 @@
             您好，欢迎来到莱福智能生活小区超市！
         </div>
         <div style="float: right;">
-          <a style="text-decoration: none;color: #666;" href="index.html">${sessionScope["user"].user_nickname }，欢迎您</a>|
+          <a style="text-decoration: none;color: #666;" href="<c:url value='/user/userCenter'/>">${sessionScope["user"].user_nickname }，欢迎您</a>|
             <a style="text-decoration: none;color: #666;" href="index.html">我的订单</a>|
             <a style="text-decoration: none;color: #666;" href="index.html">积分抽奖</a>|
             <a style="text-decoration: none;color: #666;" href="<c:url value='/market/helpCenter/'/>">帮助中心</a>|

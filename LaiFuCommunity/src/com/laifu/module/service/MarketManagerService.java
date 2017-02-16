@@ -32,4 +32,6 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	public Page<Product> xinpin_listAll(String hql, int pn, int i)
 			throws Exception;
 
+	public Page<Product> getSearchProducts(String hqlString, int pn, int i);
+
 }
