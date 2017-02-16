@@ -18,4 +18,30 @@ $(document).ready(function () {
     }, function () {
         $(".all_a_outer").stop().slideUp(500);
     });
+    
+    
+    var offset = $("#end").offset();  //结束的地方的元素
+	$(".gwc_div").click(function(event){   //是$(".gwc_div")这个元素点击促发的 开始动画的位置就是这个元素的位置为起点
+		var addcar = $(this);
+		var img = addcar.prev().find('img').attr('src');
+		var flyer = $('<img class="u-flyer" src="'+img+'">');
+		flyer.fly({
+			start: {
+				left: event.clientX,
+				top: event.clientY
+			},
+			end: {
+				left: offset.left,
+				top: offset.top,
+				width: 0,
+				height: 0
+			},
+			onEnd: function(){
+				$("#msg").show().animate({width: '220px'}, 500,function(){
+					$("#msg").animate({width: '1px'},1);
+				}).fadeOut(1000);
+				this.destory();
+			}
+		});
+	});
 });
