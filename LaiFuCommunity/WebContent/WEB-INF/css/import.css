@@ -134,4 +134,62 @@
 }
 
 
+.gwc_right{
+	position:fixed;
+	top:0;
+	right:0;
+	width:50px;
+	height:100%;
+	background-color:#3b3b3b;
+	vertical-align:middle;
+}
+.all_right{
+	position:fixed;
+	width:50px;
+	height:200px;
+	margin:auto 0px;
+	top:0;
+	bottom:0;
+}
+.all_right>div{
+	background-size:36px 36px;
+	background-position:7px;
+	background-repeat:no-repeat;
+	width:50px;
+	height:60px;
+	cursor:pointer;
+}
+#msg{
+	position:absolute;
+	top:5px;
+	width:1px;
+	display:none;
+	font-size:18px;
+	right:50px;
+	height:50px;
+	background-color:#59cf2b;
+	color:#fff;
+	line-height:50px;
+	text-align:center;
+}
+.right_gwc{
+	background-image:url("../images/gouwuche2.png");
+}
+.right_dingdan{
+	background-image:url("../images/dingdan.png");
+}
+.right_choujiang{
+	background-image:url("../images/choujiang.png");
+}
+.right_gwc:hover{
+	background-image:url("../images/gouwuche2-hover.png");
+}
+.right_dingdan:hover{
+	background-image:url("../images/dingdan-hover.png");
+}
+.right_choujiang:hover{
+	background-image:url("../images/choujiang-hover.png");
+}
+
+.u-flyer{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
 
