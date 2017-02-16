@@ -213,9 +213,20 @@
     </div>
     <div class="cf"></div>
 </div>
+<div class="gwc_right">
+	<div class="all_right">
+		<div id="end" style="height: 0;"></div>
+		<div class="right_gwc" title="购物车"></div>
+		<div id="msg">已成功加入购物车！</div>
+		<div class="right_dingdan" title="我的订单"></div>
+		<div class="right_choujiang" title="积分抽奖"></div>
+	</div>
+</div>
 <%@ include file="footer.jsp" %>
 <!-- <iframe src="footer.html" style="width: 100%;height: 550px;border: 0;"></iframe> -->
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.fly.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/requestAnimationFrame.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 </body>
 </html>
