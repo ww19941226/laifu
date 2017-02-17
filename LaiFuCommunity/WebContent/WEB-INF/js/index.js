@@ -23,6 +23,7 @@ $(document).ready(function () {
     var offset = $("#end").offset();  //结束的地方的元素
 	$(".gwc_div").click(function(event){   //是$(".gwc_div")这个元素点击促发的 开始动画的位置就是这个元素的位置为起点
 		var addcar = $(this);
+		var product_id=addcar.attr("id");
 		var img = addcar.prev().find('img').attr('src');
 		var flyer = $('<img class="u-flyer" src="'+img+'">');
 		flyer.fly({
@@ -37,9 +38,17 @@ $(document).ready(function () {
 				height: 0
 			},
 			onEnd: function(){
-				$("#msg").show().animate({width: '220px'}, 500,function(){
-					$("#msg").animate({width: '1px'},1);
-				}).fadeOut(1000);
+				$.ajax({
+		        	type: "POST",
+		        	url: "",
+		        	dataType: "json",
+		        	data:{"product_id":product_id},
+		        	success: function(data){ 
+		       			$("#msg").show().animate({width: '220px'}, 500,function(){
+							$("#msg").animate({width: '1px'},1);
+						}).fadeOut(1000);
+		        	}
+		        });
 				this.destory();
 			}
 		});

@@ -125,7 +125,7 @@
                <p class="hot_content_content_djy"><del>原价:￥${cxp.product_price}</del></p>
                 <p class="hot_content_content_dj">促销价:￥ <c:out value="${cxp.product_price*cxp.product_discount/10}"></c:out></p>
             </a>
-            <div class="gwc_div">
+            <div id="${cxp.product_id }" class="gwc_div">
                 <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
             </div>
         </div>
@@ -152,7 +152,7 @@
                 <p class="cuxiao_content_dj">￥<c:out value="${rmp.product_price*rmp.product_discount/10}"></c:out></p>
                 <p class="cuxiao_content_dj">销量${rmp.product_deal }</p>
             </a>
-            <div class="gwc_div">
+            <div id="${rmp.product_id }" class="gwc_div">
                 <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
             </div>
         </div>
@@ -177,7 +177,7 @@
                 <p class="cuxiao_content_ms">${xpp.product_name }</p>
                 <p class="cuxiao_content_dj">￥<c:out value="${xpp.product_price*xpp.product_discount/10}"></c:out></p>
             </a>
-            <div class="gwc_div">
+            <div id="${xpp.product_id }" class="gwc_div">
                 <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
             </div>
         </div>
@@ -202,7 +202,7 @@
                      <p class="cuxiao_content_ms">${jkp.product_name }</p>
                 <p class="cuxiao_content_dj">￥<c:out value="${jkp.product_price*jkp.product_discount/10}"></c:out></p>
             </a>
-            <div class="gwc_div">
+            <div id="${jkp.product_id }" class="gwc_div">
                 <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
             </div>
             </div>
