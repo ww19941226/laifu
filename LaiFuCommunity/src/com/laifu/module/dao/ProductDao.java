@@ -19,4 +19,6 @@ public interface ProductDao extends IBaseDao<Product, Integer> {
 
 	public List<Product> getjinkouProducts() throws Exception;
 
+	public Product findByPid(Integer id) throws Exception;
+
 }

@@ -1,10 +1,11 @@
 package com.laifu.module.entity;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Cart {
+public class Cart implements Serializable {
 	// 购物项
 	private Map<Integer, CartItem> map = new LinkedHashMap<Integer, CartItem>();
 	// 购物总计
@@ -16,10 +17,6 @@ public class Cart {
 
 	public double getTotal() {
 		return total;
-	}
-
-	public void setTotal(double total) {
-		this.total = total;
 	}
 
 	public void addCart(CartItem cartItem) {

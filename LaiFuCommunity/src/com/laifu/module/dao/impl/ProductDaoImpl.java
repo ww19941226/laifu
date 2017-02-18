@@ -72,4 +72,12 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 		query.setMaxResults(8);
 		return query.list();
 	}
+
+	@Override
+	public Product findByPid(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		String hqlString = "from Product where product_id=" + id;
+
+		return (Product) getSession().createQuery(hqlString).uniqueResult();
+	}
 }

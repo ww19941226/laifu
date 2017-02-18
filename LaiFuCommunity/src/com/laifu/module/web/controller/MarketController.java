@@ -1,6 +1,7 @@
 package com.laifu.module.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.laifu.common.pagination.Page;
+import com.laifu.module.entity.Cart;
+import com.laifu.module.entity.CartItem;
 import com.laifu.module.entity.Category;
 import com.laifu.module.entity.Product;
 import com.laifu.module.service.MarketManagerService;
@@ -97,6 +100,38 @@ public class MarketController {
 		return "market/jinkou";
 
 	}
+
+	/*************************** 购物车功能 ********************************************************************************/
+	@RequestMapping(value = "/market/addCart", method = { RequestMethod.POST })
+	private String addCart(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam Integer product_id,
+			Map<String, Object> map) throws Exception {
+		Product product = marketManagerService.finByPid(product_id);
+		CartItem cartItem = new CartItem();
+		cartItem.setCount(1);
+		cartItem.setProduct(product);
+		Cart cart = getCart(request);
+		cart.addCart(cartItem);
+		response.getWriter().println("1");
+		System.out.println(cart);
+		return null;
+	}
+
+	/**
+	 * 获得购物车的方法:从session中获得购物车.
+	 * 
+	 * @return
+	 */
+	private Cart getCart(HttpServletRequest request) {
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		if (cart == null) {
+			cart = new Cart();
+			request.getSession().setAttribute("cart", cart);
+		}
+		return cart;
+	}
+
+	/*************************** 购物车功能 ********************************************************************************/
 
 	/****************** 帮助中心的页面跳转 **********************************************************************************/
 	/*

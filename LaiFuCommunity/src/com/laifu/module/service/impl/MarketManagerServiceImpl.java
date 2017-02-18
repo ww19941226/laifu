@@ -119,4 +119,10 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		return PageUtil.getPage(count, pn, products, i);
 	}
 
+	@Override
+	public Product finByPid(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		return productDao.findByPid(id);
+	}
+
 }
