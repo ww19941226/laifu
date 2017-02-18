@@ -2,6 +2,10 @@
  * Created by w_w on 2017/2/7.
  */
 $(document).ready(function () {
+	$(".right_gwc").click(function(){
+		location.href="/LaiFuCommunity/market/myCart/"
+	});
+
 
     //banner
     $(".index_banner_outer>div div").hover(function () {
