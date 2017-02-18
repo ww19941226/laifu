@@ -1,5 +1,6 @@
 package com.laifu.module.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -102,8 +104,9 @@ public class MarketController {
 	}
 
 	/*************************** 购物车功能 ********************************************************************************/
+	/* 添加到购物车 */
 	@RequestMapping(value = "/market/addCart", method = { RequestMethod.POST })
-	private String addCart(HttpServletRequest request,
+	private void addCart(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam Integer product_id,
 			Map<String, Object> map) throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
@@ -114,7 +117,35 @@ public class MarketController {
 		cart.addCart(cartItem);
 		response.getWriter().println("1");
 		System.out.println(cart);
-		return null;
+	}
+
+	/* 移除购物车的购物项 */
+	@RequestMapping(value = "/market/removeCart/{product_id}", method = { RequestMethod.GET })
+	private void removeCart(HttpServletRequest request,
+			@PathVariable Integer product_id, HttpServletResponse response) {
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		cart.removeCart(product_id);
+		try {
+			response.getWriter().write("1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/* 清空购物车 */
+	@RequestMapping(value = "/market/cleanCart", method = { RequestMethod.GET })
+	private void cleanCart(HttpServletRequest request,
+			HttpServletResponse response) {
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		cart.cleanCart();
+		try {
+			response.getWriter().write("1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
