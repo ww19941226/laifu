@@ -59,8 +59,12 @@
         <div class="cf" style="height: 0;"></div>
     </div>
     <div class="gwc_info_outer">
-     <c:forEach items="${sessionScope.cart.cartItems}" var="cartItem">
-        <div class="gwc_info_one" id="商品id1">
+    <c:if test="${sessionScope.cart.cartItems=='[]'}">
+     	购物车空空如也。
+     </c:if>
+     <c:if test="${sessionScope.cart.cartItems!='[]'}">
+     	<c:forEach items="${sessionScope.cart.cartItems}" var="cartItem">
+        <div class="gwc_info_one" id="${cartItem.product.product_id}">
             <div class="fl">
                 <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
             </div>
@@ -79,6 +83,8 @@
             <div class="cf" style="height: 0;"></div>
         </div>
 </c:forEach>
+     </c:if>
+     
 
 
     </div>
@@ -102,12 +108,23 @@
         $(".deleteOne").click(function () {
             var product_id = $(this).parent().attr("id");
             console.log(product_id);
-            $("#"+product_id).slideUp(350, function () {
-                $("#"+product_id).remove();
-                if($(".gwc_info_outer>div").length == 0){
-                    $(".gwc_info_outer").html("购物车空空如也。");
-                }
-            });
+            $.ajax({
+	        	type: "POST",
+	        	url: "/LaiFuCommunity/market/removeCart",
+	        	dataType: "json",
+	        	data:{"product_id":product_id},
+	        	success: function(data){ 
+	        		console.log(data);
+	       			$("#"+product_id).slideUp(350, function () {
+		                $("#"+product_id).remove();
+		                $(".gwc_jiesuan>div:nth-child(1)").html("商品共${sessionScope.cart.totalcount}件");
+		                if($(".gwc_info_outer>div").length == 0){
+		                    $(".gwc_info_outer").html("购物车空空如也。");
+		                }
+		            });
+	        	}
+	        });
+            
         });
         //商品数量+
         $(".jia").click(function () {
@@ -132,10 +149,18 @@
         });
         //删除全部
         $("#deleteAll").click(function () {
-            $(".gwc_info_outer>div").slideUp(700, function () {
-                $(".gwc_info_outer>div").remove();
-                $(".gwc_info_outer").html("购物车空空如也。");
-            });
+        	$.ajax({
+	        	type: "POST",
+	        	url: "/LaiFuCommunity/market/cleanCart",
+	        	dataType: "json",
+	        	success: function(data){ 
+	        		console.log(data);
+	       			$(".gwc_info_outer>div").slideUp(700, function () {
+		                $(".gwc_info_outer>div").remove();
+		                $(".gwc_info_outer").html("购物车空空如也。");
+		            });
+	        	}
+	        });
         });
     });
 </script>

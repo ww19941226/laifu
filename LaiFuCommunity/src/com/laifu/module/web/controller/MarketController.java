@@ -129,11 +129,13 @@ public class MarketController {
 	}
 
 	/* 移除购物车的购物项 */
-	@RequestMapping(value = "/market/removeCart/{product_id}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/market/removeCart", method = { RequestMethod.POST })
 	private void removeCart(HttpServletRequest request,
-			@PathVariable Integer product_id, HttpServletResponse response) {
+			@RequestParam Integer product_id, HttpServletResponse response) {
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		cart.removeCart(product_id);
+		int totalcount = cart.getTotalcount();
+		double total = cart.getTotal();
 		try {
 			response.getWriter().write("1");
 		} catch (IOException e) {
@@ -144,7 +146,7 @@ public class MarketController {
 	}
 
 	/* 清空购物车 */
-	@RequestMapping(value = "/market/cleanCart", method = { RequestMethod.GET })
+	@RequestMapping(value = "/market/cleanCart", method = { RequestMethod.POST })
 	private void cleanCart(HttpServletRequest request,
 			HttpServletResponse response) {
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
