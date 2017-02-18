@@ -109,6 +109,7 @@ public class MarketController {
 	private void addCart(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam Integer product_id,
 			Map<String, Object> map) throws Exception {
+		System.out.println(product_id);
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
 		cartItem.setCount(1);
