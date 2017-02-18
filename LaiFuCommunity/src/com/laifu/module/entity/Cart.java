@@ -11,6 +11,17 @@ public class Cart implements Serializable {
 	// 购物总计
 	private double total;
 
+	// 商品的总件数
+	private int totalcount;
+
+	public int getTotalcount() {
+		return totalcount;
+	}
+
+	public void setTotalcount(int totalcount) {
+		this.totalcount = totalcount;
+	}
+
 	public Collection<CartItem> getCartItems() {
 		return map.values();
 	}
@@ -28,12 +39,13 @@ public class Cart implements Serializable {
 			map.put(product_id, cartItem);
 		}
 		total += cartItem.getSubtotal();
+		totalcount += cartItem.getCount();
 	}
 
 	public void removeCart(Integer product_id) {
 		CartItem cartItem = map.remove(product_id);
 		total -= cartItem.getSubtotal();
-
+		totalcount -= cartItem.getCount();
 	}
 
 	public void cleanCart() {

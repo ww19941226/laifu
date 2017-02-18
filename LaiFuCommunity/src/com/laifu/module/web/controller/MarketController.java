@@ -115,15 +115,17 @@ public class MarketController {
 	private void addCart(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam Integer product_id,
 			Map<String, Object> map) throws Exception {
-		System.out.println(product_id);
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
 		cartItem.setCount(1);
 		cartItem.setProduct(product);
-		Cart cart = getCart(request);
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		if (cart == null) {
+			cart = new Cart();
+			request.getSession().setAttribute("cart", cart);
+		}
 		cart.addCart(cartItem);
 		response.getWriter().println("1");
-		System.out.println(cart);
 	}
 
 	/* 移除购物车的购物项 */
@@ -160,14 +162,11 @@ public class MarketController {
 	 * 
 	 * @return
 	 */
-	private Cart getCart(HttpServletRequest request) {
-		Cart cart = (Cart) request.getSession().getAttribute("cart");
-		if (cart == null) {
-			cart = new Cart();
-			request.getSession().setAttribute("cart", cart);
-		}
-		return cart;
-	}
+	/*
+	 * private Cart getCart(HttpServletRequest request) { Cart cart = (Cart)
+	 * request.getSession().getAttribute("cart"); if (cart == null) { cart = new
+	 * Cart(); request.getSession().setAttribute("cart", cart); } return cart; }
+	 */
 
 	/*************************** 购物车功能 ********************************************************************************/
 

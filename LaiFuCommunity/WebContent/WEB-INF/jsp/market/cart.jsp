@@ -59,79 +59,33 @@
         <div class="cf" style="height: 0;"></div>
     </div>
     <div class="gwc_info_outer">
-
-
-
-
+     <c:forEach items="${sessionScope.cart.cartItems}" var="cartItem">
         <div class="gwc_info_one" id="商品id1">
             <div class="fl">
                 <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
             </div>
-            <div class="fl">奥利奥饼干18</div>
-            <div class="fl">￥39.00</div>
+            <div class="fl">${cartItem.product.product_name}</div>
+            <div class="fl">￥<c:out value="${cartItem.product.product_price*cartItem.product.product_discount/10}"></c:out></div>
             <div class="gwc_number fl">
                 <button class="jian fl">-</button>
-                <input class="shuru fl" maxlength="2" type="text" placeholder="数量"/>
+                <input class="shuru fl" maxlength="2" type="text" placeholder="数量" value="${cartItem.count}"/>
                 <button class="jia fl">+</button>
                 <div class="cf"></div>
             </div>
-            <div class="fl">￥39.00</div>
+            <div class="fl">￥${cartItem.subtotal}</div>
             <div class="deleteOne fl">
                 删除该商品
             </div>
             <div class="cf" style="height: 0;"></div>
         </div>
-
-
-        <div class="gwc_info_one" id="商品id2">
-            <div class="fl">
-                <img src="${pageContext.request.contextPath}/${pageContext.request.contextPath}/images/sp.jpg"/>
-            </div>
-            <div class="fl">奥利奥饼干18</div>
-            <div class="fl">￥39.00</div>
-            <div class="gwc_number fl">
-                <button class="jian fl">-</button>
-                <input class="shuru fl" maxlength="2" type="text" placeholder="数量"/>
-                <button class="jia fl">+</button>
-                <div class="cf"></div>
-            </div>
-            <div class="fl">￥39.00</div>
-            <div class="deleteOne fl">
-                删除该商品
-            </div>
-            <div class="cf" style="height: 0;"></div>
-        </div>
-
-
-        <div class="gwc_info_one" id="商品id3">
-            <div class="fl">
-                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
-            </div>
-            <div class="fl">奥利奥饼干18</div>
-            <div class="fl">￥39.00</div>
-            <div class="gwc_number fl">
-                <button class="jian fl">-</button>
-                <input class="shuru fl" maxlength="2" type="text" placeholder="数量"/>
-                <button class="jia fl">+</button>
-                <div class="cf"></div>
-            </div>
-            <div class="fl">￥39.00</div>
-            <div class="deleteOne fl">
-                删除该商品
-            </div>
-            <div class="cf" style="height: 0;"></div>
-        </div>
-
-
-
-
+</c:forEach>
 
 
     </div>
     <div class="gwc_jiesuan_outer">
         <div class="gwc_jiesuan fr">
-            <div class="fl">商品共5件</div>
-            <div class="fl">合计(不含运费)：10.00</div>
+            <div class="fl">商品共${sessionScope.cart.totalcount}件</div>
+            <div class="fl">合计(不含运费)：￥${sessionScope.cart.total}</div>
             <div id="tijiaodingdan" class="fl">提交订单</div>
             <div class="cf" style="height: 0;"></div>
         </div>
