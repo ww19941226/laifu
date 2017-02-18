@@ -216,7 +216,9 @@
 <div class="gwc_right">
 	<div class="all_right">
 		<div id="end" style="height: 0;"></div>
-		<div class="right_gwc" title="购物车"></div>
+		<div class="right_gwc" title="购物车">
+		  <%--  <a href="<c:url value='/market/myCart/'/>"> --%>
+		</div>
 		<div id="msg">已成功加入购物车！</div>
 		<div class="right_dingdan" title="我的订单"></div>
 		<div class="right_choujiang" title="积分抽奖"></div>

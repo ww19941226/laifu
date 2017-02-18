@@ -104,6 +104,12 @@ public class MarketController {
 	}
 
 	/*************************** 购物车功能 ********************************************************************************/
+	/* 跳转到购物车页面 */
+	@RequestMapping(value = "/market/myCart", method = { RequestMethod.GET })
+	private String myCart() {
+		return "market/cart";
+	}
+
 	/* 添加到购物车 */
 	@RequestMapping(value = "/market/addCart", method = { RequestMethod.POST })
 	private void addCart(HttpServletRequest request,
