@@ -40,10 +40,11 @@ $(document).ready(function () {
 			onEnd: function(){
 				$.ajax({
 		        	type: "POST",
-		        	url: "",
+		        	url: "/LaiFuCommunity/market/addCart",
 		        	dataType: "json",
 		        	data:{"product_id":product_id},
 		        	success: function(data){ 
+		        		console.log(data);
 		       			$("#msg").show().animate({width: '220px'}, 500,function(){
 							$("#msg").animate({width: '1px'},1);
 						}).fadeOut(1000);
