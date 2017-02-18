@@ -51,6 +51,7 @@ public class Cart implements Serializable {
 	public void cleanCart() {
 		map.clear();
 		total = 0;
+		totalcount = 0;
 	}
 
 }
