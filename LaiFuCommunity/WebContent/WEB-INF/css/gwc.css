@@ -30,10 +30,13 @@
 }
 #deleteAll{
     width: 150px;
+    background-color:#58cf2a;
+    color: #ffffff;
+    font-size: 22px;
     cursor: pointer;
 }
 #deleteAll:hover{
-    color: red;
+    background-color: #2acf15;
 }
 .gwc_info_outer{
     width: 1200px;
