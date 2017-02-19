@@ -1,6 +1,7 @@
 package com.laifu.module.web.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSONArray;
 import com.laifu.common.pagination.Page;
 import com.laifu.module.entity.Cart;
 import com.laifu.module.entity.CartItem;
@@ -134,10 +136,15 @@ public class MarketController {
 			@RequestParam Integer product_id, HttpServletResponse response) {
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		cart.removeCart(product_id);
-		int totalcount = cart.getTotalcount();
+		int totalCount = cart.getTotalcount();
 		double total = cart.getTotal();
+		Map map = new HashMap();
+		map.put("totalCount", totalCount);
+		map.put("total", total);
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.add(map);
 		try {
-			response.getWriter().write("1");
+			response.getWriter().write(jsonArray.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,8 +158,15 @@ public class MarketController {
 			HttpServletResponse response) {
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		cart.cleanCart();
+		int totalCount = cart.getTotalcount();
+		double total = cart.getTotal();
+		Map map = new HashMap();
+		map.put("totalCount", totalCount);
+		map.put("total", total);
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.add(map);
 		try {
-			response.getWriter().write("1");
+			response.getWriter().write(jsonArray.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

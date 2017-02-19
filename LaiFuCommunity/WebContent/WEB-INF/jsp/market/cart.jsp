@@ -114,7 +114,8 @@
 	        	dataType: "json",
 	        	data:{"product_id":product_id},
 	        	success: function(data){ 
-	        		console.log(data);
+	        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
+	        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
 	       			$("#"+product_id).slideUp(350, function () {
 		                $("#"+product_id).remove();
 		                $(".gwc_jiesuan>div:nth-child(1)").html("商品共${sessionScope.cart.totalcount}件");
@@ -154,7 +155,8 @@
 	        	url: "/LaiFuCommunity/market/cleanCart",
 	        	dataType: "json",
 	        	success: function(data){ 
-	        		console.log(data);
+	        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
+	        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
 	       			$(".gwc_info_outer>div").slideUp(700, function () {
 		                $(".gwc_info_outer>div").remove();
 		                $(".gwc_info_outer").html("购物车空空如也。");
