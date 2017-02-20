@@ -53,6 +53,7 @@ public class Cart implements Serializable {
 
 	public void addCountCart(CartItem cartItem) {
 		Integer product_id = cartItem.getProduct().getProduct_id();
+		removeCart(product_id);
 		map.put(product_id, cartItem);
 		total += cartItem.getSubtotal();
 		totalcount += cartItem.getCount();

@@ -146,9 +146,9 @@ public class MarketController {
 		double subtotal = cartItem2.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
-		map1.put("total", total+"");
+		map1.put("total", total + "");
 		map1.put("count", count);
-		map1.put("subtotal", subtotal+"");
+		map1.put("subtotal", subtotal + "");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());
@@ -173,9 +173,9 @@ public class MarketController {
 		double subtotal = cartItem2.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
-		map1.put("total", total+"");
+		map1.put("total", total + "");
 		map1.put("count", count);
-		map1.put("subtotal", subtotal+"");
+		map1.put("subtotal", subtotal + "");
 		System.out.println(map1);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
@@ -187,8 +187,7 @@ public class MarketController {
 	@RequestMapping(value = "/market/addCountCart", method = { RequestMethod.POST })
 	private void addCountCart(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam Integer product_id,
-			@RequestParam Integer count, Map<String, Object> map)
-			throws Exception {
+			@RequestParam Integer count) throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
 		cartItem.setCount(count);
@@ -200,8 +199,8 @@ public class MarketController {
 		double subtotal = cartItem.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
-		map1.put("total", total+"");
-		map1.put("subtotal", subtotal+"");
+		map1.put("total", total + "");
+		map1.put("subtotal", subtotal + "");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());
@@ -217,7 +216,7 @@ public class MarketController {
 		double total = cart.getTotal();
 		Map map = new HashMap();
 		map.put("totalCount", totalCount);
-		map.put("total", total+"");
+		map.put("total", total + "");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map);
 		try {
@@ -239,7 +238,7 @@ public class MarketController {
 		double total = cart.getTotal();
 		Map map = new HashMap();
 		map.put("totalCount", totalCount);
-		map.put("total", total+"");
+		map.put("total", total + "");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map);
 		try {
