@@ -136,15 +136,18 @@ public class MarketController {
 			Map<String, Object> map) throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
-		cartItem.setCount(1);
 		cartItem.setProduct(product);
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		cart.subCart(cartItem);
 		int totalCount = cart.getTotalcount();
 		double total = cart.getTotal();
+		Integer count = cartItem.getCount();
+		double subtotal = cartItem.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
 		map1.put("total", total);
+		map1.put("count", count);
+		map1.put("subtotal", subtotal);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());
@@ -157,15 +160,18 @@ public class MarketController {
 			Map<String, Object> map) throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
-		cartItem.setCount(1);
 		cartItem.setProduct(product);
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
-		cart.addCart(cartItem);
+		cart.addOneCart(cartItem);
 		int totalCount = cart.getTotalcount();
 		double total = cart.getTotal();
+		Integer count = cartItem.getCount();
+		double subtotal = cartItem.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
 		map1.put("total", total);
+		map1.put("count", count);
+		map1.put("subtotal", subtotal);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());
@@ -185,9 +191,11 @@ public class MarketController {
 		cart.addCountCart(cartItem);
 		int totalCount = cart.getTotalcount();
 		double total = cart.getTotal();
+		double subtotal = cartItem.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
 		map1.put("total", total);
+		map1.put("subtotal", subtotal);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());

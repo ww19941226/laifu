@@ -52,9 +52,17 @@ public class Cart implements Serializable {
 	public void subCart(CartItem cartItem) {
 		Integer product_id = cartItem.getProduct().getProduct_id();
 		CartItem cartItem2 = map.get(product_id);
-		cartItem2.setCount(cartItem2.getCount() - cartItem.getCount());
+		cartItem.setCount(cartItem2.getCount() - 1);
 		total -= cartItem.getSubtotal();
 		totalcount -= cartItem.getCount();
+	}
+
+	public void addOneCart(CartItem cartItem) {
+		Integer product_id = cartItem.getProduct().getProduct_id();
+		CartItem cartItem2 = map.get(product_id);
+		cartItem.setCount(cartItem2.getCount() + 1);
+		total += cartItem.getSubtotal();
+		totalcount += cartItem.getCount();
 	}
 
 	public void removeCart(Integer product_id) {
