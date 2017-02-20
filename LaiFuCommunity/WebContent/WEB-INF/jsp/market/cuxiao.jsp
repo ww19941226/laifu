@@ -103,13 +103,11 @@
 <c:set var="id" value="${id+1 }" scope="page"></c:set>
     <div class="hot_content_content fl">
         <div class="cuxiao_dazhe">${cxp.product_discount }折</div>
-        <a href="商品详情" target="_blank">
             <img src="${pageContext.request.contextPath}/images/sp.jpg">
             <p class="hot_content_content_ms">${cxp.product_name }</p>
             <p class="hot_content_content_djy"><del>原价:￥${cxp.product_price }</del></p>
             <p class="hot_content_content_dj">促销价:￥<c:out value="${cxp.product_price*cxp.product_discount/10}"></c:out></p>
-        </a>
-        <div class="gwc_div">
+        <div id="${cxp.product_id }" class="gwc_div">
             <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
         </div>
     </div>
@@ -121,9 +119,22 @@
 <div class="page cuxiao_page" style="text-align:center;">
     <common:pageV3 url="/market/cuxiao"></common:pageV3>
 </div>
+<div class="gwc_right">
+	<div class="all_right">
+		<div id="end" style="height: 0;"></div>
+		<div class="right_gwc" title="购物车">
+		  <%--  <a href="<c:url value='/market/myCart/'/>"> --%>
+		</div>
+		<div id="msg">已成功加入购物车！</div>
+		<div class="right_dingdan" title="我的订单"></div>
+		<div class="right_choujiang" title="积分抽奖"></div>
+	</div>
+</div>
 <!-- <iframe src="footer.html" style="width: 100%;height: 550px;border: 0;"></iframe> -->
 <%@ include file="footer.jsp" %>
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.fly.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/requestAnimationFrame.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 </body>
 </html>

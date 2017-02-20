@@ -28,7 +28,7 @@ $(document).ready(function () {
 	$(".gwc_div").click(function(event){   //是$(".gwc_div")这个元素点击促发的 开始动画的位置就是这个元素的位置为起点
 		var addcar = $(this);
 		var product_id=addcar.attr("id");
-		var img = addcar.prev().find('img').attr('src');
+		var img = addcar.parent().find('img').attr('src');
 		var flyer = $('<img class="u-flyer" src="'+img+'">');
 		flyer.fly({
 			start: {

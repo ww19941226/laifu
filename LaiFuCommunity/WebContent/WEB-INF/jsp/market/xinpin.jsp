@@ -101,12 +101,10 @@
 <div class="hot_content">
 <c:forEach items="${page.items }" var="xpp">
     <div class="hot_content_content fl">
-        <a href="商品详情" target="_blank">
             <img src="${pageContext.request.contextPath}/images/sp.jpg">
             <p class="hot_content_content_ms">${xpp.product_name }</p>
             <p class="hot_content_content_dj">单价:￥<c:out value="${xpp.product_price*xpp.product_discount/10}"></c:out></p>
-        </a>
-        <div class="gwc_div">
+        <div id="${xpp.product_id }" class="gwc_div">
             <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
         </div>
     </div>
@@ -120,9 +118,22 @@
     <div class="cf"></div>
     </div>
 </div>
+<div class="gwc_right">
+	<div class="all_right">
+		<div id="end" style="height: 0;"></div>
+		<div class="right_gwc" title="购物车">
+		  <%--  <a href="<c:url value='/market/myCart/'/>"> --%>
+		</div>
+		<div id="msg">已成功加入购物车！</div>
+		<div class="right_dingdan" title="我的订单"></div>
+		<div class="right_choujiang" title="积分抽奖"></div>
+	</div>
+</div>
 <!-- <iframe src="footer.html" style="width: 100%;height: 550px;border: 0;"></iframe> -->
 <%@ include file="footer.jsp" %>
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.fly.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/requestAnimationFrame.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 </body>
 </html>

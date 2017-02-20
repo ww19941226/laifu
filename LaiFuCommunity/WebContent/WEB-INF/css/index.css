@@ -87,13 +87,10 @@
     border: 1px solid #cccccc;
     text-align: center;
 }
-.cuxiao_content>a>img{
+.cuxiao_content>img{
     height: 148px;
     margin-top: 10px;
     margin-bottom: 5px;
-}
-.cuxiao_content>a{
-    text-decoration: none;
 }
 .cuxiao_content_ms{
     color: #989898;
