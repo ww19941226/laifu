@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -128,6 +127,70 @@ public class MarketController {
 		}
 		cart.addCart(cartItem);
 		response.getWriter().println("1");
+	}
+
+	/* 购物车减一操作 */
+	@RequestMapping(value = "/market/subCart", method = { RequestMethod.POST })
+	private void subCart(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam Integer product_id,
+			Map<String, Object> map) throws Exception {
+		Product product = marketManagerService.finByPid(product_id);
+		CartItem cartItem = new CartItem();
+		cartItem.setCount(1);
+		cartItem.setProduct(product);
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		cart.subCart(cartItem);
+		int totalCount = cart.getTotalcount();
+		double total = cart.getTotal();
+		Map map1 = new HashMap();
+		map1.put("totalCount", totalCount);
+		map1.put("total", total);
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.add(map1);
+		response.getWriter().print("1");
+	}
+
+	/* 购物车加一操作 */
+	@RequestMapping(value = "/market/addOneCart", method = { RequestMethod.POST })
+	private void addOneCart(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam Integer product_id,
+			Map<String, Object> map) throws Exception {
+		Product product = marketManagerService.finByPid(product_id);
+		CartItem cartItem = new CartItem();
+		cartItem.setCount(1);
+		cartItem.setProduct(product);
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		cart.addCart(cartItem);
+		int totalCount = cart.getTotalcount();
+		double total = cart.getTotal();
+		Map map1 = new HashMap();
+		map1.put("totalCount", totalCount);
+		map1.put("total", total);
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.add(map1);
+		response.getWriter().print("1");
+	}
+
+	/* 购物车数量填写操作 */
+	@RequestMapping(value = "/market/addCountCart", method = { RequestMethod.POST })
+	private void addCountCart(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam Integer product_id,
+			@RequestParam Integer count, Map<String, Object> map)
+			throws Exception {
+		Product product = marketManagerService.finByPid(product_id);
+		CartItem cartItem = new CartItem();
+		cartItem.setCount(count);
+		cartItem.setProduct(product);
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		cart.addCountCart(cartItem);
+		int totalCount = cart.getTotalcount();
+		double total = cart.getTotal();
+		Map map1 = new HashMap();
+		map1.put("totalCount", totalCount);
+		map1.put("total", total);
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.add(map1);
+		response.getWriter().print("1");
 	}
 
 	/* 移除购物车的购物项 */
