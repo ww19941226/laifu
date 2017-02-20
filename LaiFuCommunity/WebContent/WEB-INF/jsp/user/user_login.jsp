@@ -113,6 +113,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var i=2;
 		var random=(Math.random()+"").slice(2,8);		
 		$("#yzmimage").text(random);
+		
+		
+		
+		//这句为方便测试的语句，正式时记得删除
+		$("#yzm").val(random);
+		
+		
+		
+		
+		
 		/* $("#yzmimage").css("background-image","url('/LaiFuCommunity/images/huawen/h1.png')"); */
 		$("#hyg").click(function(){
 			var imgurl="<c:url value='/images/huawen/h"+i+".png'/>";

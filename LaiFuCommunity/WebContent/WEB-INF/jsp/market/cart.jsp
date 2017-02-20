@@ -72,7 +72,7 @@
             <div class="fl">￥<c:out value="${cartItem.product.product_price*cartItem.product.product_discount/10}"></c:out></div>
             <div class="gwc_number fl">
                 <button class="jian fl">-</button>
-                <input class="shuru fl" maxlength="2" type="text" placeholder="数量" value="${cartItem.count}"/>
+                <input disabled="disabled" class="shuru fl" maxlength="2" type="text" placeholder="数量" value="${cartItem.count}"/>
                 <button class="jia fl">+</button>
                 <div class="cf"></div>
             </div>
@@ -131,7 +131,18 @@
         //商品数量+
         $(".jia").click(function () {
             var product_id = $(this).parent().parent().attr("id");
-
+			$.ajax({
+	        	type: "POST",
+	        	url: "/LaiFuCommunity/market/addOneCart",
+	        	dataType: "json",
+	        	data:{"product_id":product_id},
+	        	success: function(data){ 
+	        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
+	        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
+	       			$("#"+product_id+">.gwc_number>.shuru").val(data[0].count);
+	       			$("#"+product_id+">div:nth-child(5)").html("￥"+data[0].subtotal);
+	        	}
+	        });
         });
         //商品数量-
         $(".jian").click(function () {
@@ -141,14 +152,42 @@
                 alert("现在该商品数量已为1，若想删除请点击删除该商品。");
             }
             else{
-
+				$.ajax({
+		        	type: "POST",
+		        	url: "/LaiFuCommunity/market/subCart",
+		        	dataType: "json",
+		        	data:{"product_id":product_id},
+		        	success: function(data){ 
+		        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
+		        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
+		       			$("#"+product_id+">.gwc_number>.shuru").val(data[0].count);
+		       			$("#"+product_id+">div:nth-child(5)").html("￥"+data[0].subtotal);
+		        	}
+		        });
             }
         });
         //输入商品数量
-        $(".shuru").keydown(function () {
+        /*$(".shuru").keydown(function () {
             var product_id = $(this).parent().parent().attr("id");
-            console.log(product_id);
-        });
+            var product_number = $(this).next().val();
+            var reg = new RegExp("^[0-9]*$");
+		    if(!reg.test(product_number)){
+		        alert("请输入数字!");
+		    }
+		    else{
+		    	$.ajax({
+		        	type: "POST",
+		        	url: "/LaiFuCommunity/market/addCountCart",
+		        	dataType: "json",
+		        	data:{"product_id":product_id},
+		        	success: function(data){ 
+		        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
+		        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
+		       			$("#"+product_id+">div:nth-child(5)").html("￥"+data[0].subtotal);
+		        	}
+		        });
+		    }
+        });*/
         //删除全部
         $("#deleteAll").click(function () {
         	var deleteAllConfirm = confirm("确定删除购物车全部商品？");
