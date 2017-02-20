@@ -147,7 +147,7 @@ public class MarketController {
 		map1.put("total", total);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
-		response.getWriter().print("1");
+		response.getWriter().print(jsonArray.toString());
 	}
 
 	/* 购物车加一操作 */
@@ -168,7 +168,7 @@ public class MarketController {
 		map1.put("total", total);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
-		response.getWriter().print("1");
+		response.getWriter().print(jsonArray.toString());
 	}
 
 	/* 购物车数量填写操作 */
@@ -190,7 +190,7 @@ public class MarketController {
 		map1.put("total", total);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
-		response.getWriter().print("1");
+		response.getWriter().print(jsonArray.toString());
 	}
 
 	/* 移除购物车的购物项 */
