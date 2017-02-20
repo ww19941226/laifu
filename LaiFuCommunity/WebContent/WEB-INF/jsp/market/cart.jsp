@@ -72,7 +72,7 @@
             <div class="fl">￥<c:out value="${cartItem.product.product_price*cartItem.product.product_discount/10}"></c:out></div>
             <div class="gwc_number fl">
                 <button class="jian fl">-</button>
-                <input disabled="disabled" class="shuru fl" maxlength="2" type="text" placeholder="数量" value="${cartItem.count}"/>
+                <input class="shuru fl" maxlength="3" type="text " placeholder="数量" value="${cartItem.count}"/>
                 <button class="jia fl">+</button>
                 <div class="cf"></div>
             </div>
@@ -173,10 +173,29 @@
             }
         });
         //输入商品数量
-        /*$(".shuru").keydown(function () {
+        $(".shuru").keyup(function () {
             var product_id = $(this).parent().parent().attr("id");
-            var product_number = $(this).next().val();
-            var reg = new RegExp("^[0-9]*$");
+            var product_number = $(this).val();
+            if(product_number != ""){
+            	if(!parseInt(product_number, 10)){
+	            	alert("请输入整数！");
+	            	$(this).val("");
+	            }
+	            else{
+	            	$.ajax({
+			        	type: "POST",
+			        	url: "/LaiFuCommunity/market/addCountCart",
+			        	dataType: "json",
+			        	data:{"product_id":product_id,"count":product_number},
+			        	success: function(data){ 
+			        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
+			        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
+			       			$("#"+product_id+">div:nth-child(5)").html("￥"+data[0].subtotal);
+			        	}
+			        });
+	            }
+            }
+            /* var reg = new RegExp("^[0-9]*$");
 		    if(!reg.test(product_number)){
 		        alert("请输入数字!");
 		    }
@@ -192,8 +211,8 @@
 		       			$("#"+product_id+">div:nth-child(5)").html("￥"+data[0].subtotal);
 		        	}
 		        });
-		    }
-        });*/
+		    } */
+        });
         //删除全部
         $("#deleteAll").click(function () {
         	var deleteAllConfirm = confirm("确定删除购物车全部商品？");
