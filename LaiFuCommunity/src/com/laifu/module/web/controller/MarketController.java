@@ -114,8 +114,8 @@ public class MarketController {
 	/* 添加到购物车 */
 	@RequestMapping(value = "/market/addCart", method = { RequestMethod.POST })
 	private void addCart(HttpServletRequest request,
-			HttpServletResponse response, @RequestParam Integer product_id,
-			Map<String, Object> map) throws Exception {
+			HttpServletResponse response, @RequestParam Integer product_id)
+			throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
 		cartItem.setCount(1);
@@ -132,17 +132,18 @@ public class MarketController {
 	/* 购物车减一操作 */
 	@RequestMapping(value = "/market/subCart", method = { RequestMethod.POST })
 	private void subCart(HttpServletRequest request,
-			HttpServletResponse response, @RequestParam Integer product_id,
-			Map<String, Object> map) throws Exception {
+			HttpServletResponse response, @RequestParam Integer product_id)
+			throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
 		CartItem cartItem = new CartItem();
+		cartItem.setCount(1);
 		cartItem.setProduct(product);
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
-		cart.subCart(cartItem);
+		CartItem cartItem2 = cart.subCart(cartItem);
 		int totalCount = cart.getTotalcount();
 		double total = cart.getTotal();
-		Integer count = cartItem.getCount();
-		double subtotal = cartItem.getSubtotal();
+		Integer count = cartItem2.getCount();
+		double subtotal = cartItem2.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
 		map1.put("total", total);
@@ -156,24 +157,28 @@ public class MarketController {
 	/* 购物车加一操作 */
 	@RequestMapping(value = "/market/addOneCart", method = { RequestMethod.POST })
 	private void addOneCart(HttpServletRequest request,
-			HttpServletResponse response, @RequestParam Integer product_id,
-			Map<String, Object> map) throws Exception {
+			HttpServletResponse response, @RequestParam Integer product_id)
+			throws Exception {
 		Product product = marketManagerService.finByPid(product_id);
+		System.out.println(product_id);
 		CartItem cartItem = new CartItem();
+		cartItem.setCount(1);
 		cartItem.setProduct(product);
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
-		cart.addOneCart(cartItem);
+		CartItem cartItem2 = cart.addOneCart(cartItem);
 		int totalCount = cart.getTotalcount();
 		double total = cart.getTotal();
-		Integer count = cartItem.getCount();
-		double subtotal = cartItem.getSubtotal();
+		Integer count = cartItem2.getCount();
+		double subtotal = cartItem2.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
 		map1.put("total", total);
 		map1.put("count", count);
 		map1.put("subtotal", subtotal);
+		System.out.println(map1);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
+		System.out.println(jsonArray);
 		response.getWriter().print(jsonArray.toString());
 	}
 
