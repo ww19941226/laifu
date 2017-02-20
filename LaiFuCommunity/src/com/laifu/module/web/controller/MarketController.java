@@ -146,9 +146,9 @@ public class MarketController {
 		double subtotal = cartItem2.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
-		map1.put("total", total);
+		map1.put("total", total+"");
 		map1.put("count", count);
-		map1.put("subtotal", subtotal);
+		map1.put("subtotal", subtotal+"");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());
@@ -164,6 +164,7 @@ public class MarketController {
 		CartItem cartItem = new CartItem();
 		cartItem.setCount(1);
 		cartItem.setProduct(product);
+		cartItem.setCount(1);
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		CartItem cartItem2 = cart.addOneCart(cartItem);
 		int totalCount = cart.getTotalcount();
@@ -172,9 +173,9 @@ public class MarketController {
 		double subtotal = cartItem2.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
-		map1.put("total", total);
+		map1.put("total", total+"");
 		map1.put("count", count);
-		map1.put("subtotal", subtotal);
+		map1.put("subtotal", subtotal+"");
 		System.out.println(map1);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
@@ -199,8 +200,8 @@ public class MarketController {
 		double subtotal = cartItem.getSubtotal();
 		Map map1 = new HashMap();
 		map1.put("totalCount", totalCount);
-		map1.put("total", total);
-		map1.put("subtotal", subtotal);
+		map1.put("total", total+"");
+		map1.put("subtotal", subtotal+"");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
 		response.getWriter().print(jsonArray.toString());
@@ -216,7 +217,7 @@ public class MarketController {
 		double total = cart.getTotal();
 		Map map = new HashMap();
 		map.put("totalCount", totalCount);
-		map.put("total", total);
+		map.put("total", total+"");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map);
 		try {
@@ -238,7 +239,7 @@ public class MarketController {
 		double total = cart.getTotal();
 		Map map = new HashMap();
 		map.put("totalCount", totalCount);
-		map.put("total", total);
+		map.put("total", total+"");
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map);
 		try {

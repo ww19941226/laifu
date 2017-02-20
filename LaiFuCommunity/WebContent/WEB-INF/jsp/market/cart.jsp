@@ -137,11 +137,17 @@
 	        	dataType: "json",
 	        	data:{"product_id":product_id},
 	        	success: function(data){ 
+	        		console.log(data);
 	        		$(".gwc_jiesuan>div:nth-child(1)").html("商品共"+data[0].totalCount+"件");
 	        		$(".gwc_jiesuan>div:nth-child(2)").html("合计(不含运费)："+data[0].total);
 	       			$("#"+product_id+">.gwc_number>.shuru").val(data[0].count);
 	       			$("#"+product_id+">div:nth-child(5)").html("￥"+data[0].subtotal);
-	        	}
+	        	},
+	        	error: function(XMLHttpRequest, textStatus, errorThrown) {
+                   alert(XMLHttpRequest.status);
+                   alert(XMLHttpRequest.readyState);
+                   alert(textStatus);
+               }
 	        });
         });
         //商品数量-
