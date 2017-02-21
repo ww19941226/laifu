@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import com.laifu.common.pagination.Page;
 import com.laifu.module.entity.Cart;
 import com.laifu.module.entity.CartItem;
 import com.laifu.module.entity.Category;
+import com.laifu.module.entity.CategorySecond;
 import com.laifu.module.entity.Product;
 import com.laifu.module.service.MarketManagerService;
 
@@ -93,8 +95,9 @@ public class MarketController {
 	private String gotosearch(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam String searchText)
 			throws Exception {
-		searchText = java.net.URLDecoder.decode(request.getParameter("searchText"), "utf-8");
-		searchText = new String(searchText.getBytes("ISO-8859-1"),"utf-8");
+		searchText = java.net.URLDecoder.decode(
+				request.getParameter("searchText"), "utf-8");
+		searchText = new String(searchText.getBytes("ISO-8859-1"), "utf-8");
 		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
 		String hqlString = "from Product where product_name like '%"
 				+ searchText + "%' order by product_id,product_deal desc ";
@@ -104,6 +107,43 @@ public class MarketController {
 		request.setAttribute("page", page);
 		return "market/list";
 
+	}
+
+	/* 根据一级分类查询商品 */
+	@RequestMapping(value = "/market/findbycategory/{category_id}", method = { RequestMethod.GET })
+	private String findProductByCid(
+			@PathVariable("category_id") Integer categoty_id,
+			HttpServletRequest request, Map<String, Object> map)
+			throws Exception {
+		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hqlString = "select p from Product p join p.categorySecond cs join cs.category c where c.category_id="
+				+ categoty_id;
+		Page<Product> page = marketManagerService.findByCid(hqlString, pn, 10,
+				categoty_id);
+		Category category = marketManagerService.findBycid(categoty_id);
+		map.put("category_id", categoty_id);
+		map.put("category_name", category.getCategory_name());
+		request.setAttribute("page", page);
+		return "market/Categorylist";
+	}
+
+	/* 根据二级分类查询商品 */
+	@RequestMapping(value = "/market/findbycategorysecond/{categorysecond_id}", method = { RequestMethod.GET })
+	private String findProductByCsid(
+			@PathVariable("categorysecond_id") Integer categorysecond_id,
+			HttpServletRequest request, Map<String, Object> map)
+			throws Exception {
+		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "select p  from Product p ,CategorySecond cs where p.categorySecond.categorysecond_id = cs.categorysecond_id and cs.categorysecond_id = "
+				+ categorysecond_id;
+		Page<Product> page = marketManagerService.findByCsid(hql, pn, 10,
+				categorysecond_id);
+		CategorySecond categorySecond = marketManagerService
+				.findBycsid(categorysecond_id);
+		map.put("categorysecond_id", categorysecond_id);
+		map.put("categorysecond_name", categorySecond.getCategorysecond_name());
+		request.setAttribute("page", page);
+		return "market/CategorySecondlist";
 	}
 
 	/*************************** 购物车功能 ********************************************************************************/

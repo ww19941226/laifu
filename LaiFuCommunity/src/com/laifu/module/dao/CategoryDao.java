@@ -8,4 +8,6 @@ import com.laifu.module.entity.Category;
 public interface CategoryDao extends IBaseDao<Category, Integer> {
 
 	public List<Category> getAllCategories() throws Exception;
+
+	public Category findBycid(Integer categoty_id) throws Exception;
 }

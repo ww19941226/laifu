@@ -125,4 +125,39 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		return productDao.findByPid(id);
 	}
 
+	@Override
+	public Page<Product> findByCid(String hqlString, int pn, int i, int id)
+			throws Exception {
+		// TODO Auto-generated method stub
+		String hqlString2 = "select count(*) from Product  p where p.categorySecond.category.category_id = "
+				+ id;
+		Integer count = productDao.countAll(hqlString2);
+		List<Product> products = productDao.listAll(hqlString, pn, i);
+		return PageUtil.getPage(count, pn, products, i);
+	}
+
+	@Override
+	public Page<Product> findByCsid(String hql, Integer pn, int i,
+			Integer categorySecond_id) throws Exception {
+		// TODO Auto-generated method stub
+		String hql1 = "select count(*) from Product p where p.categorySecond.categorysecond_id="
+				+ categorySecond_id;
+		Integer count = productDao.countAll(hql1);
+		List<Product> products = productDao.listAll(hql, pn, i);
+
+		return PageUtil.getPage(count, pn, products, i);
+	}
+
+	@Override
+	public Category findBycid(Integer categoty_id) throws Exception {
+		// TODO Auto-generated method stub
+		return categoryDao.findBycid(categoty_id);
+	}
+
+	@Override
+	public CategorySecond findBycsid(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		return categorySecondDao.findBycsid(id);
+	}
+
 }

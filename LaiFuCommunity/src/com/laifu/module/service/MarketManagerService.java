@@ -37,4 +37,15 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 
 	public Product finByPid(Integer id) throws Exception;
 
+	public Page<Product> findByCid(String hqlString, int pn, int i, int id)
+			throws Exception;
+
+	public Page<Product> findByCsid(String hql, Integer pn, int i,
+			Integer categorySecond_id) throws Exception;
+
+	public Category findBycid(Integer categoty_id) throws Exception;
+
+	public CategorySecond findBycsid(Integer categorysecond_id)
+			throws Exception;
+
 }

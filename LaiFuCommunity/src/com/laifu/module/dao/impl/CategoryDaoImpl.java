@@ -19,4 +19,10 @@ public class CategoryDaoImpl extends BaseDaoImpl<Category, Integer> implements
 		return getSession().createQuery("from Category").list();
 	}
 
+	@Override
+	public Category findBycid(Integer categoty_id) throws Exception {
+		// TODO Auto-generated method stub
+		return get(categoty_id);
+	}
+
 }

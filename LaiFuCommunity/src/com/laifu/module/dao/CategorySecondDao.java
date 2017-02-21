@@ -9,4 +9,5 @@ public interface CategorySecondDao extends IBaseDao<CategorySecond, Integer> {
 
 	public List<CategorySecond> getAllCategorySecond(int id) throws Exception;
 
+	public CategorySecond findBycsid(Integer id) throws Exception;
 }

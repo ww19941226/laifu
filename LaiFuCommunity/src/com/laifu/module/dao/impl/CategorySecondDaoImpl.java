@@ -21,4 +21,10 @@ public class CategorySecondDaoImpl extends BaseDaoImpl<CategorySecond, Integer>
 		return getSession().createQuery(hql).list();
 	}
 
+	@Override
+	public CategorySecond findBycsid(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		return get(id);
+	}
+
 }
