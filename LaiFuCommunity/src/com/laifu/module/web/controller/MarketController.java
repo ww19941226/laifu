@@ -89,10 +89,12 @@ public class MarketController {
 	/*
 	 * 搜索 功能页面
 	 */
-	@RequestMapping(value = "/market/search/", method = { RequestMethod.POST })
+	@RequestMapping(value = "/market/search", method = { RequestMethod.GET })
 	private String gotosearch(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam String searchText)
 			throws Exception {
+		searchText = java.net.URLDecoder.decode(request.getParameter("searchText"), "utf-8");
+		searchText = new String(searchText.getBytes("ISO-8859-1"),"utf-8");
 		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
 		String hqlString = "from Product where product_name like '%"
 				+ searchText + "%' order by product_id,product_deal desc ";

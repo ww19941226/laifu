@@ -5,7 +5,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>常见问题-帮助中心</title>
+    <title>商品列表-莱福小区超市</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nav.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/import.css"/>
         <link href="${pageContext.request.contextPath}/css/laifucommunity_main_20160926.css" rel="stylesheet" />
@@ -14,7 +14,12 @@
 <%@ include file="head.jsp" %>
 <div class="search_div">
     <div class="chaoshilogo fl"></div>
-    <div class="search fl"></div>
+    <div class="search fl">
+    	<form action="${pageContext.request.contextPath}/market/search" method="get">
+    		<input name="searchText" style="font-size:18px;border:3px solid #59cf2b;padding-left: 10px;width:418px;height:43px;" type="text" placeholder="搜索……">
+    		<input style="cursor:pointer;margin-left:-10px;color:#fff;font-size:18px;border:0;background-color:#59cf2b;width:108px;height:49px;" type="submit" value="搜索"/>
+    	</form>
+    </div>
     <div class="house fl"></div>
     <div class="cf"></div>
 </div>
@@ -57,7 +62,7 @@
         <p class="hot_content_content_ms">${sp.product_name }</p>
         <p class="hot_content_content_dj">销量:${sp.product_deal }</p>
         <p class="hot_content_content_dj">单价:￥<c:out value="${sp.product_price*sp.product_discount/10}"></c:out></p>
-        <div class="gwc_div">
+        <div id="${sp.product_id }" class="gwc_div">
             <img src="${pageContext.request.contextPath}/images/gouwuche.png" alt="加入购物车" title="加入购物车">
         </div>
      </div>
@@ -72,10 +77,23 @@
 </div>
 <div class="cf"></div>
 
-    </div>
+</div>
+<div class="gwc_right">
+	<div class="all_right">
+		<div id="end" style="height: 0;"></div>
+		<div class="right_gwc" title="购物车">
+		  <%--  <a href="<c:url value='/market/myCart/'/>"> --%>
+		</div>
+		<div id="msg">已成功加入购物车！</div>
+		<div class="right_dingdan" title="我的订单"></div>
+		<div class="right_choujiang" title="积分抽奖"></div>
+	</div>
+</div>
 <%@ include file="footer.jsp" %>
 
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.fly.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/requestAnimationFrame.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 </body>
 </html>
