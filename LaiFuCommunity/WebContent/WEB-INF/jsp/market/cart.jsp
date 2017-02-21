@@ -92,7 +92,7 @@
         <div class="gwc_jiesuan fr">
             <div class="fl">商品共${sessionScope.cart.totalcount}件</div>
             <div class="fl">合计(不含运费)：￥${sessionScope.cart.total}</div>
-            <div id="tijiaodingdan" class="fl">提交订单</div>
+            <div id="tijiaodingdan" class="fl">结算</div>
             <div class="cf" style="height: 0;"></div>
         </div>
         <div class="cf"></div>
