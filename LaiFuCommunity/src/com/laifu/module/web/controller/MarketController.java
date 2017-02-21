@@ -98,9 +98,9 @@ public class MarketController {
 				+ searchText + "%' order by product_id,product_deal desc ";
 		Page<Product> page = marketManagerService.getSearchProducts(hqlString,
 				pn, 10);
+		request.getSession().setAttribute("searchWord", searchText);
 		request.setAttribute("page", page);
-		System.out.println(page.getItems());
-		return "market/jinkou";
+		return "market/list";
 
 	}
 
@@ -176,10 +176,8 @@ public class MarketController {
 		map1.put("total", total + "");
 		map1.put("count", count);
 		map1.put("subtotal", subtotal + "");
-		System.out.println(map1);
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.add(map1);
-		System.out.println(jsonArray);
 		response.getWriter().print(jsonArray.toString());
 	}
 
