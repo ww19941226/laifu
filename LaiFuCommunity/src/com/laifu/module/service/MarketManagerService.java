@@ -48,4 +48,7 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	public CategorySecond findBycsid(Integer categorysecond_id)
 			throws Exception;
 
+	public Page<Product> getSearchjinkouProducts(String hql, int pn, int i)
+			throws Exception;
+
 }

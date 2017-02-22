@@ -1,6 +1,7 @@
 package com.laifu.module.web.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +107,23 @@ public class MarketController {
 		request.getSession().setAttribute("searchWord", searchText);
 		request.setAttribute("page", page);
 		return "market/list";
+	}
 
+	/* 按产地查询进口商品 */
+	@RequestMapping(value = "/market/searchjinkou", method = { RequestMethod.GET })
+	private String gotosearchjinkou(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam String search)
+			throws Exception {
+		search = URLDecoder.decode(request.getParameter("search"), "utf-8");
+		search = new String(search.getBytes("ISO-8859-1"), "utf-8");
+		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "from Product where is_imported=1 and product_place='"
+				+ search + "'order by product_deal desc";
+		Page<Product> page = marketManagerService.getSearchjinkouProducts(hql,
+				pn, 10);
+		request.getSession().setAttribute("search", search);
+		request.setAttribute("page", page);
+		return "market/jinkoulist";
 	}
 
 	/* 根据一级分类查询商品 */

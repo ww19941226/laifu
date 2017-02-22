@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ include file="../inc/header.jsp"%> 
+<%@ include file="../inc/header.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
  <head lang="en">
@@ -52,7 +53,7 @@
 </div>
 <div class="area">
 <div class="wrap">
-        <a class="area1" href="#oum"><img src="${pageContext.request.contextPath}/images/area1.jpg"></a>
+        <a class="area1" href="<c:url value='/market/searchjinkou?search=美国 '/>"><img src="${pageContext.request.contextPath}/images/area1.jpg"></a>
         <a class="area2" href="#han"><img src="${pageContext.request.contextPath}/images/area2.jpg"></a>
         <a class="area3" href="http://www.lingshi.com/list/c228_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area3.jpg"></a>
         <a class="area4" href="http://www.lingshi.com/list/c229_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area4.jpg"></a>

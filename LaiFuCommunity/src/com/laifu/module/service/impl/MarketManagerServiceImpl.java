@@ -120,6 +120,15 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	}
 
 	@Override
+	public Page<Product> getSearchjinkouProducts(String hql, int pn, int i)
+			throws Exception {
+		// TODO Auto-generated method stub
+		Integer count = productDao.countAll("select count(*)" + hql);
+		List<Product> products = productDao.listAll(hql, pn, i);
+		return PageUtil.getPage(count, pn, products, i);
+	}
+
+	@Override
 	public Product finByPid(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		return productDao.findByPid(id);
