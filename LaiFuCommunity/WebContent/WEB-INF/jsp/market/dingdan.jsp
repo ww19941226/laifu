@@ -61,9 +61,17 @@
         </div>
     </div>
     <form action="#" method="post">
-        <div class="fr" style="width: 450px;height: 35px;margin-top: 20px">
-            <label style="width: 100px;font-size: 19px;color: #aaaaaa;">收货地址：</label>
-            <input type="text" placeholder="请输入收货地址" style="width: 338px;height: 35px;padding-right: 10px;font-size: 18px;text-align: right;border: 1px solid #aaaaaa;"/>
+        <div class="fl" style="width: 360px;height: 35px;margin-top: 20px">
+            <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">姓名：</label>
+            <input type="text" placeholder="请输入收货人姓名" value="钟国楚" style="width: 188px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+        </div>
+        <div class="fl" style="width: 400px;height: 35px;margin-top: 20px">
+            <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">电话：</label>
+            <input type="text" placeholder="请输入收货人联系电话" value="18318260421" style="width: 208px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+        </div>
+        <div class="fl" style="width: 440px;height: 35px;margin-top: 20px">
+            <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">收货地址：</label>
+            <input type="text" placeholder="请输入收货地址" value="1栋352房" style="width: 338px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="cf"></div>
         <div class="gwc_jiesuan_outer" style="background-color: #FFFFFF">
@@ -76,6 +84,7 @@
             <input type="submit" class="fr" style="cursor:pointer;width: 150px;height: 50px;background-color:#58cf2a;text-align: center;line-height: 50px;font-size: 22px;color: #FFFFFF;" value="提交订单">
             <div class="cf"></div>
         </div>
+        <div class="cf"></div>
     </form>
 </div>
    

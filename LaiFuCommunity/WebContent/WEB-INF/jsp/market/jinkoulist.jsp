@@ -72,7 +72,7 @@
     </div>
 </div>
 <div class="page list_page" style="text-align:center;">
-    <common:pageV3 url="/market/jinkousearch?search=${sessionScope.search}" optimize="true"></common:pageV3>
+    <common:pageV3 url="/market/searchjinkou?search=${sessionScope.search}" optimize="true"></common:pageV3>
     <div class="cf"></div>
 </div>
 <div class="cf"></div>
