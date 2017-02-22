@@ -474,7 +474,8 @@ public class PropertyController {
 				e.printStackTrace();
 				System.out.println(123);
 			}
-			request.getSession().setAttribute("message", "<script>alert('导入成功');</script>");
+			request.getSession().setAttribute("message",
+					"<script>alert('导入成功');</script>");
 		}
 		return "redirect:/property/property_paymentcontent";
 
@@ -490,7 +491,8 @@ public class PropertyController {
 			throws Exception {
 		List<Payment> list = propertyService.getPaymentList();
 		propertyService.exportExcel();
-		request.getSession().setAttribute("message", "<script>alert('导出成功');</script>");
+		request.getSession().setAttribute("message",
+				"<script>alert('导出成功');</script>");
 		return "redirect:/property/property_paymentcontent";
 	}
 
@@ -635,6 +637,7 @@ public class PropertyController {
 	 */
 	@RequestMapping(value = "/property/property", method = { RequestMethod.GET })
 	public String gotoIndex(HttpServletRequest request) {
+		System.out.println("gotoindex");
 		UserVo vo = (UserVo) request.getSession().getAttribute("admin");
 		if (vo == null || vo.getUsertype().getUsertype_id() != 2)
 			return "redirect:/sysadmin/sysadmin_login";
@@ -787,12 +790,13 @@ public class PropertyController {
 			request.setAttribute("payment_paystate", payment_paystate);
 
 		}
-		
-		if(request.getSession().getAttribute("message")!=null) {
-			request.setAttribute("message", request.getSession().getAttribute("message"));
+
+		if (request.getSession().getAttribute("message") != null) {
+			request.setAttribute("message",
+					request.getSession().getAttribute("message"));
 			request.getSession().removeAttribute("message");
 		}
-		
+
 		Page<PaymentsVo> page = propertyService.paymentVo_listAll(hql, pn, 10);
 		request.setAttribute("page", page);
 		return "/property/property_paymentcontent";

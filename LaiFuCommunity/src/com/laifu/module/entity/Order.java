@@ -2,11 +2,20 @@ package com.laifu.module.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * 
@@ -29,7 +38,29 @@ public class Order implements Serializable {
 	private String order_address;
 	private String order_phone;
 	private String order_receivename;
-	private int order_userId;
+	@JoinColumn(name = "order_userId")
+	@ManyToOne
+	private User user;
+	@OneToMany(fetch = FetchType.EAGER)
+	@Cascade(value = { CascadeType.SAVE_UPDATE })
+	@JoinColumn(name = "orderItems_orderId")
+	private Set<OrderItems> orderItems = new HashSet<OrderItems>();
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<OrderItems> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Set<OrderItems> orderItems) {
+		this.orderItems = orderItems;
+	}
 
 	public int getOrder_id() {
 		return order_id;
@@ -85,14 +116,6 @@ public class Order implements Serializable {
 
 	public void setOrder_receivename(String order_receivename) {
 		this.order_receivename = order_receivename;
-	}
-
-	public int getOrder_userId() {
-		return order_userId;
-	}
-
-	public void setOrder_userId(int order_userId) {
-		this.order_userId = order_userId;
 	}
 
 	@Override

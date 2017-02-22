@@ -146,6 +146,12 @@ public class MarketController {
 		return "market/CategorySecondlist";
 	}
 
+	/* 跳转到提交订单 */
+	@RequestMapping(value = "/market/saveOrder", method = { RequestMethod.GET })
+	private String gotoSaveOrder() {
+		return "market/dingdan";
+	}
+
 	/*************************** 购物车功能 ********************************************************************************/
 	/* 跳转到购物车页面 */
 	@RequestMapping(value = "/market/myCart", method = { RequestMethod.GET })

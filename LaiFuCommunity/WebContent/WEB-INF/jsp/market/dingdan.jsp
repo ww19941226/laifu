@@ -1,14 +1,17 @@
-<!DOCTYPE html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../inc/header.jsp"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>确认订单-莱福小区超市</title>
-    <link rel="stylesheet" href="css/import.css"/>
-    <link rel="stylesheet" href="css/index.css"/>
-    <link rel="stylesheet" href="css/gwc.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/import.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/gwc.css"/>
 </head>
 <body>
-<iframe src="head.html" style="width: 100%;height: 30px;border: 0;"></iframe>
+<%@ include file="head.jsp" %>
 <div style="width: 1200px;margin:30px auto;background-color:#3b3b3b;height: 50px;line-height: 50px;text-align: center;font-size: 22px;font-family: \5FAE\8F6F\96C5\9ED1;color: #FFFFFF;">
     确认订单-莱福小区超市
 </div>
@@ -24,7 +27,7 @@
     <div class="gwc_info_outer">
         <div class="gwc_info_one" id="商品id1">
             <div class="fl">
-                <img src="images/sp.jpg"/>
+                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
             </div>
             <div class="fl" style="width: 500px;">奥利奥饼干18</div>
             <div class="fl">￥39.00</div>
@@ -36,7 +39,7 @@
 
         <div class="gwc_info_one" id="商品id2">
             <div class="fl">
-                <img src="images/sp.jpg"/>
+                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
             </div>
             <div class="fl" style="width: 500px;">奥利奥饼干18</div>
             <div class="fl">￥39.00</div>
@@ -48,7 +51,7 @@
 
         <div class="gwc_info_one" id="商品id3">
             <div class="fl">
-                <img src="images/sp.jpg"/>
+                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
             </div>
             <div class="fl" style="width: 500px;">奥利奥饼干18</div>
             <div class="fl">￥39.00</div>
@@ -75,8 +78,7 @@
         </div>
     </form>
 </div>
-
-<iframe src="footer.html" style="width: 100%;height: 550px;border: 0;"></iframe>
-
+   
+<%@ include file="footer.jsp" %>
 </body>
 </html>

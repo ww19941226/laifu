@@ -503,7 +503,7 @@ public class SystemAdminController {
 			@ModelAttribute("command") @Valid User user) {
 		try {
 			User u = userService.login(user, 0);
-			
+
 			if (u != null) {
 				int type = u.getUser_type();
 				request.getSession().setAttribute("admin",
@@ -673,8 +673,10 @@ public class SystemAdminController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*return "redirect:/sysadmin/" + complains.getComplains_id()
-				+ "/complains/complains_detail";*/
+		/*
+		 * return "redirect:/sysadmin/" + complains.getComplains_id() +
+		 * "/complains/complains_detail";
+		 */
 		return "redirect:/property/property_complains";
 	}
 

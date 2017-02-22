@@ -2,11 +2,14 @@ package com.laifu.module.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -25,10 +28,17 @@ public class OrderItems implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "orderItems_id", nullable = false)
 	private int orderItems_id;
-	private int orderItems_productId;
-	private int orderItems_orderId;
 	private int orderItems_count;
 	private double orderItems_subtotal;
+	// 商品外键
+	@JoinColumn(name = "orderItems_productId")
+	@ManyToOne
+	private Product product;
+
+	// 订单外键
+	@JoinColumn(name = "orderItems_orderId")
+	@ManyToOne(cascade = { CascadeType.ALL })
+	private Order order;
 
 	public int getOrderItems_id() {
 		return orderItems_id;
@@ -36,22 +46,6 @@ public class OrderItems implements Serializable {
 
 	public void setOrderItems_id(int orderItems_id) {
 		this.orderItems_id = orderItems_id;
-	}
-
-	public int getOrderItems_productId() {
-		return orderItems_productId;
-	}
-
-	public void setOrderItems_productId(int orderItems_productId) {
-		this.orderItems_productId = orderItems_productId;
-	}
-
-	public int getOrderItems_orderId() {
-		return orderItems_orderId;
-	}
-
-	public void setOrderItems_orderId(int orderItems_orderId) {
-		this.orderItems_orderId = orderItems_orderId;
 	}
 
 	public int getOrderItems_count() {

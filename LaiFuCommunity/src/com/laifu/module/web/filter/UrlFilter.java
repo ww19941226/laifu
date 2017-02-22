@@ -50,7 +50,7 @@ public class UrlFilter implements Filter {
 		String url = req.getRequestURI();
 
 		/*******************************************************************************************************/
-
+		// market/index
 		if (url.indexOf("/error") == -1
 				&& url.indexOf("/user/login") == -1
 				&& url.indexOf("/sysadmin/login") == -1
@@ -77,7 +77,8 @@ public class UrlFilter implements Filter {
 				}
 			} else if (url.indexOf("/user/") != -1
 					|| url.equals(req.getContextPath() + "/")
-					|| url.indexOf("/index") != -1) {
+					|| url.indexOf("/index") != -1
+					|| url.indexOf("/market") != -1) {
 				if (url.indexOf("/user/user_login") == -1
 						&& url.indexOf("/user/exit") == -1
 						&& url.indexOf("/user/code") == -1
@@ -112,6 +113,9 @@ public class UrlFilter implements Filter {
 
 		/*******************************************************************************************************/
 
+		/**
+		 * 拦截
+		 */
 		if (url.indexOf("/user/") != -1) {
 			if (url.indexOf("/user/user_financial") != -1
 					|| url.indexOf("/user/user_jiaofeijilu") != -1
