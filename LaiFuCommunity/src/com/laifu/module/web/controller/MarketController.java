@@ -184,7 +184,7 @@ public class MarketController {
 				+ "order by o.order_creattime";
 		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
 		request.setAttribute("page", page);
-		return "market/myDingdan";
+		return "market/MyDingdan";
 	}
 
 	/* 查询我的未付款订单 */

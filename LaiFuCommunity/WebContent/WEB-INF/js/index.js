@@ -5,6 +5,9 @@ $(document).ready(function () {
 	$(".right_gwc").click(function(){
 		location.href="/LaiFuCommunity/market/myCart/"
 	});
+	$(".right_dingdan").click(function(){
+		location.href="/LaiFuCommunity/market/myDingdan/"
+	});
 
 
     //banner
