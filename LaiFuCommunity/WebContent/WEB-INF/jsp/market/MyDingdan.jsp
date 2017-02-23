@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/import.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nav.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myDD.css"/>
+            <link href="${pageContext.request.contextPath}/css/laifucommunity_main_20160926.css" rel="stylesheet" />
 </head>
 <body>
 <%@ include file="head.jsp" %>
@@ -55,14 +56,30 @@
     <div class="myDD_DD" id="该订单的id！！！！！">
         <div class="myDD_DD_head">
             <div class="myDD_DD_time fl">${order.order_creattime }</div>
-            <div class="myDD_DD_status fl">订单状态：${order.order_state }</div>
+            
+            <div class="myDD_DD_status fl">订单状态：
+            
+            <c:if test="${order.order_state == 1} ">
+									<a href="#">未付款</a>
+								</c:if>
+								<c:if test="${order.order_state == 2} ">
+									已付款
+								</c:if>
+								<c:if test="${order.order_state == 3} ">
+									<a href="">确认收货</a>
+								</c:if>
+								<c:if test="${order.order_state== 4 } ">
+									交易成功
+								</c:if>
+            
+            </div>
             <div class="myDD_DD_allMoney fl">总金额：￥${order.order_money }</div>
             <div class="myDD_DD_again fl">再来一单</div>
             <div class="myDD_DD_delete fl">删除</div>
             <div class="cf" style="height: 0;"></div>
         </div>
         <div class="myDD_DD_content">
-        <c:forEach item="${order.orderItems }" var="orderItems">
+        <c:forEach items="${order.orderItems }" var="orderItems">
             <div class="myDD_DD_sp">
                 <div class="myDD_DD_sp_img fl"><img src="${pageContext.request.contextPath}/images/sp.jpg"/> </div>
                 <div class="myDD_DD_sp_ms fl">${orderItems.product.product_name } </div>
@@ -77,7 +94,12 @@
     </c:forEach>
     </div>
 </div>
-
+<div class="cf"></div>
+ <div class="page list_page" style="text-align:center;">
+    <common:pageV3 url="/market/myDingdan"></common:pageV3>
+    <div class="cf"></div>
+</div>
+<div class="cf"></div>
 <%@ include file="footer.jsp" %>
 <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.js"></script>

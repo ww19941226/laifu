@@ -181,7 +181,7 @@ public class MarketController {
 		User user = (User) request.getSession().getAttribute("user");
 		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
 		String hql = "from Order o where o.user.user_id=" + user.getUser_id()
-				+ "order by o.order_creattime";
+				+ "order by o.order_creattime desc";
 		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
 		request.setAttribute("page", page);
 		return "market/MyDingdan";
