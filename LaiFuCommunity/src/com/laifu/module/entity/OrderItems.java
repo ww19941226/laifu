@@ -35,6 +35,22 @@ public class OrderItems implements Serializable {
 	@ManyToOne
 	private Product product;
 
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	// 订单外键
 	@JoinColumn(name = "orderItems_orderId")
 	@ManyToOne(cascade = { CascadeType.ALL })
@@ -64,13 +80,10 @@ public class OrderItems implements Serializable {
 		this.orderItems_subtotal = orderItems_subtotal;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + orderItems_id;
-		return result;
-	}
+	/*
+	 * public int hashCode() { final int prime = 31; int result = 1; result =
+	 * prime * result + orderItems_id; return result; }
+	 */
 
 	@Override
 	public boolean equals(Object obj) {

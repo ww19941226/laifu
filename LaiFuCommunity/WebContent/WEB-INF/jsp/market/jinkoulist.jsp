@@ -53,7 +53,7 @@
 </div>
 
 <div style="width: 1200px;margin: 20px auto;color: #aaaaaa;font-size: 18px;font-family: \5FAE\8F6F\96C5\9ED1">
-    搜索：${sessionScope.search}
+   首页>>${sessionScope.search}
 </div>
 <div class="hot_content">
 <c:forEach items="${page.items }" var="sp">

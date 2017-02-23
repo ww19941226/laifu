@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,9 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 /**
  * 
@@ -41,8 +39,7 @@ public class Order implements Serializable {
 	@JoinColumn(name = "order_userId")
 	@ManyToOne
 	private User user;
-	@OneToMany(fetch = FetchType.EAGER)
-	@Cascade(value = { CascadeType.SAVE_UPDATE })
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "orderItems_orderId")
 	private Set<OrderItems> orderItems = new HashSet<OrderItems>();
 

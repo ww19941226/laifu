@@ -12,9 +12,13 @@ import com.laifu.common.pagination.PageUtil;
 import com.laifu.common.service.impl.BaseServiceImpl;
 import com.laifu.module.dao.CategoryDao;
 import com.laifu.module.dao.CategorySecondDao;
+import com.laifu.module.dao.OrderDao;
+import com.laifu.module.dao.OrderItemsDao;
 import com.laifu.module.dao.ProductDao;
 import com.laifu.module.entity.Category;
 import com.laifu.module.entity.CategorySecond;
+import com.laifu.module.entity.Order;
+import com.laifu.module.entity.OrderItems;
 import com.laifu.module.entity.Product;
 import com.laifu.module.service.MarketManagerService;
 
@@ -24,6 +28,18 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	private CategoryDao categoryDao;
 	private CategorySecondDao categorySecondDao;
 	private ProductDao productDao;
+	private OrderDao orderDao;
+	private OrderItemsDao orderItemsDao;
+
+	@Resource(name = "OrderItemsDao")
+	public void setOrderItemsDao(OrderItemsDao orderItemsDao) {
+		this.orderItemsDao = orderItemsDao;
+	}
+
+	@Resource(name = "OrderDao")
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
+	}
 
 	@Resource(name = "ProductDao")
 	public void setProductDao(ProductDao productDao) {
@@ -158,6 +174,15 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	}
 
 	@Override
+	public Page<Order> findByUid(String hql, Integer pn, int i)
+			throws Exception {
+		// TODO Auto-generated method stub
+		Integer count = orderDao.countAll("select count(*)" + hql);
+		List<Order> orders = orderDao.listAll(hql, pn, i);
+		return PageUtil.getPage(count, pn, orders, i);
+	}
+
+	@Override
 	public Category findBycid(Integer categoty_id) throws Exception {
 		// TODO Auto-generated method stub
 		return categoryDao.findBycid(categoty_id);
@@ -167,6 +192,30 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	public CategorySecond findBycsid(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		return categorySecondDao.findBycsid(id);
+	}
+
+	@Override
+	public void saveOrder(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		orderDao.save(order);
+	}
+
+	@Override
+	public int countOrderAll() {
+		// TODO Auto-generated method stub
+		return orderDao.countAll();
+	}
+
+	@Override
+	public void saveOrderItems(OrderItems orderItems) {
+		// TODO Auto-generated method stub
+		orderItemsDao.save(orderItems);
+	}
+
+	@Override
+	public Order findByOid(Integer order_id) throws Exception {
+		// TODO Auto-generated method stub
+		return orderDao.get(order_id);
 	}
 
 }

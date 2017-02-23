@@ -2,9 +2,13 @@ package com.laifu.module.web.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +27,10 @@ import com.laifu.module.entity.Cart;
 import com.laifu.module.entity.CartItem;
 import com.laifu.module.entity.Category;
 import com.laifu.module.entity.CategorySecond;
+import com.laifu.module.entity.Order;
+import com.laifu.module.entity.OrderItems;
 import com.laifu.module.entity.Product;
+import com.laifu.module.entity.User;
 import com.laifu.module.service.MarketManagerService;
 
 @Controller
@@ -163,11 +170,119 @@ public class MarketController {
 		return "market/CategorySecondlist";
 	}
 
+	/*********************************
+	 * 订单功能
+	 * 
+	 * @throws Exception
+	 **************************************************************/
+	/* 查询我的所有订单* */
+	@RequestMapping(value = "/market/myDingdan", method = { RequestMethod.GET })
+	public String gotoMydingdan(HttpServletRequest request) throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "from Order o where o.user.user_id=" + user.getUser_id()
+				+ "order by o.order_creattime";
+		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
+		request.setAttribute("page", page);
+		return "market/mydingdan";
+	}
+
+	/* 查询我的未付款订单 */
+	@RequestMapping(value = "/market/myDingdan/1", method = { RequestMethod.GET })
+	public String gotoMyNoPaydingdan(HttpServletRequest request)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "from Order o where o.order_state=1 and o.user.user_id="
+				+ user.getUser_id() + "order by o.order_creattime";
+		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
+		return "market/mydingdan";
+	}
+
+	/* 查询已付款 待发货订单 */
+	@RequestMapping(value = "/market/myDingdan/2", method = { RequestMethod.GET })
+	public String gotoMyNoFaHuodingdan(HttpServletRequest request)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "from Order o where o.order_state=2 and o.user.user_id="
+				+ user.getUser_id() + "order by o.order_creattime";
+		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
+		return "market/mydingdan";
+	}
+
+	/* 查询已发货订单 */
+	@RequestMapping(value = "/market/myDingdan/3", method = { RequestMethod.GET })
+	public String gotoMyFaHuodingdan(HttpServletRequest request)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "from Order o where o.order_state=3 and o.user.user_id="
+				+ user.getUser_id() + "order by o.order_creattime";
+		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
+		return "market/mydingdan";
+	}
+
+	/* 查询已确认收货订单 */
+	@RequestMapping(value = "/market/myDingdan/4", method = { RequestMethod.GET })
+	public String gotoMyShouHuodingdan(HttpServletRequest request)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
+		String hql = "from Order o where o.order_state=4 and o.user.user_id="
+				+ user.getUser_id() + "order by o.order_creattime";
+		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
+		return "market/mydingdan";
+	}
+
+	/* 根据订单id查询 */
+	@RequestMapping(value = "/market/findByOid/{order_id}", method = { RequestMethod.GET })
+	public String findByOid(HttpServletRequest request,
+			@PathVariable("order_id") Integer order_id) throws Exception {
+		Order order = marketManagerService.findByOid(order_id);
+		request.setAttribute("order", order);
+		return "market/mydingdan";
+	}
+
 	/* 跳转到提交订单 */
 	@RequestMapping(value = "/market/saveOrder", method = { RequestMethod.GET })
-	private String gotoSaveOrder() {
+	private String gotoSaveOrder(HttpServletRequest request) throws Exception {
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		User user = (User) request.getSession().getAttribute("user");
+		if (cart.getCartItems().size() == 0) {
+			return "redirect:myCart";
+		}
+		Order order = new Order();
+		order.setOrder_id(getOrder_id());
+		order.setOrder_money(cart.getTotal());
+		order.setOrder_state(1);
+		order.setOrder_creattime(new Date());
+		order.setUser(user);
+		Set<OrderItems> sets = new HashSet<OrderItems>();
+		for (CartItem cartItem : cart.getCartItems()) {
+			OrderItems orderItems = new OrderItems();
+			orderItems.setOrderItems_count(cartItem.getCount());
+			orderItems.setOrderItems_subtotal(cartItem.getSubtotal());
+			orderItems.setProduct(cartItem.getProduct());
+			orderItems.setOrder(order);
+			sets.add(orderItems);
+			/* order.getOrderItems().add(orderItems); */
+		}
+		order.setOrderItems(sets);
+		marketManagerService.saveOrder(order);
+		cart.cleanCart();
+		request.setAttribute("order", order);
+
 		return "market/dingdan";
 	}
+
+	public int getOrder_id() throws Exception {
+		int count = marketManagerService.countOrderAll() + 1;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		return Integer.parseInt(format.format(new Date())) + count;
+	}
+
+	/***********************************************************************************************/
 
 	/*************************** 购物车功能 ********************************************************************************/
 	/* 跳转到购物车页面 */

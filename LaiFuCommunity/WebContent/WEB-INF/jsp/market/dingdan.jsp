@@ -25,58 +25,36 @@
         <div class="cf" style="height: 0;"></div>
     </div>
     <div class="gwc_info_outer">
+    <c:forEach items="${order.orderItems }" var="orderItem">
         <div class="gwc_info_one" id="商品id1">
             <div class="fl">
                 <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
             </div>
-            <div class="fl" style="width: 500px;">奥利奥饼干18</div>
-            <div class="fl">￥39.00</div>
-            <div class="gwc_number fl">1</div>
-            <div class="fl">￥39.00</div>
+            <div class="fl" style="width: 500px;">${orderItem.product.product_name }</div>
+            <div class="fl">￥<c:out value="${orderItem.product.product_price*orderItem.product.product_discount/10}"></c:out></div>
+            <div class="gwc_number fl">${orderItem.orderItems_count }</div>
+            <div class="fl">￥${orderItem.orderItems_subtotal }</div>
             <div class="cf" style="height: 0;"></div>
         </div>
-
-
-        <div class="gwc_info_one" id="商品id2">
-            <div class="fl">
-                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
-            </div>
-            <div class="fl" style="width: 500px;">奥利奥饼干18</div>
-            <div class="fl">￥39.00</div>
-            <div class="gwc_number fl">1</div>
-            <div class="fl">￥39.00</div>
-            <div class="cf" style="height: 0;"></div>
-        </div>
-
-
-        <div class="gwc_info_one" id="商品id3">
-            <div class="fl">
-                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
-            </div>
-            <div class="fl" style="width: 500px;">奥利奥饼干18</div>
-            <div class="fl">￥39.00</div>
-            <div class="gwc_number fl">1</div>
-            <div class="fl">￥39.00</div>
-            <div class="cf" style="height: 0;"></div>
-        </div>
+      </c:forEach>
     </div>
     <form action="#" method="post">
         <div class="fl" style="width: 360px;height: 35px;margin-top: 20px">
             <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">姓名：</label>
-            <input type="text" placeholder="请输入收货人姓名" value="钟国楚" style="width: 188px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+            <input type="text" placeholder="请输入收货人姓名" value="${sessionScope.user.user_realname }" style="width: 188px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="fl" style="width: 400px;height: 35px;margin-top: 20px">
             <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">电话：</label>
-            <input type="text" placeholder="请输入收货人联系电话" value="18318260421" style="width: 208px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+            <input type="text" placeholder="请输入收货人联系电话" value="${sessionScope.user.user_account }" style="width: 208px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="fl" style="width: 440px;height: 35px;margin-top: 20px">
             <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">收货地址：</label>
-            <input type="text" placeholder="请输入收货地址" value="1栋352房" style="width: 338px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+            <input type="text" placeholder="请输入收货地址" value="${sessionScope.user.user_community }栋${sessionScope.user.user_house }房" style="width: 338px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="cf"></div>
         <div class="gwc_jiesuan_outer" style="background-color: #FFFFFF">
             <div class="fr" style="width: 450px;height: 100px;border: 2px solid #58cf2a;padding: 20px;">
-                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">需付款：<span style="font-size: 28px;color:#dd2727;">￥39.9</span></p>
+                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">需付款：<span style="font-size: 28px;color:#dd2727;">￥${order.order_money}</span></p>
                 <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">送货至：<span style="color: #777;font-weight: normal">1栋352房</span></p>
                 <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">收货人：<span style="color: #777;font-weight: normal">钟国楚&nbsp;&nbsp;&nbsp;18318260421</span></p>
             </div>

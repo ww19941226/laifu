@@ -6,6 +6,8 @@ import com.laifu.common.pagination.Page;
 import com.laifu.common.service.IBaseService;
 import com.laifu.module.entity.Category;
 import com.laifu.module.entity.CategorySecond;
+import com.laifu.module.entity.Order;
+import com.laifu.module.entity.OrderItems;
 import com.laifu.module.entity.Product;
 
 public interface MarketManagerService extends IBaseService<Product, Integer> {
@@ -50,5 +52,16 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 
 	public Page<Product> getSearchjinkouProducts(String hql, int pn, int i)
 			throws Exception;
+
+	public void saveOrder(Order order) throws Exception;
+
+	public int countOrderAll();
+
+	public void saveOrderItems(OrderItems orderItems);
+
+	public Page<Order> findByUid(String hql, Integer pn, int i)
+			throws Exception;
+
+	public Order findByOid(Integer order_id) throws Exception;
 
 }
