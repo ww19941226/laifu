@@ -71,7 +71,7 @@
      	<c:forEach items="${sessionScope.cart.cartItems}" var="cartItem">
         <div class="gwc_info_one" id="${cartItem.product.product_id}">
             <div class="fl">
-                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
+                <img src="${pageContext.request.contextPath}${cartItem.product.product_photo1}"/>
             </div>
             <div class="fl">${cartItem.product.product_name}</div>
             <div class="fl">￥<c:out value="${cartItem.product.product_price*cartItem.product.product_discount/10}"></c:out></div>
@@ -221,7 +221,7 @@
         	}
         });
         $("#tijiaodingdan").click(function(){
-        	location.href="/LaiFuCommunity/market/saveOrder";
+        	location.href="/LaiFuCommunity/market/confirmDD";
         });
     });
 </script>

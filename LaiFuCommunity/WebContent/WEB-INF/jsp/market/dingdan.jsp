@@ -25,38 +25,38 @@
         <div class="cf" style="height: 0;"></div>
     </div>
     <div class="gwc_info_outer">
-    <c:forEach items="${order.orderItems }" var="orderItem">
+    <c:forEach items="${sessionScope.cart.cartItems}" var="cartItem">
         <div class="gwc_info_one" id="商品id1">
             <div class="fl">
-                <img src="${pageContext.request.contextPath}/images/sp.jpg"/>
+                <img src="${pageContext.request.contextPath}${cartItem.product.product_photo1}"/>
             </div>
-            <div class="fl" style="width: 500px;">${orderItem.product.product_name }</div>
-            <div class="fl">￥<c:out value="${orderItem.product.product_price*orderItem.product.product_discount/10}"></c:out></div>
-            <div class="gwc_number fl">${orderItem.orderItems_count }</div>
-            <div class="fl">￥${orderItem.orderItems_subtotal }</div>
+            <div class="fl" style="width: 500px;">${cartItem.product.product_name}</div>
+            <div class="fl">￥<c:out value="${cartItem.product.product_price*cartItem.product.product_discount/10}"></c:out></div>
+            <div class="gwc_number fl">${cartItem.count}</div>
+            <div class="fl">￥${cartItem.subtotal}</div>
             <div class="cf" style="height: 0;"></div>
         </div>
       </c:forEach>
     </div>
-    <form action="#" method="post">
+    <form action="/LaiFuCommunity/market/saveOrder" method="post">
         <div class="fl" style="width: 360px;height: 35px;margin-top: 20px">
             <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">姓名：</label>
-            <input type="text" placeholder="请输入收货人姓名" value="${sessionScope.user.user_realname }" style="width: 188px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+            <input name="realname" type="text" placeholder="请输入收货人姓名" value="${sessionScope.user.user_realname }" style="width: 188px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="fl" style="width: 400px;height: 35px;margin-top: 20px">
             <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">电话：</label>
-            <input type="text" placeholder="请输入收货人联系电话" value="${sessionScope.user.user_account }" style="width: 208px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+            <input name="phone" type="text" placeholder="请输入收货人联系电话" value="${sessionScope.user.user_account }" style="width: 208px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="fl" style="width: 440px;height: 35px;margin-top: 20px">
             <label style="width: 100px;font-size: 16px;color: #aaaaaa;text-align: right;">收货地址：</label>
-            <input type="text" placeholder="请输入收货地址" value="${sessionScope.user.user_community }栋${sessionScope.user.user_house }房" style="width: 338px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
+            <input name="address" type="text" placeholder="请输入收货地址" value="${sessionScope.user.user_community }栋${sessionScope.user.user_house }房" style="width: 338px;height: 28px;padding-left: 10px;font-size: 16px;border: 1px solid #aaaaaa;"/>
         </div>
         <div class="cf"></div>
         <div class="gwc_jiesuan_outer" style="background-color: #FFFFFF">
             <div class="fr" style="width: 450px;height: 100px;border: 2px solid #58cf2a;padding: 20px;">
-                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">需付款：<span style="font-size: 28px;color:#dd2727;">￥${order.order_money}</span></p>
-                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">送货至：<span style="color: #777;font-weight: normal">1栋352房</span></p>
-                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">收货人：<span style="color: #777;font-weight: normal">钟国楚&nbsp;&nbsp;&nbsp;18318260421</span></p>
+                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">需付款：<span style="font-size: 28px;color:#dd2727;">￥${sessionScope.cart.total}</span></p>
+                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">送货至：<span style="color: #777;font-weight: normal">${sessionScope.user.user_community }栋${sessionScope.user.user_house }房</span></p>
+                <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">收货人：<span style="color: #777;font-weight: normal">${sessionScope.user.user_realname }&nbsp;&nbsp;&nbsp;${sessionScope.user.user_account }</span></p>
             </div>
             <div class="cf"></div>
             <input type="submit" class="fr" style="cursor:pointer;width: 150px;height: 50px;background-color:#58cf2a;text-align: center;line-height: 50px;font-size: 22px;color: #FFFFFF;" value="提交订单">

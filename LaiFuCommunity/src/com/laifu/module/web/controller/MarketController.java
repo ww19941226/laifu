@@ -234,6 +234,16 @@ public class MarketController {
 		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
 		return "market/mydingdan";
 	}
+	
+	/* 查询用户地址电话姓名等信息跳转到提交订单界面 */
+	@RequestMapping(value = "/market/confirmDD", method = { RequestMethod.GET })
+	public String gotoConfirmDingdan(HttpServletRequest request)
+			throws Exception {
+		if(((Cart) request.getSession().getAttribute("cart")).getTotalcount() == 0){
+			return "market/cart";
+		}
+		return "market/dingdan";
+	}
 
 	/* 根据订单id查询 */
 	@RequestMapping(value = "/market/findByOid/{order_id}", method = { RequestMethod.GET })
@@ -244,9 +254,9 @@ public class MarketController {
 		return "market/mydingdan";
 	}
 
-	/* 跳转到提交订单 */
-	@RequestMapping(value = "/market/saveOrder", method = { RequestMethod.GET })
-	private String gotoSaveOrder(HttpServletRequest request) throws Exception {
+	/* 跳转到支付页面 */
+	@RequestMapping(value = "/market/saveOrder", method = { RequestMethod.POST })
+	private String gotoSaveOrder(HttpServletRequest request,String realname,String phone,String address) throws Exception {
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		User user = (User) request.getSession().getAttribute("user");
 		if (cart.getCartItems().size() == 0) {
@@ -269,11 +279,14 @@ public class MarketController {
 			/* order.getOrderItems().add(orderItems); */
 		}
 		order.setOrderItems(sets);
+		order.setOrder_address(address);
+		order.setOrder_phone(phone);
+		order.setOrder_receivename(realname);
 		marketManagerService.saveOrder(order);
 		cart.cleanCart();
 		request.setAttribute("order", order);
 
-		return "market/dingdan";
+		return "market/index";
 	}
 
 	public int getOrder_id() throws Exception {
