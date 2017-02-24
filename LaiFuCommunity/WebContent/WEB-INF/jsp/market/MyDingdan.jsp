@@ -155,7 +155,7 @@
         $(".myDD_DD_again").click(function () {
             var order_id = $(this).parent().attr("id");
             console.log(order_id);
-	        location.href="/LaiFuCommunity/market/findByOid/"+order_id;
+	        location.href="/LaiFuCommunity/market/againOrder/"+order_id;
 	    });
     });
 </script>

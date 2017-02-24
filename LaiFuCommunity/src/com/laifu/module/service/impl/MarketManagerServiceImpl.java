@@ -219,9 +219,9 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	}
 
 	@Override
-	public void deleteOrder(Integer order_id) throws Exception {
+	public void deleteOrder(Order order) throws Exception {
 		// TODO Auto-generated method stub
-		orderDao.delete(order_id);
+		orderDao.deleteObject(order);
 
 	}
 

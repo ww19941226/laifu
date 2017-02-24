@@ -265,16 +265,50 @@ public class MarketController {
 			@PathVariable("order_id") Integer order_id) throws Exception {
 		Order order = marketManagerService.findByOid(order_id);
 		request.setAttribute("order", order);
-		return "market/mydingdan";
+		return "null";
 	}
 
 	/* 删除订单 */
-	@RequestMapping(value = "/market/deleteOrder/{order_id}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/market/deleteOrder/{order_id}", method = { RequestMethod.POST })
 	public void deleteOrder(HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("order_id") Integer order_id) throws Exception {
-		marketManagerService.deleteOrder(order_id);
-		response.getWriter().write("1");
+		Order order = marketManagerService.findByOid(order_id);
+		marketManagerService.deleteOrder(order);
+		response.getWriter().print("1");
+	}
+
+	/* 再来一单 */
+	@RequestMapping(value = "/market/againOrder/{order_id}", method = { RequestMethod.GET })
+	private String againOrder(HttpServletRequest request,
+			@PathVariable("order_id") Integer order_id) throws Exception {
+		User user = (User) request.getSession().getAttribute("user");
+		Order order1 = marketManagerService.findByOid(order_id);
+		Order order = new Order();
+		order.setOrder_id(getOrder_id());
+		order.setOrder_money(order1.getOrder_money());
+		order.setOrder_state(1);
+		order.setOrder_creattime(new Date());
+		order.setUser(user);
+		Set<OrderItems> sets = new HashSet<OrderItems>();
+		for (OrderItems ordertItem : order1.getOrderItems()) {
+			OrderItems orderItems = new OrderItems();
+			orderItems.setOrderItems_count(ordertItem.getOrderItems_count());
+			orderItems.setOrderItems_subtotal(ordertItem
+					.getOrderItems_subtotal());
+			orderItems.setProduct(ordertItem.getProduct());
+			orderItems.setOrder(order);
+			sets.add(orderItems);
+			/* order.getOrderItems().add(orderItems); */
+		}
+		order.setOrderItems(sets);
+		order.setOrder_address(order1.getOrder_address());
+		order.setOrder_phone(order1.getOrder_phone());
+		order.setOrder_receivename(order1.getOrder_receivename());
+		marketManagerService.saveOrder(order);
+		request.setAttribute("order", order);
+
+		return "market/index";
 	}
 
 	/* 跳转到支付页面 */
@@ -315,7 +349,7 @@ public class MarketController {
 
 	public int getOrder_id() throws Exception {
 		int count = marketManagerService.countOrderAll() + 1;
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
 		return Integer.parseInt(format.format(new Date())) + count;
 	}
 
