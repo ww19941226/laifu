@@ -177,13 +177,21 @@ public class MarketController {
 	 **************************************************************/
 	/* 查询我的所有订单* */
 	@RequestMapping(value = "/market/myDingdan", method = { RequestMethod.GET })
-	public String gotoMydingdan(HttpServletRequest request) throws Exception {
+	public String gotoMydingdan(HttpServletRequest request,@RequestParam Integer state) throws Exception {
 		User user = (User) request.getSession().getAttribute("user");
 		Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-		String hql = "from Order o where o.user.user_id=" + user.getUser_id()
-				+ "order by o.order_creattime desc";
+		String hql;
+		if(state==0){
+			hql= "from Order o where o.user.user_id=" + user.getUser_id()
+					+ "order by o.order_creattime desc";
+		}
+		else{
+			hql = "from Order o where o.order_state="+state+" and o.user.user_id="
+					+ user.getUser_id() + "order by o.order_creattime";
+		}
 		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
 		request.setAttribute("page", page);
+		request.setAttribute("dState", state);
 		return "market/MyDingdan";
 	}
 

@@ -9,13 +9,31 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/import.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nav.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myDD.css"/>
-            <link href="${pageContext.request.contextPath}/css/laifucommunity_main_20160926.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/laifucommunity_main_20160926.css" rel="stylesheet" />
+    <style type="text/css">
+    	.myDD_head>a{
+    		font-size: 18px;
+    		padding: 20px 15px 5px 15px;
+    		margin-bottom: 10px;
+    	}
+    	.myDD_head>a:hover{
+    		border-bottom: 2px solid #59cf2b;
+    	}
+    	.state${dState}{
+    		border-bottom: 2px solid #59cf2b;
+    	}
+    </style>
 </head>
 <body>
 <%@ include file="head.jsp" %>
 <div class="search_div">
     <div class="chaoshilogo fl"></div>
-    <div class="search fl"></div>
+    <div class="search fl">
+    	<form action="${pageContext.request.contextPath}/market/search" method="get">
+    		<input name="searchText" style="font-size:18px;border:3px solid #59cf2b;padding-left: 10px;width:418px;height:43px;" type="text" placeholder="搜索……">
+    		<input style="cursor:pointer;margin-left:-6px;color:#fff;font-size:18px;border:0;background-color:#59cf2b;width:108px;height:49px;" type="submit" value="搜索"/>
+    	</form>
+    </div>
     <div class="house fl"></div>
     <div class="cf"></div>
 </div>
@@ -50,27 +68,35 @@
 
 <div class="myDD_outer">
     <div class="myDD_head">
-        我的订单
+        <a class="state0" href="${pageContext.request.contextPath}/market/myDingdan?state=0">全部订单</a>
+        <a class="state1" href="${pageContext.request.contextPath}/market/myDingdan?state=1">未付款</a>
+        <a class="state2" href="${pageContext.request.contextPath}/market/myDingdan?state=2">未接单</a>
+        <a class="state3" href="${pageContext.request.contextPath}/market/myDingdan?state=3">已接单</a>
+        <a class="state4" href="${pageContext.request.contextPath}/market/myDingdan?state=4">送货中</a>
+        <a class="state5" href="${pageContext.request.contextPath}/market/myDingdan?state=5">完成交易</a>
     </div>
     <c:forEach  var="order" items="${page.items }">
-    <div class="myDD_DD" id="该订单的id！！！！！">
-        <div class="myDD_DD_head">
+    <div class="myDD_DD">
+        <div class="myDD_DD_head" id="${order.order_id }">
             <div class="myDD_DD_time fl">${order.order_creattime }</div>
             
             <div class="myDD_DD_status fl">订单状态：
             
-            <c:if test="${order.order_state == 1} ">
-									<a href="#">未付款</a>
-								</c:if>
-								<c:if test="${order.order_state == 2} ">
-									已付款
-								</c:if>
-								<c:if test="${order.order_state == 3} ">
-									<a href="">确认收货</a>
-								</c:if>
-								<c:if test="${order.order_state== 4 } ">
-									交易成功
-								</c:if>
+           					<c:if test="${order.order_state==1}">
+								<a href="#">未付款</a>
+							</c:if>
+							<c:if test="${order.order_state==2}">
+								未接单
+							</c:if>
+							<c:if test="${order.order_state==3}">
+								已接单
+							</c:if>
+							<c:if test="${order.order_state==4}">
+								送货中
+							</c:if>
+							<c:if test="${order.order_state==5}">
+								交易完成
+							</c:if>
             
             </div>
             <div class="myDD_DD_allMoney fl">总金额：￥${order.order_money }</div>
@@ -96,7 +122,7 @@
 </div>
 <div class="cf"></div>
  <div class="page list_page" style="text-align:center;">
-    <common:pageV3 url="/market/myDingdan"></common:pageV3>
+    <common:pageV3 url="/market/myDingdan?state=${dState }"></common:pageV3>
     <div class="cf"></div>
 </div>
 <div class="cf"></div>
@@ -106,44 +132,31 @@
 <script>
     $(document).ready(function () {
         //删除一个商品
-        $(".deleteOne").click(function () {
-            var product_id = $(this).parent().attr("id");
-            console.log(product_id);
-            $("#"+product_id).slideUp(350, function () {
-                $("#"+product_id).remove();
-                if($(".gwc_info_outer>div").length == 0){
-                    $(".gwc_info_outer").html("购物车空空如也。");
-                }
-            });
-        });
-        //商品数量+
-        $(".jia").click(function () {
-            var product_id = $(this).parent().parent().attr("id");
-
-        });
-        //商品数量-
-        $(".jian").click(function () {
-            var product_id = $(this).parent().parent().attr("id");
-            var product_number = $(this).next().val();
-            if(product_number == 1){
-                alert("现在该商品数量已为1，若想删除请点击删除该商品。");
-            }
-            else{
-
+        $(".myDD_DD_delete").click(function () {
+        var deleteConfirm = confirm("确定删除该订单？");
+            var order_id = $(this).parent().attr("id");
+            console.log(order_id);
+            if(deleteConfirm){
+	            $.ajax({
+		        	type: "POST",
+		        	url: "/LaiFuCommunity/market/removeDD",
+		        	dataType: "json",
+		        	data:{"order_id":order_id},
+		        	success: function(data){ 
+		       			$("#"+order_id).parent().slideUp(350, function () {
+			                $("#"+order_id).parent().remove();
+			            });
+		        	}
+		        });
             }
         });
-        //输入商品数量
-        $(".shuru").keydown(function () {
-            var product_id = $(this).parent().parent().attr("id");
-            console.log(product_id);
-        });
-        //删除全部
-        $("#deleteAll").click(function () {
-            $(".gwc_info_outer>div").slideUp(700, function () {
-                $(".gwc_info_outer>div").remove();
-                $(".gwc_info_outer").html("购物车空空如也。");
-            });
-        });
+        
+        //再来一单
+        $(".myDD_DD_again").click(function () {
+            var order_id = $(this).parent().attr("id");
+            console.log(order_id);
+	        location.href="/LaiFuCommunity/market/findByOid/"+order_id;
+	    });
     });
 </script>
 </body>

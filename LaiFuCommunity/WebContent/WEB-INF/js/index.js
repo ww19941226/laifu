@@ -6,7 +6,7 @@ $(document).ready(function () {
 		location.href="/LaiFuCommunity/market/myCart/"
 	});
 	$(".right_dingdan").click(function(){
-		location.href="/LaiFuCommunity/market/myDingdan/"
+		location.href="/LaiFuCommunity/market/myDingdan?state=0"
 	});
 
 
