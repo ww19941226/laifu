@@ -131,7 +131,7 @@
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 <script>
     $(document).ready(function () {
-        //删除一个商品
+        //删除一个订单
         $(".myDD_DD_delete").click(function () {
         var deleteConfirm = confirm("确定删除该订单？");
             var order_id = $(this).parent().attr("id");
@@ -139,7 +139,7 @@
             if(deleteConfirm){
 	            $.ajax({
 		        	type: "POST",
-		        	url: "/LaiFuCommunity/market/removeDD",
+		        	url: "/LaiFuCommunity/market/deleteOrder/"+order_id,
 		        	dataType: "json",
 		        	data:{"order_id":order_id},
 		        	success: function(data){ 
