@@ -64,4 +64,6 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 
 	public Order findByOid(Integer order_id) throws Exception;
 
+	public void deleteOrder(Integer order_id) throws Exception;
+
 }

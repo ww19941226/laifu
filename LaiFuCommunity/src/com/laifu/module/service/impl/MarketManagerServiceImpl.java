@@ -218,4 +218,11 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		return orderDao.get(order_id);
 	}
 
+	@Override
+	public void deleteOrder(Integer order_id) throws Exception {
+		// TODO Auto-generated method stub
+		orderDao.delete(order_id);
+
+	}
+
 }
