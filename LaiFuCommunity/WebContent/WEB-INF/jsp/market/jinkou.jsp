@@ -54,19 +54,19 @@
 <div class="area">
 <div class="wrap">
         <a class="area1" href="<c:url value='/market/searchjinkou?search=美国 '/>"><img src="${pageContext.request.contextPath}/images/area1.jpg"></a>
-        <a class="area2" href="#han"><img src="${pageContext.request.contextPath}/images/area2.jpg"></a>
-        <a class="area3" href="http://www.lingshi.com/list/c228_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area3.jpg"></a>
-        <a class="area4" href="http://www.lingshi.com/list/c229_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area4.jpg"></a>
-        <a class="area5" href="#fei"><img src="${pageContext.request.contextPath}/images/area5.jpg"></a>
-        <a class="area6" href="http://www.lingshi.com/list/c179_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area6.jpg"></a>
-        <a class="area7" href="ditu.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area7.jpg"></a>
-        <a class="area8" href="http://www.lingshi.com/list/c148_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area8.jpg"></a>
-        <a class="area9" href="#tai"><img src="${pageContext.request.contextPath}/images/area9.jpg"></a>
-        <a class="area10" href="#yue"><img src="${pageContext.request.contextPath}/images/area10.jpg"></a>
-        <a class="area11" href="http://www.lingshi.com/list/c143_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area11.jpg"></a>
-        <a class="area12" href="http://www.lingshi.com/list/c227_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area12.jpg"></a>
-        <a class="area13" href="http://www.lingshi.com/list/c222_o1.htm" target="_blank"><img src="${pageContext.request.contextPath}/images/area13.jpg"></a>
-        <a class="area14" href="#ma"><img src="${pageContext.request.contextPath}/images/area14.jpg"></a>
+        <a class="area2" href="<c:url value='/market/searchjinkou?search=韩国'/>"><img src="${pageContext.request.contextPath}/images/area2.jpg"></a>
+        <a class="area3" href="<c:url value='/market/searchjinkou?search=意大利 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area3.jpg"></a>
+        <a class="area4" href="<c:url value='/market/searchjinkou?search=英国 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area4.jpg"></a>
+        <a class="area5" href="<c:url value='/market/searchjinkou?search=菲律宾 '/>"><img src="${pageContext.request.contextPath}/images/area5.jpg"></a>
+        <a class="area6" href="<c:url value='/market/searchjinkou?search=其他 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area6.jpg"></a>
+        <a class="area7" href="<c:url value='/market/searchjinkou?search=全部 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area7.jpg"></a>
+        <a class="area8" href="<c:url value='/market/searchjinkou?search=日本 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area8.jpg"></a>
+        <a class="area9" href="<c:url value='/market/searchjinkou?search=泰国'/>"><img src="${pageContext.request.contextPath}/images/area9.jpg"></a>
+        <a class="area10" href="<c:url value='/market/searchjinkou?search=越南 '/>"><img src="${pageContext.request.contextPath}/images/area10.jpg"></a>
+        <a class="area11" href="<c:url value='/market/searchjinkou?search=印尼 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area11.jpg"></a>
+        <a class="area12" href="<c:url value='/market/searchjinkou?search=西班牙 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area12.jpg"></a>
+        <a class="area13" href="<c:url value='/market/searchjinkou?search=港澳台 '/>" target="_blank"><img src="${pageContext.request.contextPath}/images/area13.jpg"></a>
+        <a class="area14" href="<c:url value='/market/searchjinkou?search=马来西亚 '/>"><img src="${pageContext.request.contextPath}/images/area14.jpg"></a>
     </div>
 </div>
 

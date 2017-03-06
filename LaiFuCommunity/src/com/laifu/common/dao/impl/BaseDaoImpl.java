@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.laifu.common.dao.IBaseDao;
 import com.laifu.common.pagination.PageUtil;
 import com.laifu.common.utils.Assert;
+import com.laifu.module.entity.Category;
 
 
 /**

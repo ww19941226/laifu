@@ -9,6 +9,7 @@ import com.laifu.module.entity.CategorySecond;
 import com.laifu.module.entity.Order;
 import com.laifu.module.entity.OrderItems;
 import com.laifu.module.entity.Product;
+import com.laifu.module.entity.ReturnData;
 
 public interface MarketManagerService extends IBaseService<Product, Integer> {
 
@@ -65,5 +66,11 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	public Order findByOid(Integer order_id) throws Exception;
 
 	public void deleteOrder(Order order) throws Exception;
+
+	ReturnData getAllCategoriesForManage() throws Exception;
+
+	ReturnData getAllCategorySecondForManage() throws Exception;
+
+	ReturnData addCategory(String category_name) throws Exception;
 
 }

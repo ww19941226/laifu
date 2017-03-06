@@ -2,6 +2,9 @@ package com.laifu.common.dao;
 
 import java.util.List;
 
+import com.laifu.module.entity.Category;
+import com.laifu.module.entity.CategorySecond;
+
 /**
  * 通用Dao接口
  * 实现了通用增删查改

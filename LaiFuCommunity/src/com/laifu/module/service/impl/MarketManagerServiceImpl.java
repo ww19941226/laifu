@@ -1,11 +1,18 @@
 package com.laifu.module.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+
+import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.laifu.common.dao.IBaseDao;
 import com.laifu.common.pagination.Page;
 import com.laifu.common.pagination.PageUtil;
@@ -20,6 +27,7 @@ import com.laifu.module.entity.CategorySecond;
 import com.laifu.module.entity.Order;
 import com.laifu.module.entity.OrderItems;
 import com.laifu.module.entity.Product;
+import com.laifu.module.entity.ReturnData;
 import com.laifu.module.service.MarketManagerService;
 
 @Service("MarketManagerService")
@@ -67,6 +75,68 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		// TODO Auto-generated method stub
 
 		return categoryDao.getAllCategories();
+	}
+	
+	
+	/*一级分类后台管理相关功能*/
+	/*获取列表*/
+	@Override
+	public ReturnData getAllCategoriesForManage() throws Exception {
+		ReturnData returnData = new ReturnData();
+		List<Category> list=categoryDao.getAllCategories();
+		Category category = new Category();
+		JSONArray jsonArray = new JSONArray();
+		for(int i=0;i<list.size();i++){
+			category.setCategory_id(list.get(i).getCategory_id());
+			category.setCategory_name(list.get(i).getCategory_name());
+			jsonArray.add(category);
+		}
+		returnData.setReturnData(jsonArray);
+		//returnData.setReturnData(list);
+		returnData.setReturnResult(200);
+		return returnData;
+	}
+	
+	/*添加一级分类*/
+	@Override
+	public ReturnData addCategory(String category_name) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			Category category = new Category();
+			category.setCategory_name(category_name);
+			categoryDao.addCategory(category);
+			//returnData.setReturnData(list);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("添加失败！");
+		}
+		return returnData;
+	}
+	
+	@Override
+	public ReturnData getAllCategorySecondForManage() throws Exception {
+		ReturnData returnData = new ReturnData();
+		List<CategorySecond> list=categorySecondDao.getAllCategorySecondForManage();
+		CategorySecond categorySecond = new CategorySecond();
+		JSONArray jsonArray = new JSONArray();
+		try {
+			for(int i=0;i<list.size();i++){
+				categorySecond.setCategorysecond_id(list.get(i).getCategorysecond_id());
+				categorySecond.setCategorysecond_name(list.get(i).getCategorysecond_name());
+				categorySecond.setCategory(list.get(i).getCategory());
+				jsonArray.add(categorySecond);
+				//jsonArray.add(list.get(i));
+			}
+			returnData.setReturnData(jsonArray);
+			//returnData.setReturnData(list);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("读取数据失败，请重试");
+		}
+		return returnData;
 	}
 
 	@Override

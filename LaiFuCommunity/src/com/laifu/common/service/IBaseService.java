@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.laifu.common.pagination.Page;
+import com.laifu.module.entity.ReturnData;
 /**
  * 通用Service层
  * @author Raindrops

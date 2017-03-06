@@ -2,6 +2,8 @@ package com.laifu.module.dao.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.laifu.common.dao.impl.BaseDaoImpl;
@@ -11,6 +13,8 @@ import com.laifu.module.entity.Category;
 @Repository("CategoryDao")
 public class CategoryDaoImpl extends BaseDaoImpl<Category, Integer> implements
 		CategoryDao {
+/*	@Autowired
+	protected HibernateTemplate ht;*/
 
 	@Override
 	public List<Category> getAllCategories() throws Exception {
@@ -18,7 +22,20 @@ public class CategoryDaoImpl extends BaseDaoImpl<Category, Integer> implements
 
 		return getSession().createQuery("from Category").list();
 	}
-
+	
+	@Override
+	public void addCategory(Category category) throws Exception {
+		// TODO Auto-generated method stub
+		getSession().save(category);
+		
+	}
+	
+	/*@Override
+	public List<Category> getAllCategoriesForManage() throws Exception {
+		// TODO Auto-generated method stub
+		return (List<Category>)ht.find("from Category");
+	}*/
+	
 	@Override
 	public Category findBycid(Integer categoty_id) throws Exception {
 		// TODO Auto-generated method stub
