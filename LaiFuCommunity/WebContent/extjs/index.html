@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>extjs test</title>
+    <link rel="stylesheet" href="css/ext-theme-classic-all.css"/>
+</head>
+<body>
+<script src="js/ext-all.js"></script>
+<script>
+    Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+
+
+    var centerRegion = new Ext.TabPanel({
+        region : 'center',
+        id : 'mainPanel',
+        deferredRender : false,
+        activeTab : 0,
+        enableTabScroll : true,
+        listeners : {
+            'tabchange' : function(tab, newc, oldc) {
+                var pageUrl = tab.getActiveTab().url;
+                var pageTitle = tab.getActiveTab().title;
+            },
+            remove : function(tp, c) {
+                c.hide();
+            }
+        },
+        autoDestroy : false
+    });
+
+    Ext.onReady(function() {
+        var viewport = Ext.create('Ext.container.Viewport', {
+            layout : 'border',
+            items : [ northRegion, southRegion, westRegion, centerRegion ]
+        });
+        findMenuTree();//初始化数据
+        //loadSysConstant();//初始化值
+
+    });
+//    function loadSysConstant(){
+//        function successFun(data){
+//            for ( var propertyName in data) {
+//                var constantObjArray=data[propertyName];//这里需要转换成前端所需要的常量数据
+//                if(constantObjArray instanceof Array) {
+//                    for (var i = 0; i < constantObjArray.length; i++) {
+//                        constantObjArray[i].value=constantObjArray[i].datavalue;
+//                    }
+//                }
+//                BROTHER.CONFIG.constantMap[propertyName]=data[propertyName];
+//            }
+//
+//        }
+//        function errorFun(){
+//
+//        }
+//        var preFixUrl ='system/initkey/getSysList';
+//        var req_data ={};
+//        Ext.Ajax.request({
+//            url : basePath + '/'+preFixUrl,
+//            params: req_data,
+//            async: false,
+//            success: function(resp,opts) {
+//                var jsonData=JSON.parse(resp.responseText);
+//                var data=jsonData.returnData;
+//                if(jsonData.returnResult!=200){
+//                    failure(data);
+//                }
+//                if(typeof successFun ==='function'){
+//                    successFun(data);
+//                }else{
+//
+//                }
+//
+//            },
+//            failure: function(resp,opts) {
+//                if(typeof errorFun ==='function'){
+//                    errorFun(resp,opts);
+//                }else{
+//                    var jsonData=JSON.parse(resp.responseText);
+//                    var errorDesc=jsonData.returnDetail;
+//                    alert(errorDesc);
+//                }
+//            }
+//        });
+//    }
+    function findMenuTree() {
+        var menuRoot = Ext.getCmp('menuTree').getRootNode();
+        menuRoot.removeAll();
+        var data = [{
+            id:1,
+            name:"商品管理"
+        },{
+            id:2,
+            parentMenu:1,
+            name:"商品信息",
+            action:"sp.html"
+        },{
+            id:3,
+            name:"订单管理"
+        },{
+            id:4,
+            parentMenu:3,
+            name:"订单信息",
+            action:"orderinfo.html"
+        },{
+            id:5,
+            parentMenu:1,
+            name:"商品分类",
+            action:"fenlei.html"
+        },{
+            id:6,
+            parentMenu:5,
+            name:"一级分类",
+            action:"fenleiOne.html"
+        },{
+            id:7,
+            parentMenu:5,
+            name:"二级分类",
+            action:"fenleiTwo.html"
+        }];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].parentMenu == null) {
+                menuRoot.appendChild({
+                    text : data[i].name,
+                    url : data[i].action,
+                    id : "menuTree_" + data[i].id
+                });
+            } else {
+                var child = menuRoot.findChild('id', "menuTree_"
+                        + data[i].parentMenu, true);
+                var leaf = true;
+                if(i==4){
+                    leaf = false;
+                }
+                child.appendChild({
+                    text : data[i].name,
+                    url : data[i].action,
+                    id : "menuTree_" + data[i].id,
+                    leaf:leaf
+                });
+            }
+        }
+    }
+    var passwordForm = Ext.create('Ext.form.Panel', {
+        xtype : 'form',
+        items : [ {
+            layout : 'column',
+            border : false,
+            defaultType : 'textfield',
+            defaults : {
+                width : 300,
+                labelWidth : 100,
+                margin : '20 0 0 0',
+                labelAlign : 'right'
+            },
+            items : [ {
+                fieldLabel : '密码',
+                name : 'password',
+                inputType:"password",
+                emptyText : '请输入原来的密码',
+                blankText : '请输入原来的密码',
+                allowBlank : false
+            }, {
+                fieldLabel : '新密码',
+                name : 'newPassword',
+                inputType:"password",
+                emptyText : '请输入新密码',
+                blankText : '请输入新密码',
+                allowBlank : false
+            }, {
+                fieldLabel : '新密码',
+                name : 'newPassword2',
+                inputType:"password",
+                emptyText : '请再次输入新密码',
+                blankText : '请再次输入新密码',
+                allowBlank : false
+            } ]
+        } ],
+        buttons : [ {
+            text : '提交',
+            formBind : true,
+            handler : function(){
+                Ext.Msg.confirm('系统提示', '确定要修改密码吗？', function(btn) {
+                    if (btn == 'yes') {
+                        Ext.Ajax.request({
+                            url : basePath + '/index/updatePassword',
+                            method : 'POST',
+                            params:passwordForm.getForm().getValues(),
+                            success : function(form, action) {
+                                var jsonData=JSON.parse(form.responseText);
+                                if(jsonData.returnResult!=200){
+//								failure(data);
+                                    Ext.Msg.alert('错误', '修改失败:' + jsonData.returnDetail);
+                                    return;
+                                }else{
+                                    passwordWin.hide();
+                                }
+
+
+                                Ext.Msg.alert('提示', '修改成功');
+                            },
+                            failure : function(form, action) {
+                                var jsonData=JSON.parse(form.responseText);
+                                Ext.Msg.alert('错误', '修改失败:' + jsonData.returnDetail);
+                            }
+                        });
+                    }
+
+                }, this);
+
+            }
+        }, {
+            text : '关闭',
+            handler : function() {
+                passwordWin.hide();
+            }
+        } ]
+    });
+
+    var passwordWin = new Ext.Window({
+        width : 380,
+        height : 250,
+        closeAction : 'hide',
+        layout : 'fit',
+        plain : true,
+        modal : true,
+        maximizable : false,
+        draggable : false,
+        closable : false,
+        resizable : false,
+        items : passwordForm
+    });
+
+    var northRegion = Ext.create('Ext.panel.Panel', {
+        region : 'north',
+        height : 110,
+        html : "<div style='font-size:15pt;text-align: center;'><img src='images/laifumange.png' width='100%' height='80px;'/></h1>",
+        bbar : [ {
+            xtype : "tbfill"
+        }, {
+            pressed : false,
+            text : '刷新',
+            handler : function() {
+                location.reload();
+            }
+        }, {
+            pressed : false,
+            text : '修改密码',
+            handler : function() {
+                passwordWin.show();
+            }
+        }, {
+            pressed : false,
+            text : '退出',
+            handler : function() {
+                Ext.Msg.confirm('系统提示', '确定要退出注销系统吗？', function(btn) {
+                    if (btn == 'yes') {
+                        Ext.Ajax.request({
+                            url : basePath + '/index/logout',
+                            method : 'POST',
+                            success : function(form, action) {
+                                Ext.Msg.alert('提示', '注销成功');
+                                location.href= basePath+"/index/login";
+                            },
+                            failure : function(form, action) {
+                                Ext.Msg.alert('错误', '注销失败:' + action.result.msg);
+                            }
+                        });
+                    }
+
+                }, this);
+            }
+        } ]
+    });
+
+
+    var southRegion = Ext.create('Ext.panel.Panel', {
+        region : 'south',
+        split : false,
+        height : 30,
+        collapsible : true,
+        defaults : {
+            margin : '0 0 0 0',
+        },
+        bbar : [ "->", {
+            text : '莱福智能生活小区超市后台管理',
+        } ]
+    });
+
+
+
+    var menuTree = Ext.create('Ext.tree.Panel', {
+        rootVisible : false,
+        border : true,
+        animate : true,
+        autoScroll : true,
+        enableDD : false,
+        containerScroll : true,
+        height : "100%",
+        id : 'menuTree',
+        dockedItems : [ {
+            xtype : 'toolbar',
+            items : [ {
+                text : '展开',
+                handler : function() {
+                    menuTree.expandAll();
+                }
+            }, {
+                text : '收缩',
+                handler : function() {
+                    menuTree.collapseAll();
+                }
+            } ]
+        } ],
+        listeners : {
+            "itemclick" : function(view, record, item, index, e) {
+                if (record.raw.leaf) {
+                    gotoTabPage(record.raw.url, record.raw.text);
+                }
+            }
+        }
+    });
+
+    var westRegion = Ext.create('Ext.panel.Panel', {
+        region : 'west',
+        id : 'west-panel',
+        iconCls : 'tabs',
+        title : '平台管理',
+        split : true,
+        width : 220,
+        minSize : 100,
+        maxSize : 300,
+        collapseMode : 'mini',
+        collapsible : true,
+        margins : '0 0 0 5',
+        autoScroll : false,
+        layout : 'fit',
+        items : [ menuTree ]
+    });
+
+    function gotoTabPage(pageUrl, pageTitle) {
+        var mainPanel = Ext.getCmp('mainPanel');
+        for (var i = 0; i < mainPanel.items.length; i++) {
+            if (mainPanel.items.items[i].url == pageUrl) {
+                mainPanel.setActiveTab(mainPanel.items.items[i]);
+                mainPanel.items.items[i].loader.load();
+                return;
+            }
+        }
+        if (mainPanel.items.length >= 10) {
+            alert("最多只能打开10个窗体");
+            return;
+        }
+        var tabPage = Ext.create('Ext.panel.Panel', {
+            title : pageTitle,
+            url : pageUrl,
+            closable : true,
+            loader : {
+                url : pageUrl,
+                autoLoad : true,
+                scripts : true
+            }
+        });
+        mainPanel.add(tabPage);
+        mainPanel.setActiveTab(tabPage);
+    }
+
+
+
+
+
+
+</script>
+</body>
+</html>
