@@ -87,7 +87,7 @@ Ext.onReady(function() {
                 form.option = 'update';
                 win.setTitle("修改一级分类");
                 win.show();
-                id = record.raw.id;
+                id = record.raw.category_id;
                 loadForm();
             }
         }
@@ -216,7 +216,7 @@ Ext.onReady(function() {
                 clientValidation : true,
                 waitMsg : '正在修改一级分类请稍后',
                 waitTitle : '一级分类',
-                url : basePath + '/system/initvalue/update',
+                url :'/LaiFuCommunity/marketManage/categories/update',
                 params : {
                     id : id
                 },
@@ -241,7 +241,7 @@ Ext.onReady(function() {
         Ext.Ajax.request({
             waitMsg : '正在读取一级分类数据请稍后',
             waitTitle : '提示',
-            url : basePath + '/system/initvalue/get/',
+            url : '/LaiFuCommunity/marketManage/categories/get',
             params:{
                 id:id
             },
@@ -249,15 +249,7 @@ Ext.onReady(function() {
             success : function(response, action) {
                 var result = JSON.parse(response.responseText);
                 if(result.returnResult==200){
-                    Ext.Object.each(result.returnData,
-                        function(key, value, myself) {
-                            if (form.form.findField(key) != null)
-                                form.form.findField(key).setValue(value);
-                        });
-                    form.form.findField("iosFileData").setRawValue(result.returnData.iosImageUrl);
-                    form.form.findField("androidFileData").setRawValue(result.returnData.androidImageUrl);
-                    win.showImages.show_iosImageUrl.setSrc(result.returnData.iosImageUrl);
-                    win.showImages.show_androidImageUrl.setSrc(result.returnData.androidImageUrl);
+                    form.form.findField("category_name").setRawValue(result.returnData.category_name);
                 }else
                     Ext.Msg.alert('提示', result.returnDetail);
             },

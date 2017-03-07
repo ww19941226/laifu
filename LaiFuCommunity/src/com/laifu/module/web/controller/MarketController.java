@@ -188,7 +188,7 @@ public class MarketController {
 		} else {
 			hql = "from Order o where o.order_state=" + state
 					+ " and o.user.user_id=" + user.getUser_id()
-					+ "order by o.order_creattime";
+					+ "order by o.order_creattime desc";
 		}
 		Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
 		request.setAttribute("page", page);

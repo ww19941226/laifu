@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
@@ -33,11 +34,11 @@ import com.laifu.module.service.MarketManagerService;
 @Service("MarketManagerService")
 public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		implements MarketManagerService {
-	private CategoryDao categoryDao;
 	private CategorySecondDao categorySecondDao;
 	private ProductDao productDao;
 	private OrderDao orderDao;
 	private OrderItemsDao orderItemsDao;
+	private CategoryDao categoryDao;
 
 	@Resource(name = "OrderItemsDao")
 	public void setOrderItemsDao(OrderItemsDao orderItemsDao) {
@@ -115,22 +116,60 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		return returnData;
 	}
 	
+	//获取一条一级分类数据
+	@Override
+	public ReturnData getCategory(int id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			Category category = categoryDao.findBycid(id);
+			Category returnCategory = new Category();
+			returnCategory.setCategory_id(category.getCategory_id());
+			returnCategory.setCategory_name(category.getCategory_name());
+			returnData.setReturnData(returnCategory);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("读取失败！");
+		}
+		return returnData;
+	}
+	
+	//更新一条一级分类数据
+	@Override
+	public ReturnData updateCategory(int id,String category_name) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			Category category = findBycid(id);
+			category.setCategory_name(category_name);
+			categoryDao.updateCategory(category);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("更新失败！");
+		}
+		return returnData;
+	}
+	
+	/*获取二级分类列表*/
 	@Override
 	public ReturnData getAllCategorySecondForManage() throws Exception {
 		ReturnData returnData = new ReturnData();
 		List<CategorySecond> list=categorySecondDao.getAllCategorySecondForManage();
-		CategorySecond categorySecond = new CategorySecond();
 		JSONArray jsonArray = new JSONArray();
 		try {
 			for(int i=0;i<list.size();i++){
-				categorySecond.setCategorysecond_id(list.get(i).getCategorysecond_id());
-				categorySecond.setCategorysecond_name(list.get(i).getCategorysecond_name());
-				categorySecond.setCategory(list.get(i).getCategory());
-				jsonArray.add(categorySecond);
-				//jsonArray.add(list.get(i));
+				JSONObject jsonObject = new JSONObject();
+				JSONObject jsonOne = new JSONObject();
+				jsonOne.put("category_id", list.get(i).getCategory().getCategory_id());
+				jsonOne.put("category_name", list.get(i).getCategory().getCategory_name());
+				jsonObject.put("categorysecond_id", list.get(i).getCategorysecond_id());
+				jsonObject.put("categorysecond_name", list.get(i).getCategorysecond_name());
+				jsonObject.put("category", jsonOne);
+				jsonArray.add(jsonObject);
 			}
 			returnData.setReturnData(jsonArray);
-			//returnData.setReturnData(list);
 			returnData.setReturnResult(200);
 		} catch (Exception e) {
 			returnData.setReturnResult(300);

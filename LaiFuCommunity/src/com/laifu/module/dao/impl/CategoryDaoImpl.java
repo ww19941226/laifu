@@ -42,4 +42,10 @@ public class CategoryDaoImpl extends BaseDaoImpl<Category, Integer> implements
 		return get(categoty_id);
 	}
 
+	@Override
+	public void updateCategory(Category category) throws Exception {
+		// TODO Auto-generated method stub
+		getSession().update(category);
+	}
+
 }

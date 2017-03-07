@@ -12,4 +12,6 @@ public interface CategoryDao extends IBaseDao<Category, Integer> {
 	public Category findBycid(Integer categoty_id) throws Exception;
 
 	void addCategory(Category category) throws Exception;
+	
+	void updateCategory(Category category) throws Exception;
 }

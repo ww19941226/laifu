@@ -5,10 +5,10 @@ $(document).ready(function () {
 	$(".right_gwc").click(function(){
 		location.href="/LaiFuCommunity/market/myCart/"
 	});
+
 	$(".right_dingdan").click(function(){
 		location.href="/LaiFuCommunity/market/myDingdan?state=0"
 	});
-
 
     //banner
     $(".index_banner_outer>div div").hover(function () {
