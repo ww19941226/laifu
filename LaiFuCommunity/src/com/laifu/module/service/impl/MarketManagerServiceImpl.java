@@ -152,6 +152,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		return returnData;
 	}
 	
+	/*二级分类后台管理系统相关*/
 	/*获取二级分类列表*/
 	@Override
 	public ReturnData getAllCategorySecondForManage() throws Exception {
@@ -177,13 +178,73 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-
+	
+	@Override
+	public ReturnData addCategorySecond(String categorysecond_name,
+			int category_id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			Category category = categoryDao.findBycid(category_id);
+			CategorySecond categorySecond = new CategorySecond();
+			categorySecond.setCategory(category);
+			categorySecond.setCategorysecond_name(categorysecond_name);
+			categorySecondDao.addCategory(categorySecond);
+			//returnData.setReturnData(list);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("添加失败！");
+		}
+		return returnData;
+	}
+	
+	@Override
+	public ReturnData getCategorySecond(int categorysecond_id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		CategorySecond categorySecond = categorySecondDao.findBycsid(categorysecond_id);
+		try {
+			JSONObject jsonObject = new JSONObject();
+			JSONObject jsonOne = new JSONObject();
+			jsonOne.put("category_id", categorySecond.getCategory().getCategory_id());
+			jsonOne.put("category_name", categorySecond.getCategory().getCategory_name());
+			jsonObject.put("categorysecond_id", categorySecond.getCategorysecond_id());
+			jsonObject.put("categorysecond_name", categorySecond.getCategorysecond_name());
+			jsonObject.put("category", jsonOne);
+			returnData.setReturnData(jsonObject);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("读取数据失败，请重试");
+		}
+		return returnData;
+	}
+	
+	@Override
+	public ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			CategorySecond categorySecond = categorySecondDao.get(id);
+			Category category = categoryDao.get(category_id);
+			categorySecond.setCategorysecond_name(categorysecond_name);
+			categorySecondDao.updateCategory(categorySecond);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("更新失败！");
+		}
+		return returnData;
+	}
+	
+	/*二级分类后台管理系统相关完*/
+	
 	@Override
 	public List<CategorySecond> getAllCategorySecond(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return categorySecondDao.getAllCategorySecond(id);
 	}
-
+	
 	@Override
 	public List<Product> getHotJinkou() throws Exception {
 		// TODO Auto-generated method stub
@@ -333,5 +394,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		orderDao.deleteObject(order);
 
 	}
+
+	
 
 }

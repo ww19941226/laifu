@@ -121,6 +121,36 @@ Ext.onReady(function() {
         },
         items : [ initValueGrid ]
     })
+    
+    //产地
+    //创建数据源[数组数据源]
+    var onestore = new Ext.data.ArrayStore({
+        fields: ['category_id', 'category_name'],
+        proxy : {
+        	type : 'ajax',
+        	url : '/LaiFuCommunity/marketManage/categories/getList',
+        	reader : {
+        		type : 'json',
+        		root : 'returnData'
+        	}
+        },
+        autoLoad: true
+    });
+    //创建Combobox
+    var combobox = new Ext.form.ComboBox({
+        fieldLabel: '所属一级分类',
+        labelAlign : 'right',
+        store: onestore,
+        displayField: 'category_name',
+        valueField: 'category_id',
+        triggerAction: 'all',
+        emptyText: '请选择...',
+        allowBlank: false,
+        blankText: '请选择一级分类',
+        editable: false,
+        name:"category_id",
+        mode:'remote'
+    });
 
     var form = Ext.create('Ext.form.Panel', {
         xtype : 'form',
@@ -137,11 +167,11 @@ Ext.onReady(function() {
             },
             items : [ {
                 fieldLabel : '二级分类名称',
-                name : 'category_name',
+                name : 'categorysecond_name',
                 emptyText : '请输入二级分类名称',
                 blankText : '请输入二级分类名称',
                 allowBlank : false
-            } ]
+            },combobox ]
         } ]
 
     });
@@ -206,15 +236,14 @@ Ext.onReady(function() {
     }
 
     function submitForm() {
+    var getlist = getGridList();
+    id = getlist[0];
         if (form.option == 'add') {
             form.form.submit({
                 clientValidation : true,
                 waitMsg : '正在新增二级分类请稍后',
                 waitTitle : '二级分类',
-                url : basePath + '/system/initvalue/add',
-                params : {
-                    'initKey.Id' : initKeyId
-                },
+                url :'/LaiFuCommunity/marketManage/categorySecond/add',
                 method : 'POST',
                 success : function(form, action) {
                     if(action.result.returnResult==200){
@@ -234,7 +263,7 @@ Ext.onReady(function() {
                 clientValidation : true,
                 waitMsg : '正在修改二级分类请稍后',
                 waitTitle : '二级分类',
-                url : basePath + '/system/initvalue/update',
+                url : '/LaiFuCommunity/marketManage/categorySecond/update',
                 params : {
                     id : id
                 },
@@ -256,10 +285,12 @@ Ext.onReady(function() {
     }
 
     function loadForm() {
+    var getlist = getGridList();
+    id = getlist[0];
         Ext.Ajax.request({
             waitMsg : '正在读取二级分类数据请稍后',
             waitTitle : '提示',
-            url : basePath + '/system/initvalue/get/',
+            url :'/LaiFuCommunity/marketManage/categorySecond/get',
             params:{
                 id:id
             },
@@ -267,15 +298,8 @@ Ext.onReady(function() {
             success : function(response, action) {
                 var result = JSON.parse(response.responseText);
                 if(result.returnResult==200){
-                    Ext.Object.each(result.returnData,
-                        function(key, value, myself) {
-                            if (form.form.findField(key) != null)
-                                form.form.findField(key).setValue(value);
-                        });
-                    form.form.findField("iosFileData").setRawValue(result.returnData.iosImageUrl);
-                    form.form.findField("androidFileData").setRawValue(result.returnData.androidImageUrl);
-                    win.showImages.show_iosImageUrl.setSrc(result.returnData.iosImageUrl);
-                    win.showImages.show_androidImageUrl.setSrc(result.returnData.androidImageUrl);
+                	form.form.findField("categorysecond_name").setValue(result.returnData.categorysecond_name);
+                    form.form.findField("category_id").setValue(result.returnData.category.category_id);
                 }else
                     Ext.Msg.alert('提示', result.returnDetail);
             },
@@ -293,7 +317,7 @@ Ext.onReady(function() {
         } else {
             for (var i = 0; i < recs.length; i++) {
                 var rec = recs[i];
-                list.push(rec.get('id'))
+                list.push(rec.get('categorysecond_id'))
             }
         }
         return list;

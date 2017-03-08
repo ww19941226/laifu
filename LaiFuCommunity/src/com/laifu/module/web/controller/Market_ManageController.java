@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.laifu.module.entity.Category;
 import com.laifu.module.entity.ReturnData;
 import com.laifu.module.service.MarketManagerService;
 
@@ -38,7 +39,7 @@ public class Market_ManageController {
 		return marketManagerService.getCategory(id);
 	}
 	
-	/* 获取单条一级分类数据 */
+	/* 更新单条一级分类数据 */
 	@RequestMapping(value = "/marketManage/categories/update", method = { RequestMethod.POST })
 	@ResponseBody
 	public ReturnData updateCategories(int id,String category_name) throws Exception {
@@ -47,9 +48,32 @@ public class Market_ManageController {
 	
 	/*后台一级分类相关接口完*/
 
+	
+	/*后台二级分类相关接口*/
+	/*获取二级分类列表*/
 	@RequestMapping(value = "/marketManage/categorySecond/getList")
 	@ResponseBody
 	public ReturnData getListForSecond() throws Exception {
 		return marketManagerService.getAllCategorySecondForManage();
+	}
+	
+	/* 添加二级分类 */
+	@RequestMapping(value = "/marketManage/categorySecond/add", method = { RequestMethod.POST })
+	@ResponseBody
+	public ReturnData addCategorySecond(String categorysecond_name,int category_id) throws Exception {
+		return marketManagerService.addCategorySecond(categorysecond_name, category_id);
+	}
+	 /*更新*/
+	@RequestMapping(value = "/marketManage/categorySecond/update", method = { RequestMethod.POST })
+	@ResponseBody
+	public ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception {
+		return marketManagerService.updateCategorySecond(id,categorysecond_name, category_id);
+	}
+	
+	/* 获取单条数据*/
+	@RequestMapping(value = "/marketManage/categorySecond/get", method = { RequestMethod.POST })
+	@ResponseBody
+	public ReturnData getCategorySecond(int id) throws Exception {
+		return marketManagerService.getCategorySecond(id);
 	}
 }

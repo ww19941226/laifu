@@ -69,12 +69,17 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 
 	ReturnData getAllCategoriesForManage() throws Exception;
 
-	ReturnData getAllCategorySecondForManage() throws Exception;
-
 	ReturnData addCategory(String category_name) throws Exception;
 	
 	ReturnData getCategory(int category_id) throws Exception;
 	
 	ReturnData updateCategory(int category_id,String category_name) throws Exception;
 
+	ReturnData getAllCategorySecondForManage() throws Exception;
+	
+	ReturnData addCategorySecond(String categorysecond_name,int category_id) throws Exception;
+	
+	ReturnData getCategorySecond(int categorysecond_id) throws Exception;
+	
+	ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception;
 }

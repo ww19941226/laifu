@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.laifu.common.dao.impl.BaseDaoImpl;
 import com.laifu.module.dao.CategorySecondDao;
+import com.laifu.module.entity.Category;
 import com.laifu.module.entity.CategorySecond;
 
 @Repository("CategorySecondDao")
@@ -33,6 +34,16 @@ public class CategorySecondDaoImpl extends BaseDaoImpl<CategorySecond, Integer>
 	public CategorySecond findBycsid(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		return get(id);
+	}
+
+	@Override
+	public void addCategory(CategorySecond categorySecond) throws Exception {
+		getSession().save(categorySecond);
+	}
+
+	@Override
+	public void updateCategory(CategorySecond categorySecond) throws Exception {
+		getSession().update(categorySecond);
 	}
 
 }
