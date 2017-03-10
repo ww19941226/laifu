@@ -24,11 +24,11 @@ Ext.onReady(function() {
             name : "number",
             type : "string"
         }, {
-            name : "product_placeId",
-            type : "int"
+            name : "product_place",
+            type : "string"
         }, {
             name : "is_imported",
-            type : "int"
+            type : "string"
         }, {
             name : "prouduct_discount",
             type : "double"
@@ -36,27 +36,34 @@ Ext.onReady(function() {
             name : "prouduct_deal",
             type : "int"
         }, {
-            name : "product_categoryId",
-            type : "int"
+            name : "product_category_name",
+            type : "string"
+        }, {
+            name : "product_categorySecond_name",
+            type : "string"
         } ]
     });
 
     var initValueStore = Ext.create('Ext.data.JsonStore', {
         model :'InitValue',
-        data: [
+        pageSize:20,
+        /*data: [
             {prouduct_creattime:'2017-02-23 10:34:59',prouduct_name:'奥利奥饼干1',prouduct_price:'15.8',number:'200',product_placeId:2,is_imported:1,prouduct_discount:10,prouduct_deal:25,product_categoryId:2},
             {prouduct_creattime:'2017-02-22 10:34:59',prouduct_name:'奥利奥饼干2',prouduct_price:'16.8',number:'100',product_placeId:2,is_imported:1,prouduct_discount:10,prouduct_deal:25,product_categoryId:2},
             {prouduct_creattime:'2017-02-21 10:34:59',prouduct_name:'奥利奥饼干3',prouduct_price:'17.8',number:'300',product_placeId:2,is_imported:1,prouduct_discount:10,prouduct_deal:25,product_categoryId:2}
-        ]
-        //proxy : {
-        //	type : 'ajax',
-        //	url : basePath + '/system/initvalue/getList',
-        //	reader : {
-        //		type : 'json',
-        //		root : 'returnData'
-        //	}
-        //},
-        //autoLoad: true
+        ]*/
+        proxy : {
+        	type : 'ajax',
+        	pageSize:20,
+        	actionMethods:{create: 'POST'},
+        	url : '/LaiFuCommunity/marketManage/product/getList',
+        	reader : {
+        		type : 'json',
+        		root : 'returnData.data',
+        		totalProperty: 'returnData.recordCount'
+        	}
+        },
+        autoLoad: true
     });
     var columns = [ new Ext.grid.RowNumberer({
         header : '序号',
@@ -90,7 +97,7 @@ Ext.onReady(function() {
         header : "产地",
         width : "10%",
         align : 'center',
-        dataIndex : 'product_placeId',
+        dataIndex : 'product_place',
         sortable : true
     },{
         header : "是否进口",
@@ -114,7 +121,13 @@ Ext.onReady(function() {
         header : "一级分类",
         width : "10%",
         align : 'center',
-        dataIndex : 'product_categoryId',
+        dataIndex : 'product_category_name',
+        sortable : true
+    },{
+        header : "二级分类",
+        width : "10%",
+        align : 'center',
+        dataIndex : 'product_categorySecond_name',
         sortable : true
     }];
 
@@ -140,6 +153,14 @@ Ext.onReady(function() {
 
     var initValueGrid = Ext.create('Ext.grid.Panel', {
         width : '100%',
+        dockedItems:[{
+	        xtype: 'pagingtoolbar',
+            emptyMsg: "没有数据",
+            displayMsg:"",
+	        store: initValueStore,
+	        dock: 'bottom',
+	        displayInfo: true
+	    }],
         store : initValueStore,
         columnLines : true,
         height : "100%",

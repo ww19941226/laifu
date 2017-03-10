@@ -8,12 +8,14 @@ Ext.onReady(function() {
     Ext.QuickTips.init();
     Ext.form.Field.prototype.msgTarget = "qtip";
     var id = "";
+    params = {id:2017030936};
     var win;
+    
     Ext.define("InitValue", {
         extend : "Ext.data.Model",
         fields : [ {
             name : "id",
-            type : "long"
+            type : "int"
         }, {
             name : "order_creattime",
             type : "string"
@@ -32,28 +34,29 @@ Ext.onReady(function() {
         }, {
             name : "order_receivename",
             type : "string"
-        }, {
-            name : "order_button",
-            type : "string"
         } ]
     });
 
     var initValueStore = Ext.create('Ext.data.JsonStore', {
         model :'InitValue',
-        data: [
-            {order_creattime:'2017-02-23 10:34:59',order_money:'15.8',order_state:2,order_address:'广东深圳',order_phone:'18318260000',order_receivename:'李先生',order_button:'<a href="接单请求?id=">接单</a>'},
-            {order_creattime:'2017-02-22 10:34:59',order_money:'16.8',order_state:2,order_address:'广东深圳',order_phone:'18318260000',order_receivename:'李先生',order_button:'<a href="接单请求?id=">接单</a>'},
-            {order_creattime:'2017-02-21 10:34:59',order_money:'17.8',order_state:2,order_address:'广东深圳',order_phone:'18318260000',order_receivename:'李先生',order_button:'<a href="接单请求?id=">接单</a>'}
-        ]
-        //proxy : {
-        //	type : 'ajax',
-        //	url : basePath + '/system/initvalue/getList',
-        //	reader : {
-        //		type : 'json',
-        //		root : 'returnData'
-        //	}
-        //},
-        //autoLoad: true
+        pageSize:20,
+        /*data:[
+            {order_creattime:'2017-02-23 10:34:59',order_money:'15.8',order_state:2,order_address:'广东深圳',order_phone:'18318260000',order_receivename:'李先生'},
+            {order_creattime:'2017-02-22 10:34:59',order_money:'16.8',order_state:3,order_address:'广东深圳',order_phone:'18318260000',order_receivename:'李先生'},
+            {order_creattime:'2017-02-21 10:34:59',order_money:'17.8',order_state:4,order_address:'广东深圳',order_phone:'18318260000',order_receivename:'李先生'}
+        ]}*/
+        proxy : {
+        	type : 'ajax',
+        	pageSize:20,
+        	actionMethods:{create: 'POST'},
+        	url : '/LaiFuCommunity/marketManage/order/getList',
+        	reader : {
+        		type : 'json',
+        		root : 'returnData.data',
+        		totalProperty: 'returnData.recordCount'
+        	}
+        },
+        autoLoad: true
     });
     var columns = [ new Ext.grid.RowNumberer({
         header : '序号',
@@ -61,7 +64,7 @@ Ext.onReady(function() {
         align : 'center'
     }), {
         header : "下单时间",
-        width : "15%",
+        width : "18%",
         align : 'center',
         dataIndex : 'order_creattime',
         sortable : true
@@ -76,7 +79,20 @@ Ext.onReady(function() {
         width : "10%",
         align : 'center',
         dataIndex : 'order_state',
-        sortable : true
+        sortable : true,
+        renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
+        	if(record.data.order_state == 1){
+        		return '未付款';
+        	}else if(record.data.order_state == 2){
+        		return '未接单';
+        	}else if(record.data.order_state == 3){
+        		return '已接单';
+        	}else if(record.data.order_state == 4){
+        		return '已发货';
+        	}else if(record.data.order_state == 5){
+        		return '交易成功';
+        	}
+        }
     },{
         header : "收货人",
         width : "10%",
@@ -99,9 +115,46 @@ Ext.onReady(function() {
         header : "操作",
         width : "10%",
         align : 'center',
-        dataIndex : 'order_button',
-        sortable : true
+        sortable : true,
+        renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
+        	var id = record.raw.id;
+        	if(record.data.order_state == 1){
+        		return '待付款';
+        	}else if(record.data.order_state == 2){
+        		return '<a href="javascript:void(0)" onclick="changeState('+id+')">接单</a>';
+        	}else if(record.data.order_state == 3){
+        		return '<a href="javascript:void(0)" onclick="changeState('+id+')">发货</a>';
+        	}else if(record.data.order_state == 4){
+        		return '<a href="javascript:void(0)" onclick="changeState('+id+')">送货员确认已送达</a>';
+        	}else if(record.data.order_state == 5){
+        		return '交易成功';
+        	}
+        }
     }];
+
+	changeState = function(id){
+    	Ext.Ajax.request({
+            waitMsg : '正在进行操作请稍后',
+            waitTitle : '提示',
+            url : '/LaiFuCommunity/marketManage/order/update',
+            params:{
+                id:id
+            },
+            method : 'POST',
+            success : function(response, action) {
+                var result = JSON.parse(response.responseText);
+                if(result.returnResult==200){
+                    Ext.Msg.alert('提示', '操作成功');
+                    initValueGrid.store.reload();
+                }else
+                    Ext.Msg.alert('提示', result.returnDetail);
+            },
+            failure : function(form, action) {
+                Ext.Msg.alert('提示', '操作失败' + form.status);
+            }
+        });
+    
+    }
 
     var toolbar = new Ext.Toolbar({
         items : [ "订单信息管理：", "-", {
@@ -116,25 +169,32 @@ Ext.onReady(function() {
 
     var initValueGrid = Ext.create('Ext.grid.Panel', {
         width : '100%',
-        store : initValueStore,
+        dockedItems:[{
+	        xtype: 'pagingtoolbar',
+            emptyMsg: "没有数据",
+            displayMsg:"",
+	        store: initValueStore,
+	        dock: 'bottom',
+	        displayInfo: true
+	    }],
+	    store: initValueStore,
         columnLines : true,
         height : "100%",
         rowLines : true,
-        selType : "checkboxmodel",
         multiSelect : true,
         autoScroll : true,
         tbar : toolbar,
         viewConfig : {
             forceFit : true,
-            enableTextSelection:true,
+            enableTextSelection:false,
             stripeRows : true
         },
         columns : columns,
         listeners : {
             'itemdblclick' : function(dataview, record, item, index, e) {
-                win.show();
-                //id = record.raw.id;
-                //loadForm();
+            	params.id = record.raw.id;
+            	orderInfoGrid.store.reload();
+            	win.show();
             }
         }
     })
@@ -156,8 +216,14 @@ Ext.onReady(function() {
     Ext.define("orderInfo", {
         extend : "Ext.data.Model",
         fields : [ {
-            name : "product",
-            type : "object"
+            name : "prouduct_photo1",
+            type : "string"
+        },{
+            name : "prouduct_name",
+            type : "string"
+        },{
+            name : "prouduct_price",
+            type : "double"
         }, {
             name : "orderItems_count",
             type : "int"
@@ -169,19 +235,22 @@ Ext.onReady(function() {
 
     var orderInfoStore = Ext.create('Ext.data.JsonStore', {
         model :'orderInfo',
-        data: [
+        /*data: [
+            {product:{prouduct_photo1:'www.baidu.com',prouduct_name:'饼干18',prouduct_price:7.5},orderItems_count:3,orderItems_subtotal:22.5},
             {product:{prouduct_photo1:'www.baidu.com',prouduct_name:'饼干18',prouduct_price:7.5},orderItems_count:3,orderItems_subtotal:22.5},
             {product:{prouduct_photo1:'www.baidu.com',prouduct_name:'饼干18',prouduct_price:7.5},orderItems_count:3,orderItems_subtotal:22.5},
             {product:{prouduct_photo1:'www.baidu.com',prouduct_name:'饼干18',prouduct_price:7.5},orderItems_count:3,orderItems_subtotal:22.5}
-        ]
-        //proxy : {
-        //	type : 'ajax',
-        //	url : basePath + '/system/initvalue/getList',
-        //	reader : {
-        //		type : 'json',
-        //		root : 'returnData'
-        //	}
-        //},
+        ]*/
+        proxy : {
+        	type : 'ajax',
+        	actionMethods:{create: 'POST'},
+        	url :'/LaiFuCommunity/marketManage/order/get',
+        	extraParams: params,
+        	reader : {
+        		type : 'json',
+        		root : 'returnData'
+        	}
+        }
     });
     var orderInfocolumns = [ new Ext.grid.RowNumberer({
         header : '序号',
@@ -191,28 +260,25 @@ Ext.onReady(function() {
         header : "商品图片",
         width : "20%",
         align : 'center',
-        dataIndex : 'product.prouduct_photo1',
+        dataIndex : 'prouduct_photo1',
         sortable : true,
         renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
-            return '<input id="show" type="image" width="70px" height="70px"  src="'+record.data.product.prouduct_photo1+'"/>'
+            return '<input id="show" type="image" width="70px" height="70px"  src="'+record.data.prouduct_photo1+'"/>'
         }
     },{
         header : "商品名称",
         width : "30%",
         align : 'center',
-        dataIndex : 'product.prouduct_name',
+        dataIndex : 'prouduct_name',
         sortable : true,
-        renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
-            return record.data.product.prouduct_name;
-        }
     },{
         header : "单价",
         width : "15%",
         align : 'center',
-        dataIndex : 'product.prouduct_price',
+        dataIndex : 'prouduct_price',
         sortable : true,
         renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
-            return record.data.product.prouduct_price;
+            return record.data.prouduct_price;
         }
     },{
         header : "数量",
@@ -230,7 +296,7 @@ Ext.onReady(function() {
 
     var orderInfoGrid = Ext.create('Ext.grid.Panel', {
         width : '100%',
-        store : orderInfoStore,
+        store:orderInfoStore,
         columnLines : true,
         height : "100%",
         rowLines : true,
@@ -238,7 +304,7 @@ Ext.onReady(function() {
         autoScroll : true,
         viewConfig : {
             forceFit : true,
-            enableTextSelection:true,
+            enableTextSelection:false,
             stripeRows : true
         },
         columns : orderInfocolumns,
@@ -249,21 +315,6 @@ Ext.onReady(function() {
             }
         } ]
     })
-
-    //var initValuePanel = Ext.create('Ext.panel.Panel', {
-    //    renderTo : 'spInfoManage',
-    //    width : '100%',
-    //    height : '100%',
-    //    collapseMode : 'mini',
-    //    margins : '0 0 0 0',
-    //    autoScroll : false,
-    //    layout : {
-    //        type : 'hbox',
-    //        align : 'stretch'
-    //    },
-    //    items : [ initValueGrid ]
-    //})
-
 
     var win = new Ext.Window({
         width : 1000,
@@ -279,35 +330,5 @@ Ext.onReady(function() {
         resizable : false,
         items : [ orderInfoGrid ]
     });
-
-    function loadForm() {
-        Ext.Ajax.request({
-            waitMsg : '正在读取商品信息请稍后',
-            waitTitle : '提示',
-            url : basePath + '/system/initvalue/get/',
-            params:{
-                id:id
-            },
-            method : 'POST',
-            success : function(response, action) {
-                var result = JSON.parse(response.responseText);
-                if(result.returnResult==200){
-                    Ext.Object.each(result.returnData,
-                        function(key, value, myself) {
-                            if (form.form.findField(key) != null)
-                                form.form.findField(key).setValue(value);
-                        });
-                    form.form.findField("iosFileData").setRawValue(result.returnData.iosImageUrl);
-                    form.form.findField("androidFileData").setRawValue(result.returnData.androidImageUrl);
-                    win.showImages.show_iosImageUrl.setSrc(result.returnData.iosImageUrl);
-                    win.showImages.show_androidImageUrl.setSrc(result.returnData.androidImageUrl);
-                }else
-                    Ext.Msg.alert('提示', result.returnDetail);
-            },
-            failure : function(form, action) {
-                Ext.Msg.alert('提示', '商品信息加载失败' + form.status);
-            }
-        });
-    }
 });
 

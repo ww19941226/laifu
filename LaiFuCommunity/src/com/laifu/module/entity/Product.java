@@ -37,6 +37,15 @@ public class Product implements Serializable {
 	private String product_photo4;
 	private String product_photo5;
 	private String product_place;// 商品产地
+	private int number;
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
 
 	public String getProduct_place() {
 		return product_place;

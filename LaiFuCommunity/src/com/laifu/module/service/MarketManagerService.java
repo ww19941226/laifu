@@ -8,6 +8,7 @@ import com.laifu.module.entity.Category;
 import com.laifu.module.entity.CategorySecond;
 import com.laifu.module.entity.Order;
 import com.laifu.module.entity.OrderItems;
+import com.laifu.module.entity.PageData;
 import com.laifu.module.entity.Product;
 import com.laifu.module.entity.ReturnData;
 
@@ -57,6 +58,8 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	public void saveOrder(Order order) throws Exception;
 
 	public int countOrderAll();
+	
+	public int countProductAll();
 
 	public void saveOrderItems(OrderItems orderItems);
 
@@ -82,4 +85,12 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	ReturnData getCategorySecond(int categorysecond_id) throws Exception;
 	
 	ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception;
+	
+	ReturnData getOrderList(PageData pageData) throws Exception;
+	
+	ReturnData getOrder(int id) throws Exception;
+	
+	ReturnData updateOrder(int id) throws Exception;
+	
+	ReturnData getProductList(PageData pageData) throws Exception;
 }

@@ -77,7 +77,7 @@ Ext.onReady(function() {
         tbar : toolbar,
         viewConfig : {
             forceFit : true,
-            enableTextSelection:true,
+            enableTextSelection:false,
             stripeRows : true
         },
         columns : columns,

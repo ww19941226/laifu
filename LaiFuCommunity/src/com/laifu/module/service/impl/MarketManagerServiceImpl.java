@@ -1,5 +1,6 @@
 package com.laifu.module.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import com.laifu.module.entity.Category;
 import com.laifu.module.entity.CategorySecond;
 import com.laifu.module.entity.Order;
 import com.laifu.module.entity.OrderItems;
+import com.laifu.module.entity.PageData;
 import com.laifu.module.entity.Product;
 import com.laifu.module.entity.ReturnData;
 import com.laifu.module.service.MarketManagerService;
@@ -239,6 +241,121 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	
 	/*二级分类后台管理系统相关完*/
 	
+	
+	/*订单管理后台管理系统相关*/
+	@Override
+	public ReturnData getOrderList(PageData pageData) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			String hql = "from Order order by order_id desc";
+			List<Order> list = orderDao.listAll(hql, pageData.getPageNo(), 20);
+			JSONArray jsonArray = new JSONArray();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dateString = "";
+			for(int i=0;i<list.size();i++){
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("id", list.get(i).getOrder_id());
+				dateString = formatter.format(list.get(i).getOrder_creattime());
+				jsonObject.put("order_creattime", dateString);
+				jsonObject.put("order_money", list.get(i).getOrder_money());
+				jsonObject.put("order_state", list.get(i).getOrder_state());
+				jsonObject.put("order_receivename", list.get(i).getOrder_receivename());
+				jsonObject.put("order_phone", list.get(i).getOrder_phone());
+				jsonObject.put("order_address", list.get(i).getOrder_address());
+				jsonArray.add(jsonObject);
+			}
+			pageData.setRecordCount(countOrderAll());
+			pageData.setData(jsonArray);
+			returnData.setReturnData(pageData);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("数据获取失败");
+		}
+		return returnData;
+	}
+
+	@Override
+	public ReturnData getOrder(int id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			List<OrderItems> list = orderItemsDao.getAllOrderItems(id);
+			JSONArray jsonArray = new JSONArray();
+			for(int i=0;i<list.size();i++){
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("prouduct_photo1", list.get(i).getProduct().getProduct_photo1());
+				jsonObject.put("prouduct_name", list.get(i).getProduct().getProduct_name());
+				jsonObject.put("prouduct_price", list.get(i).getProduct().getProduct_price()*list.get(i).getProduct().getProduct_discount()*0.1);
+				jsonObject.put("orderItems_count", list.get(i).getOrderItems_count());
+				jsonObject.put("orderItems_subtotal", list.get(i).getOrderItems_subtotal());
+				jsonArray.add(jsonObject);
+			}
+			returnData.setReturnData(jsonArray);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("获取数据失败");
+		}
+		return returnData;
+	}
+
+	@Override
+	public ReturnData updateOrder(int id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			Order order = orderDao.get(id);
+			order.setOrder_state(order.getOrder_state()+1);
+			orderDao.update(order);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("更新数据失败");
+		}
+		return returnData;
+	}
+	/*订单管理后台管理系统相关完*/
+	
+	/*商品管理后台管理系统相关*/
+	@Override
+	public ReturnData getProductList(PageData pageData) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			String hql = "from Product";
+			List<Product> list = productDao.listAll(hql, pageData.getPageNo(), 20);
+			JSONArray jsonArray = new JSONArray();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dateString = "";
+			for(int i=0;i<list.size();i++){
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("id", list.get(i).getProduct_id());
+				dateString = formatter.format(list.get(i).getProduct_creattime());
+				jsonObject.put("prouduct_creattime", dateString);
+				jsonObject.put("prouduct_name", list.get(i).getProduct_name());
+				jsonObject.put("prouduct_price", list.get(i).getProduct_price());
+				jsonObject.put("number", list.get(i).getNumber());
+				jsonObject.put("product_place", list.get(i).getProduct_place());
+				if(list.get(i).getIs_imported() == 0){
+					jsonObject.put("is_imported", "否");
+				}else{
+					jsonObject.put("is_imported", "是");
+				}
+				jsonObject.put("prouduct_discount", list.get(i).getProduct_discount());
+				jsonObject.put("prouduct_deal", list.get(i).getProduct_deal());
+				jsonObject.put("product_category_name", list.get(i).getCategorySecond().getCategory().getCategory_name());
+				jsonObject.put("product_categorySecond_name", list.get(i).getCategorySecond().getCategorysecond_name());
+				jsonArray.add(jsonObject);
+			}
+			pageData.setRecordCount(countProductAll());
+			pageData.setData(jsonArray);
+			returnData.setReturnData(pageData);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("数据获取失败");
+		}
+		return returnData;
+	}
+	
 	@Override
 	public List<CategorySecond> getAllCategorySecond(int id) throws Exception {
 		// TODO Auto-generated method stub
@@ -375,6 +492,12 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		// TODO Auto-generated method stub
 		return orderDao.countAll();
 	}
+	
+	@Override
+	public int countProductAll() {
+		// TODO Auto-generated method stub
+		return productDao.countAll();
+	}
 
 	@Override
 	public void saveOrderItems(OrderItems orderItems) {
@@ -394,7 +517,4 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		orderDao.deleteObject(order);
 
 	}
-
-	
-
 }
