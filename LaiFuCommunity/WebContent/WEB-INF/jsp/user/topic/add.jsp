@@ -79,7 +79,7 @@
 
 
 <!--底部链接和版权信息等-->
-<div class="footer">
+<div class="footer" style="text-align: center">
     <div class="link">
         <a href="<c:url value='/about_us'/>">关于我们</a>
         |

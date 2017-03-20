@@ -16,7 +16,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 	@Override
 	public List<Product> getHotJinkou() throws Exception {
 		// TODO Auto-generated method stub
-		String hql = "from Product where  is_imported=1 order by product_deal Desc";
+		String hql = "from Product where  is_imported=1 and number!=0 order by product_deal Desc";
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult(0);
 		query.setMaxResults(20);
@@ -26,7 +26,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 
 	@Override
 	public List<Product> getNewJinkou() throws Exception {
-		String hql = "from Product where  is_imported=1 order by product_creattime desc";
+		String hql = "from Product where  is_imported=1 and number!=0 order by product_creattime desc";
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult(0);
 		query.setMaxResults(20);
@@ -37,7 +37,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 	@Override
 	public List<Product> getcuxiaoProducts() throws Exception {
 		// TODO Auto-generated method stub
-		String hqlString = "from Product where is_discount=1 order by product_discount ,product_creattime desc ";
+		String hqlString = "from Product where is_discount=1 and number!=0 order by product_discount ,product_creattime desc ";
 		Query query = getSession().createQuery(hqlString);
 		query.setFirstResult(0);
 		query.setMaxResults(8);
@@ -47,7 +47,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 	@Override
 	public List<Product> getremaiProducts() throws Exception {
 		// TODO Auto-generated method stub
-		String hqlString = "from Product order by product_deal desc,product_creattime desc ";
+		String hqlString = "from Product where number!=0 order by product_deal desc,product_creattime desc ";
 		Query query = getSession().createQuery(hqlString);
 		query.setFirstResult(0);
 		query.setMaxResults(8);
@@ -57,7 +57,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 	@Override
 	public List<Product> getxinpinProducts() throws Exception {
 		// TODO Auto-generated method stub
-		String hql = "from Product order by product_creattime desc ";
+		String hql = "from Product where number!=0 order by product_creattime desc ";
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult(0);
 		query.setMaxResults(8);
@@ -66,7 +66,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 
 	@Override
 	public List<Product> getjinkouProducts() throws Exception {
-		String hql = "from Product where  is_imported=1 order by product_creattime ";
+		String hql = "from Product where  is_imported=1 and number!=0 order by product_creattime ";
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult(0);
 		query.setMaxResults(8);
@@ -79,5 +79,15 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 		String hqlString = "from Product where product_id=" + id;
 
 		return (Product) getSession().createQuery(hqlString).uniqueResult();
+	}
+
+	@Override
+	public void addProduct(Product product) throws Exception {
+		getSession().save(product);		
+	}
+
+	@Override
+	public void updateProduct(Product product) throws Exception {
+		getSession().update(product);
 	}
 }

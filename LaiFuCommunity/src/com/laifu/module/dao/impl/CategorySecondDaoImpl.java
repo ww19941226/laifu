@@ -29,6 +29,14 @@ public class CategorySecondDaoImpl extends BaseDaoImpl<CategorySecond, Integer>
 		String hql = "from CategorySecond";
 		return getSession().createQuery(hql).list();
 	}
+	
+	@Override
+	public List<CategorySecond> getAllCategorySecondForManageSp(int category_id) throws Exception {
+		// TODO Auto-generated method stub
+
+		String hql = "from CategorySecond where category.category_id="+category_id;
+		return getSession().createQuery(hql).list();
+	}
 
 	@Override
 	public CategorySecond findBycsid(Integer id) throws Exception {

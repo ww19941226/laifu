@@ -109,6 +109,10 @@
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
 <script>
     $(document).ready(function () {
+    	var numberMsg = '<%=request.getSession().getAttribute("numberMsg")%>';
+    	if(numberMsg != 'null'){
+    		alert(numberMsg);
+    	}
         //删除一个商品
         $(".deleteOne").click(function () {
         	var deleteOneConfirm = confirm("确定删除该商品？");

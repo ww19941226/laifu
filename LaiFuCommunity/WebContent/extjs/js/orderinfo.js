@@ -119,7 +119,7 @@ Ext.onReady(function() {
         renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
         	var id = record.raw.id;
         	if(record.data.order_state == 1){
-        		return '待付款';
+        		return '<a href="javascript:void(0)" onclick="changeState('+id+')">收款</a>';
         	}else if(record.data.order_state == 2){
         		return '<a href="javascript:void(0)" onclick="changeState('+id+')">接单</a>';
         	}else if(record.data.order_state == 3){

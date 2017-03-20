@@ -6,11 +6,12 @@ Ext.onReady(function() {
     Ext.form.Field.prototype.msgTarget = "qtip";
     var id = "";
     var win;
+    params = {category_id:1};
     Ext.define("InitValue", {
         extend : "Ext.data.Model",
         fields : [ {
             name : "id",
-            type : "long"
+            type : "int"
         }, {
             name : "prouduct_creattime",
             type : "string"
@@ -19,10 +20,10 @@ Ext.onReady(function() {
             type : "string"
         }, {
             name : "prouduct_price",
-            type : "string"
+            type : "double"
         }, {
             name : "number",
-            type : "string"
+            type : "int"
         }, {
             name : "product_place",
             type : "string"
@@ -40,6 +41,9 @@ Ext.onReady(function() {
             type : "string"
         }, {
             name : "product_categorySecond_name",
+            type : "string"
+        }, {
+            name : "product_photo1",
             type : "string"
         } ]
     });
@@ -77,19 +81,19 @@ Ext.onReady(function() {
         sortable : true
     },{
         header : "商品名称",
-        width : "23%",
+        width : "18%",
         align : 'center',
         dataIndex : 'prouduct_name',
         sortable : true
     },{
         header : "商品单价",
-        width : "10%",
+        width : "7%",
         align : 'center',
         dataIndex : 'prouduct_price',
         sortable : true
     },{
         header : "商品货存",
-        width : "10%",
+        width : "7%",
         align : 'center',
         dataIndex : 'number',
         sortable : true
@@ -144,7 +148,8 @@ Ext.onReady(function() {
         }, {
             text : '刷新',
             handler : function() {
-                initValueGrid.store.reload();
+            	initValueStore.removeAll();
+				initValueStore.reload();
             }
         } ]
     });
@@ -201,66 +206,94 @@ Ext.onReady(function() {
         items : [ initValueGrid ]
     })
 
-    //产地
-    //创建数据源[数组数据源]
-    var combostore = new Ext.data.ArrayStore({
-        fields: ['categorySecondplace_id', 'categorySecond_name'],
-        data: [[1, '欧美'], [2, '泰国'], [3, '港澳台']]
-    });
-    //创建Combobox
-    var combobox = new Ext.form.ComboBox({
-        fieldLabel: '产地',
-        labelAlign : 'right',
-        store: combostore,
-        displayField: 'categorySecond_name',
-        valueField: 'categorySecondplace_id',
-        triggerAction: 'all',
-        emptyText: '请选择...',
-        allowBlank: false,
-        blankText: '请选择产地',
-        editable: false,
-        mode: 'local'
-    });
 
     //一级分类
     //创建数据源[数组数据源]
     var Onecombostore = new Ext.data.ArrayStore({
-        fields: ['categorySecondplace_id', 'categorySecond_name'],
-        data: [[1, '饼干'], [2, '糖果'], [3, '日常用品']]
+        fields: ['category_id', 'category_name'],
+        proxy : {
+        	type : 'ajax',
+        	url : '/LaiFuCommunity/marketManage/categories/getList',
+        	reader : {
+        		type : 'json',
+        		root : 'returnData'
+        	}
+        },
+        autoLoad: true
     });
     //创建Combobox
     var Onecombobox = new Ext.form.ComboBox({
         fieldLabel: '一级分类',
         labelAlign : 'right',
         store: Onecombostore,
-        displayField: 'categorySecond_name',
-        valueField: 'categorySecondplace_id',
+        displayField: 'category_name',
+        valueField: 'category_id',
         triggerAction: 'all',
         emptyText: '请选择...',
         allowBlank: false,
         blankText: '请选择一级分类',
         editable: false,
-        mode: 'local'
+        name:"category_id",
+        mode: 'remote',
+        listeners : {
+            change: function (category_id) {
+            form.form.findField("categorysecond_id").setValue("");
+				params.category_id = category_id.value;
+				Twocombobox.store.reload();
+           	}
+        }
     });
 
     //二级分类
     //创建数据源[数组数据源]
     var Twocombostore = new Ext.data.ArrayStore({
-        fields: ['categorySecondplace_id', 'categorySecond_name'],
-        data: [[1, '饼干'], [2, '糖果'], [3, '日常用品']]
+        fields: ['categorysecond_id', 'categorysecond_name'],
+        proxy : {
+        	type : 'ajax',
+        	url : '/LaiFuCommunity/marketManage/categorySecond/getListForSp',
+        	extraParams: params,
+        	reader : {
+        		type : 'json',
+        		root : 'returnData'
+        	}
+        },
+        autoLoad: true
     });
     //创建Combobox
     var Twocombobox = new Ext.form.ComboBox({
         fieldLabel: '二级分类',
         labelAlign : 'right',
         store: Twocombostore,
-        displayField: 'categorySecond_name',
-        valueField: 'categorySecondplace_id',
+        displayField: 'categorysecond_name',
+        valueField: 'categorysecond_id',
         triggerAction: 'all',
         emptyText: '请选择...',
         allowBlank: false,
         blankText: '请选择二级分类',
         editable: false,
+        name:"categorysecond_id",
+        mode: 'remote'
+    });
+    
+    //创建数据源[数组数据源]
+    var jinkoucombostore = new Ext.data.SimpleStore({
+        fields: ['is_imported', 'is_imported_name'],
+        data:[['1','是'],['0','否']],
+        autoLoad: true
+    });
+    //创建Combobox
+    var jinkoucombobox = new Ext.form.ComboBox({
+        fieldLabel: '是否进口',
+        labelAlign : 'right',
+        store: jinkoucombostore,
+        displayField: 'is_imported_name',
+        valueField: 'is_imported',
+        triggerAction: 'all',
+        emptyText: '请选择...',
+        allowBlank: false,
+        blankText: '请选择是否进口',
+        editable: false,
+        name:"is_imported",
         mode: 'local'
     });
 
@@ -297,26 +330,32 @@ Ext.onReady(function() {
                 emptyText : '请输入货存',
                 blankText : '请输入货存',
                 allowBlank : false
-            },
-                combobox,Onecombobox,Twocombobox,
+            }, {
+                fieldLabel : '产地',
+                name : 'product_place',
+                emptyText : '请输入产地',
+                blankText : '请输入产地',
+                allowBlank : false
+            },jinkoucombobox,
+                Onecombobox,Twocombobox,
                 {
                     fieldLabel : '打折数',
                     name : 'prouduct_discount',
                     emptyText : '请输入打折数',
                     blankText : '请输入打折数',
-                    value:10,
                     allowBlank : false
                 },{
-                xtype     : 'filefield',
+                xtype: 'filefield',
                 fieldLabel : '商品图片',
-                name : 'prouduct_photo1',
+                name : 'file',
+                id:'photo',
                 allowBlank : true,
                 listeners : {
                     change: function (btn, v) {
 
                         //得到选择的图片路径
                         var url = 'file://'
-                            + form.form.findField('prouduct_photo1').getValue();
+                            + form.form.findField('file').getValue();
                         var img_reg = /\.([jJ][pP][gG]){1}$|\.([jJ][pP][eE][gG]){1}$|\.([gG][iI][fF]){1}$|\.([pP][nN][gG]){1}$|\.([bB][mM][pP]){1}$/;
                         //是否是规定的图片类型
                         if (img_reg.test(url)) {
@@ -329,13 +368,34 @@ Ext.onReady(function() {
                                 var file = btn.fileInputEl.dom.files[0];
                                 var url = URL.createObjectURL(file);  //通过createObjectURL获取url
 //	                    		var url = "D:\\work\\soft\\aaa.png";
-//                                win.showImages["show_prouduct_photo1"].setSrc(url);
+//                                win.showImages["show_product_photo"].setSrc(url);
                                 win.showImages["show_Image"].setSrc(url);
+                                
+                                //上传
+                                $.ajaxFileUpload({  
+							        //处理文件上传操作的服务器端地址  
+							        url:"/LaiFuCommunity/marketManage/uploadPicture",  
+							        secureuri:false,                           //是否启用安全提交,默认为false   
+							        fileElementId:'photo-button-fileInputEl',               		//文件选择框的id属性  
+							        dataType:'text',                           //服务器返回的格式,可以是json或xml等  
+							        success:function(data, status){ 			//服务器响应成功时的处理函数  
+							        	data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">','');
+							        	data = data.replace('</pre>','');
+							        	form.form.findField('photo_lujing').setValue(data);
+							        },  
+							        error:function(data, status, e){ //服务器响应失败时的处理函数  
+							             alert("头像更改失败！");  
+							        }  
+							    });
                             }
                         }
                     }
                 }
-            } ]
+            },{
+                    fieldLabel : '上传图片后生成的图片路径',
+                    name : 'photo_lujing',
+                    readOnly:true
+                } ]
         } ]
 
     });
@@ -404,7 +464,7 @@ Ext.onReady(function() {
         form.form.reset();
         form.option = 'add';
         win.setTitle("新增商品");
-
+		win.showImages["show_Image"].setSrc("");
         win.show();
     }
 
@@ -424,35 +484,51 @@ Ext.onReady(function() {
     }
 
     function submitForm() {
+    var prouduct_name_add = form.form.findField('prouduct_name').getValue();
+    var prouduct_price_add = form.form.findField('prouduct_price').getValue();
+    var number_add = form.form.findField('number').getValue();
+    var product_place_add = form.form.findField('product_place').getValue();
+    var is_imported_add = form.form.findField('is_imported').getValue();
+    var category_id_add = form.form.findField('category_id').getValue();
+    var categorysecond_id_add = form.form.findField('categorysecond_id').getValue();
+    var prouduct_discount_add = form.form.findField('prouduct_discount').getValue();
+    var photo_lujing_add = form.form.findField('photo_lujing').getValue();
         if (form.option == 'add') {
-            form.form.submit({
-                clientValidation : true,
-                waitMsg : '正在新增商品请稍后',
-                waitTitle : '商品信息',
-                url : basePath + '/system/initvalue/add',
-                params : {
-                    'initKey.Id' : initKeyId
+            $.ajax({  
+            	type:'post',
+		        //处理文件上传操作的服务器端地址  
+		        url:"/LaiFuCommunity/marketManage/product/add",  
+		        data:{
+                	prouduct_name_add:prouduct_name_add,
+                	prouduct_price_add:prouduct_price_add,
+                	number_add:number_add,
+                	product_place_add:product_place_add,
+                	is_imported_add:is_imported_add,
+                	category_id_add:category_id_add,
+                	categorysecond_id_add:categorysecond_id_add,
+                	prouduct_discount_add:prouduct_discount_add,
+                	photo_lujing_add
                 },
-                method : 'POST',
-                success : function(form, action) {
-                    if(action.result.returnResult==200){
-                        win.hide(action);
-                        Ext.Msg.alert('提示', '新增商品成功');
-                        initValueStore.reload();
-                    }else
-                        Ext.Msg.alert('提示', action.result.returnDetail);
-
-                },
-                failure : function(form, action) {
-                    Ext.Msg.alert('提示', '新增商品失败:' + action.result.msg);
-                }
-            });
+		        success:function(data, status){ 			//服务器响应成功时的处理函数  
+			        if(data.returnResult==200){
+			        	win.hide();
+	                    Ext.Msg.alert('提示', '添加商品信息成功');
+	                    initValueStore.reload();
+                    }
+                    else{
+                    	alert("添加商品信息失败！");  
+                    }
+		        },  
+		        error:function(data, status, e){ //服务器响应失败时的处理函数  
+		             alert("添加商品信息失败！");  
+		        }  
+		    });
         } else if (form.option == 'update') {
             form.form.submit({
                 clientValidation : true,
                 waitMsg : '正在修改商品信息请稍后',
                 waitTitle : '商品信息',
-                url : basePath + '/system/initvalue/update',
+                url :'/LaiFuCommunity/marketManage/product/update',
                 params : {
                     id : id
                 },
@@ -477,7 +553,7 @@ Ext.onReady(function() {
         Ext.Ajax.request({
             waitMsg : '正在读取商品信息请稍后',
             waitTitle : '提示',
-            url : basePath + '/system/initvalue/get/',
+            url : '/LaiFuCommunity/marketManage/product/get',
             params:{
                 id:id
             },
@@ -490,10 +566,15 @@ Ext.onReady(function() {
                             if (form.form.findField(key) != null)
                                 form.form.findField(key).setValue(value);
                         });
-                    form.form.findField("iosFileData").setRawValue(result.returnData.iosImageUrl);
-                    form.form.findField("androidFileData").setRawValue(result.returnData.androidImageUrl);
-                    win.showImages.show_iosImageUrl.setSrc(result.returnData.iosImageUrl);
-                    win.showImages.show_androidImageUrl.setSrc(result.returnData.androidImageUrl);
+                    form.form.findField("category_id").setValue(result.returnData.category.category_id);
+                    form.form.findField("categorysecond_id").setValue(result.returnData.categorySecond.categorySecond_id);
+                    if(result.returnData.is_imported == 1){
+                    	form.form.findField("is_imported").setValue("是");
+                    }else{
+                    	form.form.findField("is_imported").setValue("否");
+                    }
+                    form.form.findField("photo").setRawValue(result.returnData.product_photo1);
+                    win.showImages.show_Image.setSrc("/LaiFuCommunity"+result.returnData.product_photo1);
                 }else
                     Ext.Msg.alert('提示', result.returnDetail);
             },

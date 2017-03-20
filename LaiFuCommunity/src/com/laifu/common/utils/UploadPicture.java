@@ -14,8 +14,12 @@ public class UploadPicture {
 		try {
 			String imgpath="/upload";
 			String path = request.getServletContext().getRealPath(imgpath);
-			String fileName = getFileName() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-			
+			String fileName;
+			if(file.getOriginalFilename().equals("")){
+				fileName = getFileName()+".jpg";
+			}else{
+				fileName = getFileName() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+			}
 			if(preFileName != null && preFileName.equals("null") && !preFileName.trim().equals("")) {
 				File preFile = new File(path, preFileName.substring(imgpath.length()+1));
 				if(preFile.exists()) preFile.delete();

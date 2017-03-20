@@ -14,6 +14,8 @@ public interface CategorySecondDao extends IBaseDao<CategorySecond, Integer> {
 
 	List<CategorySecond> getAllCategorySecondForManage() throws Exception;
 	
+	List<CategorySecond> getAllCategorySecondForManageSp(int category_id) throws Exception;
+	
 	void addCategory(CategorySecond categorySecond) throws Exception;
 	
 	void updateCategory(CategorySecond categorySecond) throws Exception;

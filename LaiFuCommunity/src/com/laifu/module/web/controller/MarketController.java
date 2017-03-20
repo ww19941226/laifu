@@ -3,6 +3,7 @@ package com.laifu.module.web.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,7 +55,7 @@ public class MarketController {
 		request.setAttribute("rmProducts", remaiProducts);
 		request.setAttribute("xpProducts", xinpinProducts);
 		request.setAttribute("jkProducts", jinkouProducts);
-		return "market/index";
+		return "/market/index";
 	}
 
 	/*
@@ -64,7 +65,7 @@ public class MarketController {
 	private String gotoMarketcuxiao(HttpServletRequest request)
 			throws Exception {
 		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-		String hql = "from Product  where is_discount=1 order by product_discount";
+		String hql = "from Product  where is_discount=1 and number!=0 order by product_discount";
 		Page<Product> page = marketManagerService.cuxiao_listAll(hql, pn, 5);
 		request.setAttribute("page", page);
 
@@ -90,7 +91,7 @@ public class MarketController {
 	@RequestMapping(value = "/market/newProducts", method = { RequestMethod.GET })
 	private String gotoMarketnew(HttpServletRequest request) throws Exception {
 		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-		String hql = "from Product order by product_creattime desc";
+		String hql = "from Product where number!=0 order by product_creattime desc";
 		Page<Product> page = marketManagerService.xinpin_listAll(hql, pn, 10);
 		request.setAttribute("page", page);
 		return "market/xinpin";
@@ -107,7 +108,7 @@ public class MarketController {
 				request.getParameter("searchText"), "utf-8");
 		searchText = new String(searchText.getBytes("ISO-8859-1"), "utf-8");
 		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-		String hqlString = "from Product where product_name like '%"
+		String hqlString = "from Product where number!=0 and product_name like '%"
 				+ searchText + "%' order by product_id,product_deal desc ";
 		Page<Product> page = marketManagerService.getSearchProducts(hqlString,
 				pn, 10);
@@ -124,7 +125,7 @@ public class MarketController {
 		search = URLDecoder.decode(request.getParameter("search"), "utf-8");
 		search = new String(search.getBytes("ISO-8859-1"), "utf-8");
 		int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-		String hql = "from Product where is_imported=1 and product_place='"
+		String hql = "from Product where is_imported=1 and number!=0 and product_place='"
 				+ search + "'order by product_deal desc";
 		Page<Product> page = marketManagerService.getSearchjinkouProducts(hql,
 				pn, 10);
@@ -253,7 +254,21 @@ public class MarketController {
 	@RequestMapping(value = "/market/confirmDD", method = { RequestMethod.GET })
 	public String gotoConfirmDingdan(HttpServletRequest request)
 			throws Exception {
-		if (((Cart) request.getSession().getAttribute("cart")).getTotalcount() == 0) {
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		if (cart.getTotalcount() == 0) {
+			return "market/cart";
+		}
+		String numberMsg = "";
+		for (CartItem cartItem : cart.getCartItems()) {
+			Product product = marketManagerService.finByPid(cartItem.getProduct().getProduct_id());
+			int findNumber = product.getNumber();
+			if(findNumber<cartItem.getCount()){
+				numberMsg += product.getProduct_name()+"的货存仅为"+findNumber+";";
+			}
+		}
+		if(numberMsg!=""){
+			numberMsg+="请重新提交订单!";
+			request.getSession().setAttribute("numberMsg", numberMsg);
 			return "market/cart";
 		}
 		return "market/dingdan";
@@ -358,7 +373,8 @@ public class MarketController {
 	/*************************** 购物车功能 ********************************************************************************/
 	/* 跳转到购物车页面 */
 	@RequestMapping(value = "/market/myCart", method = { RequestMethod.GET })
-	private String myCart() {
+	private String myCart(HttpServletRequest request) {
+		request.getSession().removeAttribute("numberMsg");
 		return "market/cart";
 	}
 

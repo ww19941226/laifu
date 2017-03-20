@@ -101,7 +101,7 @@
 <div class="hot_content">
 <c:forEach items="${page.items }" var="xpp">
     <div class="hot_content_content fl">
-            <img src="${pageContext.request.contextPath}/images/sp.jpg">
+            <img src='<c:url value="${xpp.product_photo1 }"/>'>
             <p class="hot_content_content_ms">${xpp.product_name }</p>
             <p class="hot_content_content_dj">单价:￥<c:out value="${xpp.product_price*xpp.product_discount/10}"></c:out></p>
         <div id="${xpp.product_id }" class="gwc_div">

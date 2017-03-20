@@ -78,7 +78,7 @@
     <div class="hot_content">
     	<c:forEach  items="${ jinkouHotList}" var="jk">
         <div class="hot_content_content fl">
-             	<img src="${pageContext.request.contextPath}/${jk.product_photo1}">
+             	<img src='<c:url value="${jk.product_photo1 }"/>'>
                 <p class="hot_content_content_ms">${jk.product_name }</p>
                 <p class="hot_content_content_dj">￥<c:out value="${jk.product_price*jk.product_discount/10}"></c:out></p>
             <div id="${jk.product_id }" class="gwc_div">
@@ -97,7 +97,7 @@
     <div class="hot_content">
     	<c:forEach items="${jinkoNewList}" var="jkn">
         <div class="hot_content_content fl">
-                <img src="${pageContext.request.contextPath}/${jkn.product_photo1}">
+                <img src='<c:url value="${jkn.product_photo1 }"/>'>
                 <p class="hot_content_content_ms">${jkn.product_name }</p>
                 <p class="hot_content_content_dj">￥<c:out value="${jkn.product_price*jkn.product_discount/10}"></c:out></p>
             <div id="${jkn.product_id }" class="gwc_div">

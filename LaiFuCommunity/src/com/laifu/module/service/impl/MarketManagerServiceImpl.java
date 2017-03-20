@@ -320,7 +320,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	public ReturnData getProductList(PageData pageData) throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
-			String hql = "from Product";
+			String hql = "from Product order by product_id desc";
 			List<Product> list = productDao.listAll(hql, pageData.getPageNo(), 20);
 			JSONArray jsonArray = new JSONArray();
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -352,6 +352,41 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		} catch (Exception e) {
 			returnData.setReturnResult(300);
 			returnData.setReturnDetail("数据获取失败");
+		}
+		return returnData;
+	}
+	
+	@Override
+	public ReturnData saveProduct(Product product) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			productDao.addProduct(product);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("添加商品失败");
+		}
+		return returnData;
+	}
+	
+	/*获取二级分类列表*/
+	@Override
+	public ReturnData getAllCategorySecondForManageSp(int category_id) throws Exception {
+		ReturnData returnData = new ReturnData();
+		List<CategorySecond> list=categorySecondDao.getAllCategorySecondForManageSp(category_id);
+		JSONArray jsonArray = new JSONArray();
+		try {
+			for(int i=0;i<list.size();i++){
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("categorysecond_id", list.get(i).getCategorysecond_id());
+				jsonObject.put("categorysecond_name", list.get(i).getCategorysecond_name());
+				jsonArray.add(jsonObject);
+			}
+			returnData.setReturnData(jsonArray);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("读取数据失败，请重试");
 		}
 		return returnData;
 	}

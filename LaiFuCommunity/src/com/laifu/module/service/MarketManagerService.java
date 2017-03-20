@@ -80,6 +80,8 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 
 	ReturnData getAllCategorySecondForManage() throws Exception;
 	
+	ReturnData getAllCategorySecondForManageSp(int category_id) throws Exception;
+	
 	ReturnData addCategorySecond(String categorysecond_name,int category_id) throws Exception;
 	
 	ReturnData getCategorySecond(int categorysecond_id) throws Exception;
@@ -93,4 +95,6 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	ReturnData updateOrder(int id) throws Exception;
 	
 	ReturnData getProductList(PageData pageData) throws Exception;
+	
+	ReturnData saveProduct(Product product) throws Exception;
 }

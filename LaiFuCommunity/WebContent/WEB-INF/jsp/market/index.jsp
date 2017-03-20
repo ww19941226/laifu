@@ -118,7 +118,7 @@
     <div class="index_cuxiao_shangpin fl">
     <c:forEach items="${cxProducts }" var="cxp">
         <div class="cuxiao_content fl">
-              <img src="${pageContext.request.contextPath}/images/sp.jpg">
+              <img src='<c:url value="${cxp.product_photo1 }"/>'>
               <p class="cuxiao_content_ms">${cxp.product_name }</p>
               <%--  <p class="cuxiao_content_dj">￥${cxp.product_price }</p> --%>
               <p class="hot_content_content_djy"><del>原价:￥${cxp.product_price}</del></p>
@@ -144,7 +144,7 @@
     <div class="index_cuxiao_shangpin fl">
     <c:forEach items="${rmProducts }" var="rmp">
         <div class="cuxiao_content fl">
-               <img src="${pageContext.request.contextPath}/images/sp.jpg">
+               <img src='<c:url value="${rmp.product_photo1 }"/>'>
                <p class="cuxiao_content_ms">${rmp.product_name }</p>
                <p class="cuxiao_content_dj">￥<c:out value="${rmp.product_price*rmp.product_discount/10}"></c:out></p>
                <p class="cuxiao_content_dj">销量${rmp.product_deal }</p>
@@ -168,7 +168,7 @@
     <div class="index_cuxiao_shangpin fl">
     <c:forEach items="${ xpProducts}" var="xpp">
         <div class="cuxiao_content fl">
-               <img src="${pageContext.request.contextPath}/images/sp.jpg">
+               <img src='<c:url value="${xpp.product_photo1 }"/>'>
                <p class="cuxiao_content_ms">${xpp.product_name }</p>
                <p class="cuxiao_content_dj">￥<c:out value="${xpp.product_price*xpp.product_discount/10}"></c:out></p>
             <div id="${xpp.product_id }" class="gwc_div">
@@ -191,7 +191,7 @@
     <div class="index_cuxiao_shangpin fl">
     <c:forEach items="${ jkProducts}" var="jkp">
         <div class="cuxiao_content fl">
-               <img src="${pageContext.request.contextPath}/images/sp.jpg">
+               <img src='<c:url value="${jkp.product_photo1 }"/>'>
                <p class="cuxiao_content_ms">${jkp.product_name }</p>
                <p class="cuxiao_content_dj">￥<c:out value="${jkp.product_price*jkp.product_discount/10}"></c:out></p>
             <div id="${jkp.product_id }" class="gwc_div">

@@ -103,7 +103,7 @@
 <c:set var="id" value="${id+1 }" scope="page"></c:set>
     <div class="hot_content_content fl">
         <div class="cuxiao_dazhe">${cxp.product_discount }折</div>
-            <img src="${pageContext.request.contextPath}/images/sp.jpg">
+            <img src='<c:url value="${cxp.product_photo1 }"/>'>
             <p class="hot_content_content_ms">${cxp.product_name }</p>
             <p class="hot_content_content_djy"><del>原价:￥${cxp.product_price }</del></p>
             <p class="hot_content_content_dj">促销价:￥<c:out value="${cxp.product_price*cxp.product_discount/10}"></c:out></p>
