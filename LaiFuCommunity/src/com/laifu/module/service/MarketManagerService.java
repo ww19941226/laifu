@@ -97,4 +97,8 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	ReturnData getProductList(PageData pageData) throws Exception;
 	
 	ReturnData saveProduct(Product product) throws Exception;
+	
+	ReturnData updateProduct(Integer id,String prouduct_name_add,Double prouduct_price_add,Integer number_add,
+			String product_place_add,String is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
+			Integer prouduct_discount_add,String photo_lujing_add) throws Exception;
 }

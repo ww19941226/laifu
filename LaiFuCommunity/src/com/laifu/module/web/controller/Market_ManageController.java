@@ -134,7 +134,7 @@ public class Market_ManageController {
 	@RequestMapping(value = "/marketManage/product/add", method = { RequestMethod.POST })
 	@ResponseBody
 	public ReturnData addProduct(String prouduct_name_add,Double prouduct_price_add,Integer number_add,
-			String product_place_add,Integer is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
+			String product_place_add,String is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
 			Integer prouduct_discount_add,String photo_lujing_add) throws Exception {
 		ReturnData returnData = new ReturnData();
 		Product product = new Product();
@@ -142,7 +142,12 @@ public class Market_ManageController {
 		product.setProduct_price(prouduct_price_add);
 		product.setNumber(number_add);
 		product.setProduct_place(product_place_add);
-		product.setIs_imported(is_imported_add);
+		if(is_imported_add.equals("是")){
+			product.setIs_imported(1);
+		}else{
+			product.setIs_imported(0);
+		}
+		
 		CategorySecond categorySecond = marketManagerService.findBycsid(categorysecond_id_add);
 		product.setCategorySecond(categorySecond);
 		product.setProduct_discount(prouduct_discount_add);
@@ -173,11 +178,12 @@ public class Market_ManageController {
 	}
 	
 	 /*更新商品数据*/
-	@RequestMapping(value = "/marketManage/product/update", method = { RequestMethod.POST })
+	@RequestMapping(value = "/marketManage/product/update", method = { RequestMethod.POST})
 	@ResponseBody
-	public ReturnData updateProduct(String prouduct_name,Double prouduct_price,Integer number,String product_place,
-			Integer category_id,Integer categorysecond_id,Integer prouduct_discount,@RequestParam(value="product_photo1", required = false)MultipartFile product_photo1) throws Exception {
-		return null;
+	public ReturnData updateProduct(Integer id,String prouduct_name_add,Double prouduct_price_add,Integer number_add,
+			String product_place_add,String is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
+			Integer prouduct_discount_add,String photo_lujing_add) throws Exception {
+		return marketManagerService.updateProduct(id, prouduct_name_add, prouduct_price_add, number_add, product_place_add, is_imported_add, category_id_add, categorysecond_id_add, prouduct_discount_add, photo_lujing_add);
 	}
 	
 	/*获取二级分类列表*/

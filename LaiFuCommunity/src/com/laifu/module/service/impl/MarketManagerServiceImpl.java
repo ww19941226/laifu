@@ -1,6 +1,7 @@
 package com.laifu.module.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -368,6 +369,44 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
+	
+	@Override
+	public ReturnData updateProduct(Integer id,String prouduct_name_add,Double prouduct_price_add,Integer number_add,
+			String product_place_add,String is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
+			Integer prouduct_discount_add,String photo_lujing_add) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			Product findProduct = productDao.findByPid(id);
+			findProduct.setProduct_name(prouduct_name_add);
+			findProduct.setProduct_price(prouduct_price_add);
+			findProduct.setNumber(number_add);
+			findProduct.setProduct_place(product_place_add);
+			if(is_imported_add.equals("是")){
+				findProduct.setIs_imported(1);
+			}else{
+				findProduct.setIs_imported(0);
+			}
+			
+			CategorySecond categorySecond = findBycsid(categorysecond_id_add);
+			findProduct.setCategorySecond(categorySecond);
+			findProduct.setProduct_discount(prouduct_discount_add);
+			if(prouduct_discount_add == 10){
+				findProduct.setIs_discount(0);
+			}
+			else {
+				findProduct.setIs_discount(1);
+			}
+			findProduct.setProduct_creattime(new Date());
+			findProduct.setProduct_photo1(photo_lujing_add);
+			productDao.updateProduct(findProduct);
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("更新数据失败");
+		}
+		return returnData;
+	}
+	/*商品管理后台管理系统相关完*/
 	
 	/*获取二级分类列表*/
 	@Override

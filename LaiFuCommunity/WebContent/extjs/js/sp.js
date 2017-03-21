@@ -278,7 +278,7 @@ Ext.onReady(function() {
     //创建数据源[数组数据源]
     var jinkoucombostore = new Ext.data.SimpleStore({
         fields: ['is_imported', 'is_imported_name'],
-        data:[['1','是'],['0','否']],
+        data:[['是','是'],['否','否']],
         autoLoad: true
     });
     //创建Combobox
@@ -370,7 +370,6 @@ Ext.onReady(function() {
 //	                    		var url = "D:\\work\\soft\\aaa.png";
 //                                win.showImages["show_product_photo"].setSrc(url);
                                 win.showImages["show_Image"].setSrc(url);
-                                
                                 //上传
                                 $.ajaxFileUpload({  
 							        //处理文件上传操作的服务器端地址  
@@ -516,37 +515,47 @@ Ext.onReady(function() {
 	                    initValueStore.reload();
                     }
                     else{
-                    	alert("添加商品信息失败！");  
+                    	Ext.Msg.alert("添加商品信息失败！");  
                     }
 		        },  
 		        error:function(data, status, e){ //服务器响应失败时的处理函数  
-		             alert("添加商品信息失败！");  
+		             Ext.Msg.alert("添加商品信息失败！");  
 		        }  
 		    });
         } else if (form.option == 'update') {
-            form.form.submit({
-                clientValidation : true,
-                waitMsg : '正在修改商品信息请稍后',
-                waitTitle : '商品信息',
-                url :'/LaiFuCommunity/marketManage/product/update',
-                params : {
-                    id : id
+        
+        	$.ajax({  
+            	type:'post',
+		        //处理文件上传操作的服务器端地址  
+		        url:"/LaiFuCommunity/marketManage/product/update",  
+		        data:{
+		        	id:id,
+                	prouduct_name_add:prouduct_name_add,
+                	prouduct_price_add:prouduct_price_add,
+                	number_add:number_add,
+                	product_place_add:product_place_add,
+                	is_imported_add:is_imported_add,
+                	category_id_add:category_id_add,
+                	categorysecond_id_add:categorysecond_id_add,
+                	prouduct_discount_add:prouduct_discount_add,
+                	photo_lujing_add
                 },
-                method : 'POST',
-                success : function(form, action) {
-                    if(action.result.returnResult==200){
-                        win.hide();
-                        Ext.Msg.alert('提示', '修改商品信息成功');
-                        initValueStore.reload();
-                    }else
-                        Ext.Msg.alert('提示', action.result.returnDetail);
-
-                },
-                failure : function(form, action) {
-                    Ext.Msg.alert('提示', '修改商品信息失败:' + action.result.msg);
-                }
-            });
+		        success:function(data, status){ 			//服务器响应成功时的处理函数  
+			        if(data.returnResult==200){
+			        	win.hide();
+	                    Ext.Msg.alert('提示', '修改商品信息成功');
+	                    initValueStore.reload();
+                    }
+                    else{
+                    	Ext.Msg.alert('提示', "修改商品信息失败！");  
+                    }
+		        },  
+		        error:function(data, status, e){ //服务器响应失败时的处理函数  
+		             Ext.Msg.alert('提示', "修改商品信息失败！");  
+		        }  
+		    });
         }
+        $("#photo-button-fileInputEl").remove();
     }
 
     function loadForm() {

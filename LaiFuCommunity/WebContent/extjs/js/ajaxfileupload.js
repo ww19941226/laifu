@@ -7,19 +7,13 @@ jQuery.extend({
             var frameId = 'jUploadFrame' + id;
             
             if(window.ActiveXObject) {
-            	if(jQuery.browser.version=="9.0") {
-            		io = document.createElement('iframe');
-            		io.id = frameId;
-            		io.name = frameId;
-            	} else if(jQuery.browser.version=="6.0"||jQuery.browser.version=="7.0"||jQuery.browser.version=="8.0") {
-            		var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
-                    if(typeof uri== 'boolean'){
-                        io.src = 'javascript:false';
-                    }
-                    else if(typeof uri== 'string'){
-                        io.src = uri;
-                    }
-            	}
+                var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
+                if(typeof uri== 'boolean'){
+                    io.src = 'javascript:false';
+                }
+                else if(typeof uri== 'string'){
+                    io.src = uri;
+                }
             }
             else {
                 var io = document.createElement('iframe');
@@ -40,11 +34,17 @@ jQuery.extend({
   var formId = 'jUploadForm' + id;
   var fileId = 'jUploadFile' + id;
   var form = jQuery('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>'); 
-  var oldElement = jQuery('#' + fileElementId);
-  var newElement = jQuery(oldElement).clone();
-  jQuery(oldElement).attr('id', fileId);
-  jQuery(oldElement).before(newElement);
-  jQuery(oldElement).appendTo(form);
+  var oldElement = jQuery('#' + fileElementId);  
+
+  var newElement = oldElement.clone(true);  
+
+  newElement[0].files=oldElement[0].files;  
+
+  oldElement.attr('id', fileId);  
+
+  oldElement.before(newElement);  
+
+  oldElement.appendTo(form);
   //set attributes
   jQuery(form).css('position', 'absolute');
   jQuery(form).css('top', '-1200px');
@@ -161,7 +161,7 @@ jQuery.extend({
                 xml = null;
 
             };
-        };
+        }
         // Timeout checker
         if( s.timeout > 0 ) 
   {
