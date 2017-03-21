@@ -248,7 +248,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	public ReturnData getOrderList(PageData pageData) throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
-			String hql = "from Order order by order_id desc";
+			String hql = "from Order o order by o.order_id desc";
 			List<Order> list = orderDao.listAll(hql, pageData.getPageNo(), 20);
 			JSONArray jsonArray = new JSONArray();
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -366,6 +366,21 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		} catch (Exception e) {
 			returnData.setReturnResult(300);
 			returnData.setReturnDetail("添加商品失败");
+		}
+		return returnData;
+	}
+	
+	@Override
+	public ReturnData removeProduct(Integer[] ids) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			for(int i=0;i<ids.length;i++){
+				productDao.removeProduct(ids[i]);
+			}
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("删除商品失败");
 		}
 		return returnData;
 	}

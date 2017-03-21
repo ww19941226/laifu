@@ -90,4 +90,11 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 	public void updateProduct(Product product) throws Exception {
 		getSession().update(product);
 	}
+
+	@Override
+	public void removeProduct(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		Product product = findByPid(id);
+		getSession().delete(product);
+	}
 }

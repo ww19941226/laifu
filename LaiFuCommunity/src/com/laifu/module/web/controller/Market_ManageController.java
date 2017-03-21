@@ -186,6 +186,13 @@ public class Market_ManageController {
 		return marketManagerService.updateProduct(id, prouduct_name_add, prouduct_price_add, number_add, product_place_add, is_imported_add, category_id_add, categorysecond_id_add, prouduct_discount_add, photo_lujing_add);
 	}
 	
+	 /*更新商品数据*/
+		@RequestMapping(value = "/marketManage/product/remove", method = { RequestMethod.POST})
+		@ResponseBody
+		public ReturnData removeProduct(Integer[] ids) throws Exception {
+			return marketManagerService.removeProduct(ids);
+		}
+	
 	/*获取二级分类列表*/
 	@RequestMapping(value = "/marketManage/categorySecond/getListForSp")
 	@ResponseBody

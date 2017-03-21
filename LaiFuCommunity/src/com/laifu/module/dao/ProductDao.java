@@ -25,5 +25,7 @@ public interface ProductDao extends IBaseDao<Product, Integer> {
 	void addProduct(Product product) throws Exception;
 	
 	void updateProduct(Product product) throws Exception;
+	
+	void removeProduct(Integer id) throws Exception;
 
 }

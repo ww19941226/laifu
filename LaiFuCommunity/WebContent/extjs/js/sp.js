@@ -391,6 +391,8 @@ Ext.onReady(function() {
                     }
                 }
             },{
+            		hidden: true, 
+					hideLabel:true, 
                     fieldLabel : '上传图片后生成的图片路径',
                     name : 'photo_lujing',
                     readOnly:true
@@ -609,7 +611,7 @@ Ext.onReady(function() {
                     msg : '正在删除商品，请稍后......'
                 });
                 Ext.Ajax.request({
-                    url : basePath + '/system/initvalue/remove',
+                    url : '/LaiFuCommunity/marketManage/product/remove',
                     params : {
                         ids : gridList
                     },
