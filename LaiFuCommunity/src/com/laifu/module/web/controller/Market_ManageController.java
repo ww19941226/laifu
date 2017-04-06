@@ -99,10 +99,10 @@ public class Market_ManageController {
 	/*获取订单管理列表*/
 	@RequestMapping(value = "/marketManage/order/getList", method = { RequestMethod.POST })
 	@ResponseBody
-	public ReturnData getOrderList(@RequestParam(value = "page", defaultValue = "1", required = false) int page) throws Exception {
+	public ReturnData getOrderList(@RequestParam(value = "page", defaultValue = "1", required = false) int page,int order_status) throws Exception {
 		PageData pageData = new PageData();
 		pageData.setPageNo(page);
-		return marketManagerService.getOrderList(pageData);
+		return marketManagerService.getOrderList(pageData,order_status);
 	}
 	
 	/* 获取一个订单的详情 */

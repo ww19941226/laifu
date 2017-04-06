@@ -55,7 +55,8 @@
        <div class="comment">
            <div class="com_form">
                <textarea name="topic_comment" class="input" id="saytext" contenteditable="true" placeholder="说点什么吧……"></textarea>
-               <div class="file_bg"><img src="<c:url value='/images/file_img.png'/>" class="file_img"> <input id="file0" type="file" class="file_input" name="file" accept="image/png,image/gif,image/jpg,image/jpeg" multiple="multiple" alt="图片"></div>
+               <div class="file_bg"><img src="<c:url value='/images/file_img.png'/>" class="file_img"> <input id="file0" type="file" class="file_input" name="file" accept="image/png,image/gif,image/jpg,image/jpeg"
+                multiple="multiple" alt="图片"></div>
                <p><input type="submit" class="sub_btn" value="发表">
                    <select class="sub_select">
                        <optgroup label="话题类型">
@@ -108,7 +109,6 @@
     	if(topic_type!=1&&topic_type!=2&&topic_type!=4){
     		topic_type=0;
     	}
-    	console.log("话题类型为"+topic_type);
     	/* 我的话题 */
     	if(topic_type==0){
     		$("#qqFaceform").show();
@@ -268,7 +268,9 @@ function ajax_topic(data,topic_type){
     			$(".t_main").append(a_talk);
     			
     			//用户头像昵称，话题类型，来自小区，时间，话题内容
-    			var a_talk_k1=$('<div class="user_img"><img class="user_imgli" src="/LaiFuCommunity'+data_item.author.user_head+'"></div><div class="user_info"><p class="name"><a href="/LaiFuCommunity/user/topic/other_topic?user_id='+data_item.author.user_id+'" target="_blank">'+data_item.author.user_nickname+'</a></p><p class="time_address">'+topicName+'&nbsp;&nbsp;&nbsp;来自幸福小区&nbsp;&nbsp;&nbsp;'+topic_datetime+'</p></div><div class="user_neirong"><p>'+topic_neir+'</p></div><div class="user_neirongimg"></div>');
+    			var a_talk_k1=$('<div class="user_img"><img class="user_imgli" src="/LaiFuCommunity'+data_item.author.user_head+'"></div><div class="user_info"><p class="name"><a href="/LaiFuCommunity/user/topic/other_topic?user_id='
+    			+data_item.author.user_id+'" target="_blank">'+data_item.author.user_nickname+'</a></p><p class="time_address">'+topicName+'&nbsp;&nbsp;&nbsp;来自幸福小区&nbsp;&nbsp;&nbsp;'
+    			+topic_datetime+'</p></div><div class="user_neirong"><p>'+topic_neir+'</p></div><div class="user_neirongimg"></div>');
     			$("#"+data_item.topic.topic_id).append(a_talk_k1);
     			
     			//话题图片
@@ -299,10 +301,12 @@ function ajax_topic(data,topic_type){
 				var commentNumber = data_item.commentVo.length;
 				var praiseConfirm = data_item.praise;
 				if(praiseConfirm){
-					$("#"+data_item.topic.topic_id).append('<div class="user_good">&nbsp;|&nbsp;<a>取消赞('+praiseNumber+')</a>&nbsp;|&nbsp;<a>评论('+commentNumber+')</a>&nbsp;|&nbsp;<a hidden class="delete_topic">删除</a></div><div class="cominput_div" hidden><textarea rows="2" cols="88"></textarea><button>评论</button></div>');
+					$("#"+data_item.topic.topic_id).append('<div class="user_good">&nbsp;|&nbsp;<a>取消赞('+praiseNumber+')</a>&nbsp;|&nbsp;<a>评论('
+					+commentNumber+')</a>&nbsp;|&nbsp;<a hidden class="delete_topic">删除</a></div><div class="cominput_div" hidden><textarea rows="2" cols="88"></textarea><button>评论</button></div>');
 				}
 				else{
-					$("#"+data_item.topic.topic_id).append('<div class="user_good">&nbsp;|&nbsp;<a>点赞('+praiseNumber+')</a>&nbsp;|&nbsp;<a>评论('+commentNumber+')</a>&nbsp;|&nbsp;<a hidden class="delete_topic">删除</a></div><div class="cominput_div" hidden><textarea rows="2" cols="88"></textarea><button>评论</button></div>');
+					$("#"+data_item.topic.topic_id).append('<div class="user_good">&nbsp;|&nbsp;<a>点赞('+praiseNumber+')</a>&nbsp;|&nbsp;<a>评论('
+					+commentNumber+')</a>&nbsp;|&nbsp;<a hidden class="delete_topic">删除</a></div><div class="cominput_div" hidden><textarea rows="2" cols="88"></textarea><button>评论</button></div>');
 				}
 				
 				
@@ -346,6 +350,7 @@ function ajax_topic(data,topic_type){
     					console.log(data.length);
     					//评论数量
     					$("#"+dtopicid+">.user_good>a:nth-child(2)").text("评论("+data.length+")");
+    					//评论内容的显示
     					comment_xianshi(data, dtopicid);
     				});
     				
@@ -407,7 +412,8 @@ function ajax_topic(data,topic_type){
     						if(data.length!=0){
 								$("#"+dtopicid+">.praise").append("<img src='/LaiFuCommunity/images/good.png'/>");
 								for(var image in data){
-    								$("#"+dtopicid+">.praise").append("<a target='_blank' href='/LaiFuCommunity/user/topic/other_topic?user_id="+data[image].user_id+"'><img title='"+data[image].user_nickname+"' id='p"+data[image].user_id+"' src='/LaiFuCommunity"+data[image].user_head+"'/></a>");
+    								$("#"+dtopicid+">.praise").append("<a target='_blank' href='/LaiFuCommunity/user/topic/other_topic?user_id="+data[image].user_id+"'><img title='"+data[image].user_nickname
+    								+"' id='p"+data[image].user_id+"' src='/LaiFuCommunity"+data[image].user_head+"'/></a>");
     							}
 							}
     						
@@ -429,7 +435,8 @@ function ajax_topic(data,topic_type){
     						if(data.length!=0){
 								$("#"+dtopicid+">.praise").append("<img src='/LaiFuCommunity/images/good.png'/>");
 								for(var image in data){
-    								$("#"+dtopicid+">.praise").append("<a target='_blank' href='/LaiFuCommunity/user/topic/other_topic?user_id="+data[image].user_id+"'><img title='"+data[image].user_nickname+"' id='p"+data[image].user_id+"' src='/LaiFuCommunity"+data[image].user_head+"'/></a>");
+    								$("#"+dtopicid+">.praise").append("<a target='_blank' href='/LaiFuCommunity/user/topic/other_topic?user_id="+data[image].user_id
+    								+"'><img title='"+data[image].user_nickname+"' id='p"+data[image].user_id+"' src='/LaiFuCommunity"+data[image].user_head+"'/></a>");
     							}
 							}
     						

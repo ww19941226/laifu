@@ -107,7 +107,7 @@
         <div class="myDD_DD_content">
         <c:forEach items="${order.orderItems }" var="orderItems">
             <div class="myDD_DD_sp">
-                <div class="myDD_DD_sp_img fl"><img src="${pageContext.request.contextPath}/images/sp.jpg"/> </div>
+                <div class="myDD_DD_sp_img fl"><img src="${pageContext.request.contextPath}${orderItems.product.product_photo1}"/> </div>
                 <div class="myDD_DD_sp_ms fl">${orderItems.product.product_name } </div>
                 <div class="myDD_DD_sp_dj fl">￥<c:out value="${orderItems.product.product_price*orderItems.product.product_discount/10}"></c:out></div>
                 <div class="myDD_DD_sp_number fl">${orderItems.orderItems_count}</div>

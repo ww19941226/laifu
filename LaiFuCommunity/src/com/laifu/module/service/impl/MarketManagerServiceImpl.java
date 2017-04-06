@@ -245,10 +245,16 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 	
 	/*订单管理后台管理系统相关*/
 	@Override
-	public ReturnData getOrderList(PageData pageData) throws Exception {
+	public ReturnData getOrderList(PageData pageData,int order_status) throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
-			String hql = "from Order o order by o.order_id desc";
+			String hql = "";
+			if(order_status == 0){
+				hql = "from Order o order by o.order_id desc";
+			}
+			else{
+				hql = "from Order o where o.order_state="+order_status+" order by o.order_id desc";
+			}
 			List<Order> list = orderDao.listAll(hql, pageData.getPageNo(), 20);
 			JSONArray jsonArray = new JSONArray();
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -88,7 +88,7 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	
 	ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception;
 	
-	ReturnData getOrderList(PageData pageData) throws Exception;
+	ReturnData getOrderList(PageData pageData,int order_status) throws Exception;
 	
 	ReturnData getOrder(int id) throws Exception;
 	

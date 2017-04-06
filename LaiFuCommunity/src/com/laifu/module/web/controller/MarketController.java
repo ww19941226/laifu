@@ -359,7 +359,7 @@ public class MarketController {
 		cart.cleanCart();
 		request.setAttribute("order", order);
 
-		return "market/index";
+		return "redirect:index";
 	}
 
 	public int getOrder_id() throws Exception {

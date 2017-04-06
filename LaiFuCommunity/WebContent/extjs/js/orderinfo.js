@@ -9,6 +9,7 @@ Ext.onReady(function() {
     Ext.form.Field.prototype.msgTarget = "qtip";
     var id = "";
     params = {id:2017030936};
+    paramStatus = {order_status:0};
     var win;
     
     Ext.define("InitValue", {
@@ -50,6 +51,7 @@ Ext.onReady(function() {
         	pageSize:20,
         	actionMethods:{create: 'POST'},
         	url : '/LaiFuCommunity/marketManage/order/getList',
+        	extraParams: paramStatus,
         	reader : {
         		type : 'json',
         		root : 'returnData.data',
@@ -155,9 +157,46 @@ Ext.onReady(function() {
         });
     
     }
+    
+    //根据订单状态查询数据列表
+    //创建数据源[数组数据源]
+    var orderStatusStore = new Ext.data.SimpleStore({
+        fields: ['order_status', 'status_name'],
+        data:[
+        	['0','全部'],
+            ['1','未付款'],
+            ['2','未接单'],
+            ['3','已接单'],
+            ['4','已发货'],
+            ['5','交易完成']
+        ],
+        autoLoad: true
+    });
+    //创建Combobox
+    var orderStatusBox = new Ext.form.ComboBox({
+        fieldLabel: '按状态查询',
+        labelAlign : 'right',
+        store: orderStatusStore,
+        displayField: 'status_name',
+        valueField: 'order_status',
+        triggerAction: 'all',
+        emptyText: '请选择查询条件',
+        allowBlank: false,
+        blankText: '请选择查询条件',
+        editable: false,
+        name:"order_status",
+        value:'全部',
+        mode: 'local',
+        listeners : {
+            change: function (order_status) {
+				paramStatus.order_status = order_status.displayTplData[0].order_status;
+				initValueStore.reload();
+           	}
+        }
+    });
 
     var toolbar = new Ext.Toolbar({
-        items : [ "订单信息管理：", "-", {
+        items : [ "订单信息管理：", "-",orderStatusBox,{
             text : '刷新',
             handler : function() {
                 initValueGrid.store.reload();
