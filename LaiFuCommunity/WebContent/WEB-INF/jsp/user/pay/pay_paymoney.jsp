@@ -32,6 +32,7 @@
                     <p>中国农业银行<input type="radio" style="width: 5%;" name="pd_FrpId" value="ABC-NET-B2C"></p>
                     <p>建设银行<input type="radio" style="width: 5%;"  name="pd_FrpId"  value="CCB-NET-B2C"></p>
                     <p>中国银行<input type="radio" style="width: 5%;"  name="pd_FrpId"  value="BOC-NET-B2C"></p>
+                    
                 </td>
             </tr>
             <tr>

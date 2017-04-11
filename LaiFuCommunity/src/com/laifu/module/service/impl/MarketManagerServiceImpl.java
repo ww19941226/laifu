@@ -2,20 +2,15 @@ package com.laifu.module.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.laifu.common.dao.IBaseDao;
 import com.laifu.common.pagination.Page;
 import com.laifu.common.pagination.PageUtil;
@@ -80,28 +75,26 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 
 		return categoryDao.getAllCategories();
 	}
-	
-	
-	/*一级分类后台管理相关功能*/
-	/*获取列表*/
+
+	/* 一级分类后台管理相关功能 */
+	/* 获取列表 */
 	@Override
 	public ReturnData getAllCategoriesForManage() throws Exception {
 		ReturnData returnData = new ReturnData();
-		List<Category> list=categoryDao.getAllCategories();
+		List<Category> list = categoryDao.getAllCategories();
 		Category category = new Category();
 		JSONArray jsonArray = new JSONArray();
-		for(int i=0;i<list.size();i++){
+		for (int i = 0; i < list.size(); i++) {
 			category.setCategory_id(list.get(i).getCategory_id());
 			category.setCategory_name(list.get(i).getCategory_name());
 			jsonArray.add(category);
 		}
 		returnData.setReturnData(jsonArray);
-		//returnData.setReturnData(list);
 		returnData.setReturnResult(200);
 		return returnData;
 	}
-	
-	/*添加一级分类*/
+
+	/* 添加一级分类 */
 	@Override
 	public ReturnData addCategory(String category_name) throws Exception {
 		ReturnData returnData = new ReturnData();
@@ -109,7 +102,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 			Category category = new Category();
 			category.setCategory_name(category_name);
 			categoryDao.addCategory(category);
-			//returnData.setReturnData(list);
+			// returnData.setReturnData(list);
 			returnData.setReturnResult(200);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -118,8 +111,8 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
-	//获取一条一级分类数据
+
+	// 获取一条一级分类数据
 	@Override
 	public ReturnData getCategory(int id) throws Exception {
 		ReturnData returnData = new ReturnData();
@@ -137,10 +130,11 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
-	//更新一条一级分类数据
+
+	// 更新一条一级分类数据
 	@Override
-	public ReturnData updateCategory(int id,String category_name) throws Exception {
+	public ReturnData updateCategory(int id, String category_name)
+			throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
 			Category category = findBycid(id);
@@ -154,22 +148,27 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
-	/*二级分类后台管理系统相关*/
-	/*获取二级分类列表*/
+
+	/* 二级分类后台管理系统相关 */
+	/* 获取二级分类列表 */
 	@Override
 	public ReturnData getAllCategorySecondForManage() throws Exception {
 		ReturnData returnData = new ReturnData();
-		List<CategorySecond> list=categorySecondDao.getAllCategorySecondForManage();
+		List<CategorySecond> list = categorySecondDao
+				.getAllCategorySecondForManage();
 		JSONArray jsonArray = new JSONArray();
 		try {
-			for(int i=0;i<list.size();i++){
+			for (int i = 0; i < list.size(); i++) {
 				JSONObject jsonObject = new JSONObject();
 				JSONObject jsonOne = new JSONObject();
-				jsonOne.put("category_id", list.get(i).getCategory().getCategory_id());
-				jsonOne.put("category_name", list.get(i).getCategory().getCategory_name());
-				jsonObject.put("categorysecond_id", list.get(i).getCategorysecond_id());
-				jsonObject.put("categorysecond_name", list.get(i).getCategorysecond_name());
+				jsonOne.put("category_id", list.get(i).getCategory()
+						.getCategory_id());
+				jsonOne.put("category_name", list.get(i).getCategory()
+						.getCategory_name());
+				jsonObject.put("categorysecond_id", list.get(i)
+						.getCategorysecond_id());
+				jsonObject.put("categorysecond_name", list.get(i)
+						.getCategorysecond_name());
 				jsonObject.put("category", jsonOne);
 				jsonArray.add(jsonObject);
 			}
@@ -181,7 +180,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
 	public ReturnData addCategorySecond(String categorysecond_name,
 			int category_id) throws Exception {
@@ -192,7 +191,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 			categorySecond.setCategory(category);
 			categorySecond.setCategorysecond_name(categorysecond_name);
 			categorySecondDao.addCategory(categorySecond);
-			//returnData.setReturnData(list);
+			// returnData.setReturnData(list);
 			returnData.setReturnResult(200);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -201,18 +200,23 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
 	public ReturnData getCategorySecond(int categorysecond_id) throws Exception {
 		ReturnData returnData = new ReturnData();
-		CategorySecond categorySecond = categorySecondDao.findBycsid(categorysecond_id);
+		CategorySecond categorySecond = categorySecondDao
+				.findBycsid(categorysecond_id);
 		try {
 			JSONObject jsonObject = new JSONObject();
 			JSONObject jsonOne = new JSONObject();
-			jsonOne.put("category_id", categorySecond.getCategory().getCategory_id());
-			jsonOne.put("category_name", categorySecond.getCategory().getCategory_name());
-			jsonObject.put("categorysecond_id", categorySecond.getCategorysecond_id());
-			jsonObject.put("categorysecond_name", categorySecond.getCategorysecond_name());
+			jsonOne.put("category_id", categorySecond.getCategory()
+					.getCategory_id());
+			jsonOne.put("category_name", categorySecond.getCategory()
+					.getCategory_name());
+			jsonObject.put("categorysecond_id",
+					categorySecond.getCategorysecond_id());
+			jsonObject.put("categorysecond_name",
+					categorySecond.getCategorysecond_name());
 			jsonObject.put("category", jsonOne);
 			returnData.setReturnData(jsonObject);
 			returnData.setReturnResult(200);
@@ -222,9 +226,10 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
-	public ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception {
+	public ReturnData updateCategorySecond(int id, String categorysecond_name,
+			int category_id) throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
 			CategorySecond categorySecond = categorySecondDao.get(id);
@@ -239,34 +244,36 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
-	/*二级分类后台管理系统相关完*/
-	
-	
-	/*订单管理后台管理系统相关*/
+
+	/* 二级分类后台管理系统相关完 */
+
+	/* 订单管理后台管理系统相关 */
 	@Override
-	public ReturnData getOrderList(PageData pageData,int order_status) throws Exception {
+	public ReturnData getOrderList(PageData pageData, int order_status)
+			throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
 			String hql = "";
-			if(order_status == 0){
+			if (order_status == 0) {
 				hql = "from Order o order by o.order_id desc";
-			}
-			else{
-				hql = "from Order o where o.order_state="+order_status+" order by o.order_id desc";
+			} else {
+				hql = "from Order o where o.order_state=" + order_status
+						+ " order by o.order_id desc";
 			}
 			List<Order> list = orderDao.listAll(hql, pageData.getPageNo(), 20);
 			JSONArray jsonArray = new JSONArray();
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
 			String dateString = "";
-			for(int i=0;i<list.size();i++){
+			for (int i = 0; i < list.size(); i++) {
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("id", list.get(i).getOrder_id());
 				dateString = formatter.format(list.get(i).getOrder_creattime());
 				jsonObject.put("order_creattime", dateString);
 				jsonObject.put("order_money", list.get(i).getOrder_money());
 				jsonObject.put("order_state", list.get(i).getOrder_state());
-				jsonObject.put("order_receivename", list.get(i).getOrder_receivename());
+				jsonObject.put("order_receivename", list.get(i)
+						.getOrder_receivename());
 				jsonObject.put("order_phone", list.get(i).getOrder_phone());
 				jsonObject.put("order_address", list.get(i).getOrder_address());
 				jsonArray.add(jsonObject);
@@ -288,13 +295,19 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		try {
 			List<OrderItems> list = orderItemsDao.getAllOrderItems(id);
 			JSONArray jsonArray = new JSONArray();
-			for(int i=0;i<list.size();i++){
+			for (int i = 0; i < list.size(); i++) {
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("prouduct_photo1", list.get(i).getProduct().getProduct_photo1());
-				jsonObject.put("prouduct_name", list.get(i).getProduct().getProduct_name());
-				jsonObject.put("prouduct_price", list.get(i).getProduct().getProduct_price()*list.get(i).getProduct().getProduct_discount()*0.1);
-				jsonObject.put("orderItems_count", list.get(i).getOrderItems_count());
-				jsonObject.put("orderItems_subtotal", list.get(i).getOrderItems_subtotal());
+				jsonObject.put("prouduct_photo1", list.get(i).getProduct()
+						.getProduct_photo1());
+				jsonObject.put("prouduct_name", list.get(i).getProduct()
+						.getProduct_name());
+				jsonObject.put("prouduct_price", list.get(i).getProduct()
+						.getProduct_price()
+						* list.get(i).getProduct().getProduct_discount() * 0.1);
+				jsonObject.put("orderItems_count", list.get(i)
+						.getOrderItems_count());
+				jsonObject.put("orderItems_subtotal", list.get(i)
+						.getOrderItems_subtotal());
 				jsonArray.add(jsonObject);
 			}
 			returnData.setReturnData(jsonArray);
@@ -311,7 +324,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		ReturnData returnData = new ReturnData();
 		try {
 			Order order = orderDao.get(id);
-			order.setOrder_state(order.getOrder_state()+1);
+			order.setOrder_state(order.getOrder_state() + 1);
 			orderDao.update(order);
 			returnData.setReturnResult(200);
 		} catch (Exception e) {
@@ -320,36 +333,44 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	/*订单管理后台管理系统相关完*/
-	
-	/*商品管理后台管理系统相关*/
+
+	/* 订单管理后台管理系统相关完 */
+
+	/* 商品管理后台管理系统相关 */
 	@Override
 	public ReturnData getProductList(PageData pageData) throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
 			String hql = "from Product order by product_id desc";
-			List<Product> list = productDao.listAll(hql, pageData.getPageNo(), 20);
+			List<Product> list = productDao.listAll(hql, pageData.getPageNo(),
+					20);
 			JSONArray jsonArray = new JSONArray();
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
 			String dateString = "";
-			for(int i=0;i<list.size();i++){
+			for (int i = 0; i < list.size(); i++) {
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("id", list.get(i).getProduct_id());
-				dateString = formatter.format(list.get(i).getProduct_creattime());
+				dateString = formatter.format(list.get(i)
+						.getProduct_creattime());
 				jsonObject.put("prouduct_creattime", dateString);
 				jsonObject.put("prouduct_name", list.get(i).getProduct_name());
-				jsonObject.put("prouduct_price", list.get(i).getProduct_price());
+				jsonObject
+						.put("prouduct_price", list.get(i).getProduct_price());
 				jsonObject.put("number", list.get(i).getNumber());
 				jsonObject.put("product_place", list.get(i).getProduct_place());
-				if(list.get(i).getIs_imported() == 0){
+				if (list.get(i).getIs_imported() == 0) {
 					jsonObject.put("is_imported", "否");
-				}else{
+				} else {
 					jsonObject.put("is_imported", "是");
 				}
-				jsonObject.put("prouduct_discount", list.get(i).getProduct_discount());
+				jsonObject.put("prouduct_discount", list.get(i)
+						.getProduct_discount());
 				jsonObject.put("prouduct_deal", list.get(i).getProduct_deal());
-				jsonObject.put("product_category_name", list.get(i).getCategorySecond().getCategory().getCategory_name());
-				jsonObject.put("product_categorySecond_name", list.get(i).getCategorySecond().getCategorysecond_name());
+				jsonObject.put("product_category_name", list.get(i)
+						.getCategorySecond().getCategory().getCategory_name());
+				jsonObject.put("product_categorySecond_name", list.get(i)
+						.getCategorySecond().getCategorysecond_name());
 				jsonArray.add(jsonObject);
 			}
 			pageData.setRecordCount(countProductAll());
@@ -362,7 +383,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
 	public ReturnData saveProduct(Product product) throws Exception {
 		ReturnData returnData = new ReturnData();
@@ -375,12 +396,12 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
 	public ReturnData removeProduct(Integer[] ids) throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
-			for(int i=0;i<ids.length;i++){
+			for (int i = 0; i < ids.length; i++) {
 				productDao.removeProduct(ids[i]);
 			}
 			returnData.setReturnResult(200);
@@ -390,11 +411,14 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
-	public ReturnData updateProduct(Integer id,String prouduct_name_add,Double prouduct_price_add,Integer number_add,
-			String product_place_add,String is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
-			Integer prouduct_discount_add,String photo_lujing_add) throws Exception {
+	public ReturnData updateProduct(Integer id, String prouduct_name_add,
+			Double prouduct_price_add, Integer number_add,
+			String product_place_add, String is_imported_add,
+			Integer category_id_add, Integer categorysecond_id_add,
+			Integer prouduct_discount_add, String photo_lujing_add)
+			throws Exception {
 		ReturnData returnData = new ReturnData();
 		try {
 			Product findProduct = productDao.findByPid(id);
@@ -402,19 +426,18 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 			findProduct.setProduct_price(prouduct_price_add);
 			findProduct.setNumber(number_add);
 			findProduct.setProduct_place(product_place_add);
-			if(is_imported_add.equals("是")){
+			if (is_imported_add.equals("是")) {
 				findProduct.setIs_imported(1);
-			}else{
+			} else {
 				findProduct.setIs_imported(0);
 			}
-			
+
 			CategorySecond categorySecond = findBycsid(categorysecond_id_add);
 			findProduct.setCategorySecond(categorySecond);
 			findProduct.setProduct_discount(prouduct_discount_add);
-			if(prouduct_discount_add == 10){
+			if (prouduct_discount_add == 10) {
 				findProduct.setIs_discount(0);
-			}
-			else {
+			} else {
 				findProduct.setIs_discount(1);
 			}
 			findProduct.setProduct_creattime(new Date());
@@ -427,19 +450,24 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	/*商品管理后台管理系统相关完*/
-	
-	/*获取二级分类列表*/
+
+	/* 商品管理后台管理系统相关完 */
+
+	/* 获取二级分类列表 */
 	@Override
-	public ReturnData getAllCategorySecondForManageSp(int category_id) throws Exception {
+	public ReturnData getAllCategorySecondForManageSp(int category_id)
+			throws Exception {
 		ReturnData returnData = new ReturnData();
-		List<CategorySecond> list=categorySecondDao.getAllCategorySecondForManageSp(category_id);
+		List<CategorySecond> list = categorySecondDao
+				.getAllCategorySecondForManageSp(category_id);
 		JSONArray jsonArray = new JSONArray();
 		try {
-			for(int i=0;i<list.size();i++){
+			for (int i = 0; i < list.size(); i++) {
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("categorysecond_id", list.get(i).getCategorysecond_id());
-				jsonObject.put("categorysecond_name", list.get(i).getCategorysecond_name());
+				jsonObject.put("categorysecond_id", list.get(i)
+						.getCategorysecond_id());
+				jsonObject.put("categorysecond_name", list.get(i)
+						.getCategorysecond_name());
 				jsonArray.add(jsonObject);
 			}
 			returnData.setReturnData(jsonArray);
@@ -450,13 +478,13 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
-	
+
 	@Override
 	public List<CategorySecond> getAllCategorySecond(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return categorySecondDao.getAllCategorySecond(id);
 	}
-	
+
 	@Override
 	public List<Product> getHotJinkou() throws Exception {
 		// TODO Auto-generated method stub
@@ -587,7 +615,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		// TODO Auto-generated method stub
 		return orderDao.countAll();
 	}
-	
+
 	@Override
 	public int countProductAll() {
 		// TODO Auto-generated method stub
@@ -611,5 +639,17 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		// TODO Auto-generated method stub
 		orderDao.deleteObject(order);
 
+	}
+
+	@Override
+	public void updateOrder1(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		orderDao.update(order);
+	}
+
+	@Override
+	public void saveProduct1(Product product) {
+		// TODO Auto-generated method stub
+		productDao.update(product);
 	}
 }

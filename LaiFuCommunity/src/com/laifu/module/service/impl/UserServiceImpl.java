@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.laifu.common.dao.IBaseDao;
 import com.laifu.common.exception.UserException;
 import com.laifu.common.service.impl.BaseServiceImpl;
-import com.laifu.common.utils.verificationcode.BSONSms;
 import com.laifu.module.dao.CommunityDao;
 import com.laifu.module.dao.HouseDao;
 import com.laifu.module.dao.UserDao;
@@ -44,13 +43,14 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 		this.baseDao = baseDao;
 		this.userDao = (UserDao) baseDao;
 	}
-	
+
 	/*********************************************************************************************/
-	
+
 	/**
 	 * 通过手机判断用户是否存在
 	 * 
-	 * @param user_account 手机号
+	 * @param user_account
+	 *            手机号
 	 * @return 用户是否存在
 	 * @throws Exception
 	 */
@@ -58,11 +58,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	public boolean exit(String user_account) throws Exception {
 		return userDao.exit(user_account);
 	}
-	
+
 	/**
 	 * 发送短信验证码
 	 * 
-	 * @param user_account 用户手机号
+	 * @param user_account
+	 *            用户手机号
 	 * @return 短信验证码
 	 * @throws Exception
 	 */
@@ -72,11 +73,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 		for (int i = 0; i < 6; i++) {
 			code = code + (int) (Math.random() * 10);
 		}
-		System.out.println(user_account + " " + code);   //便捷入口
-		//BSONSms.requestSms(user_account, code);   //发送短信
+		System.out.println(user_account + " " + code); // 便捷入口
+		// BSONSms.requestSms(user_account, code); //发送短信
 		return code;
 	}
-	
+
 	/**
 	 * 用户注册服务
 	 * 
@@ -85,6 +86,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	 */
 	@Override
 	public void register(User user) throws Exception {
+
 		user.setUser_registertime(new Date());
 		user.setUser_nickname(user.getUser_account());
 		user.setUser_head("/upload/default.jpg");
@@ -94,7 +96,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 		user.setUser_checkstate(0);
 		userDao.save(user);
 	}
-	
+
 	/**
 	 * 用户登录服务
 	 * 
@@ -106,13 +108,16 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	@Override
 	public User login(User preUser, int type) throws Exception {
 		User user = userDao.getByAccount(preUser.getUser_account());
-		if (user != null && preUser.getUser_password().equals(user.getUser_password())) {
-			if(type==1 && user.getUser_type()==1) return user;
-			if(type==0 && user.getUser_type()!=1) return user;
+		if (user != null
+				&& preUser.getUser_password().equals(user.getUser_password())) {
+			if (type == 1 && user.getUser_type() == 1)
+				return user;
+			if (type == 0 && user.getUser_type() != 1)
+				return user;
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 通过用户名获取用户信息
 	 * 
@@ -124,11 +129,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	public User getByAccount(String user_account) throws Exception {
 		return userDao.getByAccount(user_account);
 	}
-	
+
 	/**
 	 * 通过用户手机号获取用户的全部信息
 	 * 
-	 * @param user_account 用户手机号
+	 * @param user_account
+	 *            用户手机号
 	 * @return
 	 * @throws Exception
 	 */
@@ -136,11 +142,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	public UserVo getUserVoByAccount(String user_account) throws Exception {
 		return userDao.getUserVoByAccount(user_account);
 	}
-	
+
 	public UserVo getUserVoById(int user_id) throws Exception {
 		return userDao.getUserVoById(user_id);
 	}
-	
+
 	/**
 	 * 完善个人信息
 	 * 
@@ -150,22 +156,27 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	 * @throws Exception
 	 */
 	@Override
-	public User complete(User preUser, User newUser, int user_house) throws Exception {
-		if(newUser.getUser_card()!=null) {
+	public User complete(User preUser, User newUser, int user_house)
+			throws Exception {
+		if (newUser.getUser_card() != null) {
 			preUser.setUser_card(newUser.getUser_card());
 			preUser.setUser_sex(this.getSex(newUser.getUser_card()));
 			preUser.setUser_age(this.getAge(newUser.getUser_card()));
 		}
-		if(newUser.getUser_realname()!=null) preUser.setUser_realname(newUser.getUser_realname());
-		if(newUser.getUser_nickname()!=null) preUser.setUser_nickname(newUser.getUser_nickname());
-		if(newUser.getUser_email()!=null) preUser.setUser_email(newUser.getUser_email());
-		if(newUser.getUser_head()!=null) preUser.setUser_head(newUser.getUser_head());
+		if (newUser.getUser_realname() != null)
+			preUser.setUser_realname(newUser.getUser_realname());
+		if (newUser.getUser_nickname() != null)
+			preUser.setUser_nickname(newUser.getUser_nickname());
+		if (newUser.getUser_email() != null)
+			preUser.setUser_email(newUser.getUser_email());
+		if (newUser.getUser_head() != null)
+			preUser.setUser_head(newUser.getUser_head());
 		preUser.setUser_house(user_house);
 		System.out.println(preUser.toString());
 		userDao.update(preUser);
 		return preUser;
 	}
-	
+
 	/**
 	 * 修改用户密码
 	 * 
@@ -174,10 +185,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	 */
 	@Override
 	public void updatePassword(User user) throws Exception {
-		String hql = "update User set user_password='" + user.getUser_password() + "' where user_id=" + user.getUser_id();
+		String hql = "update User set user_password='"
+				+ user.getUser_password() + "' where user_id="
+				+ user.getUser_id();
 		userDao.update(hql);
 	}
-	
+
 	/**
 	 * 通过账号修改用户密码
 	 * 
@@ -185,10 +198,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	 * @throws Exception
 	 */
 	public void updatePasswordByAccount(User user) throws Exception {
-		String hql = "update User set user_password='" + user.getUser_password() + "' where user_account='" + user.getUser_account() + "'";
+		String hql = "update User set user_password='"
+				+ user.getUser_password() + "' where user_account='"
+				+ user.getUser_account() + "'";
 		userDao.update(hql);
 	}
-	
+
 	/**
 	 * 更改昵称
 	 * 
@@ -197,10 +212,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	 */
 	@Override
 	public void updateNickName(User user) throws Exception {
-		String hql = "update User set user_nickname='" + user.getUser_nickname() + "' where user_id=" + user.getUser_id();
+		String hql = "update User set user_nickname='"
+				+ user.getUser_nickname() + "' where user_id="
+				+ user.getUser_id();
 		userDao.update(hql);
 	}
-	
+
 	/**
 	 * 通过hql语句修改数据表
 	 * 
@@ -211,15 +228,14 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	public void update(String hql) throws Exception {
 		userDao.update(hql);
 	}
-	
-	
+
 	/*********************************************************************************************/
-	
-	
+
 	/**
 	 * android登录接口
 	 * 
-	 * @param user 要登录的android用户
+	 * @param user
+	 *            要登录的android用户
 	 * @return UserVo 查询到的用户信息
 	 * @throws Exception
 	 */
@@ -227,15 +243,16 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	public UserVo android_login(User user) throws Exception {
 
 		UserVo vo = userDao.getUserVoByAccount(user.getUser_account());
-		if (vo!=null && user.getUser_password().equals(vo.getUser().getUser_password()) && vo.getUsertype().getUsertype_id()==1) {
+		if (vo != null
+				&& user.getUser_password().equals(
+						vo.getUser().getUser_password())
+				&& vo.getUsertype().getUsertype_id() == 1) {
 			return vo;
 		}
 		return null;
 	}
-	
-	
-	/*********************************************************************************************/
 
+	/*********************************************************************************************/
 
 	/**
 	 * 注销登录服务
@@ -313,8 +330,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 	}
 
 	/************************************************************************************************************/
-
-	
 
 	/**
 	 * android更改密码的服务
@@ -394,8 +409,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 		return userDao.getList();
 	}
 
-	
-
 	@Override
 	public int getAge(String user_card) {
 		// 440921 1994 01 27 00 1 4
@@ -469,5 +482,4 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements
 
 	}
 
-	
 }

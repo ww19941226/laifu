@@ -45,6 +45,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 	}
 
 	@Override
+	/* 得到热卖商品 */
 	public List<Product> getremaiProducts() throws Exception {
 		// TODO Auto-generated method stub
 		String hqlString = "from Product where number!=0 order by product_deal desc,product_creattime desc ";
@@ -83,7 +84,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 
 	@Override
 	public void addProduct(Product product) throws Exception {
-		getSession().save(product);		
+		getSession().save(product);
 	}
 
 	@Override

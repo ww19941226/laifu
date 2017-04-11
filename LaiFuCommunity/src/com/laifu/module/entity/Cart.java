@@ -30,6 +30,7 @@ public class Cart implements Serializable {
 		return total;
 	}
 
+	/* 将商品加入购物车 */
 	public void addCart(CartItem cartItem) {
 		Integer product_id = cartItem.getProduct().getProduct_id();
 		if (map.containsKey(product_id)) {
@@ -68,12 +69,14 @@ public class Cart implements Serializable {
 		return cartItem2;
 	}
 
+	/* 将商品从购物车中移除 */
 	public void removeCart(Integer product_id) {
 		CartItem cartItem = map.remove(product_id);
 		total -= cartItem.getSubtotal();
 		totalcount -= cartItem.getCount();
 	}
 
+	/* 清空购物车 */
 	public void cleanCart() {
 		map.clear();
 		total = 0;

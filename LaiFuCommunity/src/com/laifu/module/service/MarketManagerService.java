@@ -58,7 +58,7 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	public void saveOrder(Order order) throws Exception;
 
 	public int countOrderAll();
-	
+
 	public int countProductAll();
 
 	public void saveOrderItems(OrderItems orderItems);
@@ -73,34 +73,46 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 	ReturnData getAllCategoriesForManage() throws Exception;
 
 	ReturnData addCategory(String category_name) throws Exception;
-	
+
 	ReturnData getCategory(int category_id) throws Exception;
-	
-	ReturnData updateCategory(int category_id,String category_name) throws Exception;
+
+	ReturnData updateCategory(int category_id, String category_name)
+			throws Exception;
 
 	ReturnData getAllCategorySecondForManage() throws Exception;
-	
-	ReturnData getAllCategorySecondForManageSp(int category_id) throws Exception;
-	
-	ReturnData addCategorySecond(String categorysecond_name,int category_id) throws Exception;
-	
+
+	ReturnData getAllCategorySecondForManageSp(int category_id)
+			throws Exception;
+
+	ReturnData addCategorySecond(String categorysecond_name, int category_id)
+			throws Exception;
+
 	ReturnData getCategorySecond(int categorysecond_id) throws Exception;
-	
-	ReturnData updateCategorySecond(int id,String categorysecond_name,int category_id) throws Exception;
-	
-	ReturnData getOrderList(PageData pageData,int order_status) throws Exception;
-	
+
+	ReturnData updateCategorySecond(int id, String categorysecond_name,
+			int category_id) throws Exception;
+
+	ReturnData getOrderList(PageData pageData, int order_status)
+			throws Exception;
+
 	ReturnData getOrder(int id) throws Exception;
-	
+
 	ReturnData updateOrder(int id) throws Exception;
-	
+
+	public void updateOrder1(Order order) throws Exception;
+
 	ReturnData getProductList(PageData pageData) throws Exception;
-	
+
 	ReturnData saveProduct(Product product) throws Exception;
-	
+
 	ReturnData removeProduct(Integer[] ids) throws Exception;
-	
-	ReturnData updateProduct(Integer id,String prouduct_name_add,Double prouduct_price_add,Integer number_add,
-			String product_place_add,String is_imported_add,Integer category_id_add,Integer categorysecond_id_add,
-			Integer prouduct_discount_add,String photo_lujing_add) throws Exception;
+
+	ReturnData updateProduct(Integer id, String prouduct_name_add,
+			Double prouduct_price_add, Integer number_add,
+			String product_place_add, String is_imported_add,
+			Integer category_id_add, Integer categorysecond_id_add,
+			Integer prouduct_discount_add, String photo_lujing_add)
+			throws Exception;
+
+	public void saveProduct1(Product product);
 }

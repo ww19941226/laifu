@@ -3,7 +3,6 @@ package com.laifu.module.web.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONArray;
 import com.laifu.common.pagination.Page;
+import com.laifu.common.utils.PaymentUtil;
 import com.laifu.module.entity.Cart;
 import com.laifu.module.entity.CartItem;
 import com.laifu.module.entity.Category;
@@ -197,59 +197,6 @@ public class MarketController {
 		return "market/MyDingdan";
 	}
 
-	//
-	// /* 查询我的未付款订单 */
-	// @RequestMapping(value = "/market/myDingdan/1", method = {
-	// RequestMethod.GET })
-	// public String gotoMyNoPaydingdan(HttpServletRequest request)
-	// throws Exception {
-	// User user = (User) request.getSession().getAttribute("user");
-	// Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-	// String hql = "from Order o where o.order_state=1 and o.user.user_id="
-	// + user.getUser_id() + "order by o.order_creattime";
-	// Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
-	// return "market/mydingdan";
-	// }
-	//
-	// /* 查询已付款 待发货订单 */
-	// @RequestMapping(value = "/market/myDingdan/2", method = {
-	// RequestMethod.GET })
-	// public String gotoMyNoFaHuodingdan(HttpServletRequest request)
-	// throws Exception {
-	// User user = (User) request.getSession().getAttribute("user");
-	// Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-	// String hql = "from Order o where o.order_state=2 and o.user.user_id="
-	// + user.getUser_id() + "order by o.order_creattime";
-	// Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
-	// return "market/mydingdan";
-	// }
-	//
-	// /* 查询已发货订单 */
-	// @RequestMapping(value = "/market/myDingdan/3", method = {
-	// RequestMethod.GET })
-	// public String gotoMyFaHuodingdan(HttpServletRequest request)
-	// throws Exception {
-	// User user = (User) request.getSession().getAttribute("user");
-	// Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-	// String hql = "from Order o where o.order_state=3 and o.user.user_id="
-	// + user.getUser_id() + "order by o.order_creattime";
-	// Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
-	// return "market/mydingdan";
-	// }
-	//
-	// /* 查询已确认收货订单 */
-	// @RequestMapping(value = "/market/myDingdan/4", method = {
-	// RequestMethod.GET })
-	// public String gotoMyShouHuodingdan(HttpServletRequest request)
-	// throws Exception {
-	// User user = (User) request.getSession().getAttribute("user");
-	// Integer pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
-	// String hql = "from Order o where o.order_state=4 and o.user.user_id="
-	// + user.getUser_id() + "order by o.order_creattime";
-	// Page<Order> page = marketManagerService.findByUid(hql, pn, 10);
-	// return "market/mydingdan";
-	// }
-
 	/* 查询用户地址电话姓名等信息跳转到提交订单界面 */
 	@RequestMapping(value = "/market/confirmDD", method = { RequestMethod.GET })
 	public String gotoConfirmDingdan(HttpServletRequest request)
@@ -260,14 +207,16 @@ public class MarketController {
 		}
 		String numberMsg = "";
 		for (CartItem cartItem : cart.getCartItems()) {
-			Product product = marketManagerService.finByPid(cartItem.getProduct().getProduct_id());
+			Product product = marketManagerService.finByPid(cartItem
+					.getProduct().getProduct_id());
 			int findNumber = product.getNumber();
-			if(findNumber<cartItem.getCount()){
-				numberMsg += product.getProduct_name()+"的货存仅为"+findNumber+";";
+			if (findNumber < cartItem.getCount()) {
+				numberMsg += product.getProduct_name() + "的货存仅为" + findNumber
+						+ ";";
 			}
 		}
-		if(numberMsg!=""){
-			numberMsg+="请重新提交订单!";
+		if (numberMsg != "") {
+			numberMsg += "请重新提交订单!";
 			request.getSession().setAttribute("numberMsg", numberMsg);
 			return "market/cart";
 		}
@@ -323,7 +272,7 @@ public class MarketController {
 		marketManagerService.saveOrder(order);
 		request.setAttribute("order", order);
 
-		return "market/index";
+		return "market/pay";
 	}
 
 	/* 跳转到支付页面 */
@@ -359,7 +308,78 @@ public class MarketController {
 		cart.cleanCart();
 		request.setAttribute("order", order);
 
-		return "redirect:index";
+		// return "redirect:index";
+		return "market/pay";
+	}
+
+	// 未付款订单付款
+	@RequestMapping(value = "/market/orderPay", method = { RequestMethod.GET })
+	public String payOrder(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Order order = new Order();
+		order = marketManagerService.findByOid(Integer.parseInt(request
+				.getParameter("order_id")));
+		request.setAttribute("order", order);
+		return "market/pay";
+	}
+
+	// 为订单进行付款
+	@RequestMapping(value = "/market/pay", method = { RequestMethod.POST,
+			RequestMethod.GET })
+	public void pay(HttpServletRequest request, HttpServletResponse response)
+			throws NumberFormatException, Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		// 付款需要的参数:
+		String p0_Cmd = "Buy"; // 业务类型:
+		String p1_MerId = "10001126856";// 商户编号:
+		String p2_Order = request.getParameter("p2_Order");// 订单编号:
+		System.out.println(p2_Order);
+		String p3_Amt = "0.01"; // 付款金额:
+		String p4_Cur = "CNY"; // 交易币种:
+		String p5_Pid = ""; // 商品名称:
+		String p6_Pcat = ""; // 商品种类:
+		String p7_Pdesc = ""; // 商品描述:
+		String p8_Url = "http://119.29.116.99:8080/LaiFuCommunity/market/backPayResult"; // 商户接收支付成功数据的地址:
+		String p9_SAF = ""; // 送货地址:
+		String pa_MP = ""; // 商户扩展信息:
+		String pd_FrpId = request.getParameter("pd_FrpId");// 支付通道编码:
+		String pr_NeedResponse = "1"; // 应答机制:
+		String keyValue = "69cl522AV6q613Ii4W6u8K6XuW8vM1N6bFgyv769220IuYe9u37N4y7rI4Pl"; // 秘钥
+		String hmac = PaymentUtil.buildHmac(p0_Cmd, p1_MerId, p2_Order, p3_Amt,
+				p4_Cur, p5_Pid, p6_Pcat, p7_Pdesc, p8_Url, p9_SAF, pa_MP,
+				pd_FrpId, pr_NeedResponse, keyValue); // hmac
+		StringBuffer sb = new StringBuffer(
+				"https://www.yeepay.com/app-merchant-proxy/node?");
+		sb.append("p0_Cmd=").append(p0_Cmd).append("&");
+		sb.append("p1_MerId=").append(p1_MerId).append("&");
+		sb.append("p2_Order=").append(p2_Order).append("&");
+		sb.append("p3_Amt=").append(p3_Amt).append("&");
+		sb.append("p4_Cur=").append(p4_Cur).append("&");
+		sb.append("p5_Pid=").append(p5_Pid).append("&");
+		sb.append("p6_Pcat=").append(p6_Pcat).append("&");
+		sb.append("p7_Pdesc=").append(p7_Pdesc).append("&");
+		sb.append("p8_Url=").append(p8_Url).append("&");
+		sb.append("p9_SAF=").append(p9_SAF).append("&");
+		sb.append("pa_MP=").append(pa_MP).append("&");
+		sb.append("pd_FrpId=").append(pd_FrpId).append("&");
+		sb.append("pr_NeedResponse=").append(pr_NeedResponse).append("&");
+		sb.append("hmac=").append(hmac);
+
+		Order order = marketManagerService
+				.findByOid(Integer.parseInt(p2_Order));
+		Set<OrderItems> sets = order.getOrderItems();
+		for (OrderItems orderItems : sets) {
+			int number = orderItems.getProduct().getNumber()
+					- orderItems.getOrderItems_count();
+			Product product = orderItems.getProduct();
+			product.setNumber(number);
+			marketManagerService.saveProduct1(product);
+		}
+		order.setOrder_state(2);
+		marketManagerService.updateOrder1(order);
+		response.sendRedirect(sb.toString());
+
 	}
 
 	public int getOrder_id() throws Exception {

@@ -81,9 +81,9 @@
             <div class="myDD_DD_time fl">${order.order_creattime }</div>
             
             <div class="myDD_DD_status fl">订单状态：
-            
+          
            					<c:if test="${order.order_state==1}">
-								<a href="#">未付款</a>
+								<a href="${pageContext.request.contextPath}/market/orderPay?order_id=<c:out value="${order.order_id}"/>"><span style="color:red">付款</span></a>
 							</c:if>
 							<c:if test="${order.order_state==2}">
 								未接单
@@ -97,7 +97,7 @@
 							<c:if test="${order.order_state==5}">
 								交易完成
 							</c:if>
-            
+
             </div>
             <div class="myDD_DD_allMoney fl">总金额：￥${order.order_money }</div>
             <div class="myDD_DD_again fl">再来一单</div>

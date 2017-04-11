@@ -24,7 +24,7 @@
         <div class="nav fr">
             <ul class="clearfix">
                 <li class="fl"><a href="<c:url value='/index' />">首页</a></li>
-                        <li class="fl"><a href="<c:url value='/user/APPdownload' />">APP下载</a></li>
+                        <li class="fl"><a href="<c:url value='/market/index'/>">小区超市</a></li>
                         <li class="fl"><a href="<c:url value='/user/topic'/>?communityTopic=2">话题</a></li>
                         <li class="fl"><a href="<c:url value='/user/userCenter'/>">物业服务</a></li>
                         <li class="fl"><a class="nav-btn" href="<c:url value='/user/userCenter'/>">个人中心</a></li>

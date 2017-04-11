@@ -59,7 +59,7 @@
                 <p style="color: #3b3b3b;font-size: 15px;font-weight: bold;line-height: 30px;">收货人：<span style="color: #777;font-weight: normal">${sessionScope.user.user_realname }&nbsp;&nbsp;&nbsp;${sessionScope.user.user_account }</span></p>
             </div>
             <div class="cf"></div>
-            <input type="submit" class="fr" style="cursor:pointer;width: 150px;height: 50px;background-color:#58cf2a;text-align: center;line-height: 50px;font-size: 22px;color: #FFFFFF;" value="提交订单">
+            <input type="submit" class="fr" style="cursor:pointer;width: 150px;height: 50px;background-color:#58cf2a;text-align: center;line-height: 50px;font-size: 22px;color: #FFFFFF;border:none;" value="提交订单">
             <div class="cf"></div>
         </div>
         <div class="cf"></div>

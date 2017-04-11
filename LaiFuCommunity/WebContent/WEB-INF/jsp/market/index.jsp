@@ -52,6 +52,7 @@
         <div class="all_a_outer">
             <div class="all_a">
                 <div class="all_a_nav">
+                <!-- 前台页面显示一级分类，二级分类 -->
                 <c:forEach items="${sessionScope.categoryList }" var="c" >
                     <div class="all_a_nav1">
                         <a href="<c:url value='/market/findbycategory/${c.category_id}' />">${c.category_name }</a>

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.laifu.common.Constants;
 import com.laifu.common.exception.UserException;
+import com.laifu.common.utils.MD5;
 import com.laifu.common.utils.UploadPicture;
 import com.laifu.module.entity.House;
 import com.laifu.module.entity.Paymenttype;
@@ -48,7 +48,7 @@ public class UserController {
 	private PropertyService propertyService;
 
 	/*************************************************************************************************/
-	
+
 	/**
 	 * 进入财务统计页面
 	 * 
@@ -56,21 +56,27 @@ public class UserController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/user/user_caiwutongji2", method = { RequestMethod.GET ,RequestMethod.POST })
-	public String user_caiwutongji2(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/user/user_caiwutongji2", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public String user_caiwutongji2(HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			List<FinancialVo> list = new ArrayList<FinancialVo>();
 			String hql = "from Paymenttype";
 			List<Paymenttype> typeList = propertyService.getPaymenttypeList();
 			User user = (User) request.getSession().getAttribute("user");
-			
-			for(int i=0; i<typeList.size(); i++) {
-				hql = "select sum(payment_units) from Payment where payment_userid="+user.getUser_id()+" and payment_type=" + typeList.get(i).getPaymenttype_id();
+
+			for (int i = 0; i < typeList.size(); i++) {
+				hql = "select sum(payment_units) from Payment where payment_userid="
+						+ user.getUser_id()
+						+ " and payment_type="
+						+ typeList.get(i).getPaymenttype_id();
 				double sum = propertyService.getPaymentSum(hql);
 				System.out.println(sum);
-				list.add(new FinancialVo(typeList.get(i).getPaymenttype_name(), sum, Constants.color[i]));
+				list.add(new FinancialVo(typeList.get(i).getPaymenttype_name(),
+						sum, Constants.color[i]));
 			}
-			
+
 			JSONArray jsa = JSONArray.fromObject(list);
 			request.setAttribute("chartDatap", jsa.toString());
 
@@ -80,8 +86,7 @@ public class UserController {
 		}
 		return "/user/user_caiwutongji2";
 	}
-	
-	
+
 	/**
 	 * 进入财务统计的页面
 	 * 
@@ -89,8 +94,10 @@ public class UserController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/user/user_caiwutongji", method = { RequestMethod.GET ,RequestMethod.POST })
-	public String user_caiwutongji(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/user/user_caiwutongji", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	public String user_caiwutongji(HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			List<FinancialVo> list = new ArrayList<FinancialVo>();
 
@@ -143,38 +150,43 @@ public class UserController {
 		}
 		return "/user/user_caiwutongji";
 	}
-	
+
 	/**
 	 * 
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/gotoFilter", method = { RequestMethod.GET ,RequestMethod.POST })
-	public void gotoFilter(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/gotoFilter", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public void gotoFilter(HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
-			HttpServletRequest req = (HttpServletRequest) request.getAttribute("request");
-			HttpServletResponse rep = (HttpServletResponse) request.getAttribute("response");
+			HttpServletRequest req = (HttpServletRequest) request
+					.getAttribute("request");
+			HttpServletResponse rep = (HttpServletResponse) request
+					.getAttribute("response");
 			HttpSession session = req.getSession();
-			
+
 			req.setAttribute("filter", "true");
 			User user = (User) session.getAttribute("user");
 			UserVo admin = (UserVo) session.getAttribute("admin");
-			if(user != null) {
+			if (user != null) {
 				user = userService.get(user.getUser_id());
 				session.setAttribute("user", user);
 			}
-			if(admin != null) {
+			if (admin != null) {
 				admin = userService.getUserVoById(admin.getUser().getUser_id());
 				session.setAttribute("admin", admin);
 			}
-			request.getRequestDispatcher(req.getRequestURI().replace(req.getContextPath(), "")).forward(req, rep);
+			request.getRequestDispatcher(
+					req.getRequestURI().replace(req.getContextPath(), ""))
+					.forward(req, rep);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * 进入关于我们的界面
 	 * 
@@ -184,7 +196,7 @@ public class UserController {
 	public String about_us() {
 		return "/about_us";
 	}
-	
+
 	/**
 	 * 进入phone版的关于我们
 	 * 
@@ -194,7 +206,7 @@ public class UserController {
 	public String about_us_phone() {
 		return "/about_us_phone";
 	}
-	
+
 	/**
 	 * 进入小区简介
 	 * 
@@ -313,7 +325,7 @@ public class UserController {
 	public void checkCode(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			//System.out.println("hello");
+			// System.out.println("hello");
 			String smsCode = request.getParameter("code");
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("text/plain; charset=UTF-8");
@@ -345,6 +357,8 @@ public class UserController {
 			HttpServletResponse response,
 			@ModelAttribute("command") @Valid User user) {
 		try {
+			MD5 md5 = new MD5();
+			user.setUser_password(md5.EncoderByMd5(user.getUser_password()));
 			userService.register(user);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -364,15 +378,17 @@ public class UserController {
 	public void checkAccountAndPassword(HttpServletResponse response,
 			@ModelAttribute("command") @Valid User user) {
 		try {
-			//System.out.println(user.getUser_account());
-			//System.out.println(user.getUser_password());
+			// System.out.println(user.getUser_account());
+			// System.out.println(user.getUser_password());
+			MD5 md5 = new MD5();
+			user.setUser_password(md5.EncoderByMd5(user.getUser_password()));
 			User u = userService.login(user, 1);
 			String code;
 			if (u != null)
 				code = "1";
 			else
 				code = "0";
-			//System.out.println(code);
+			// System.out.println(code);
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("text/plain; charset=UTF-8");
 			response.getWriter().write(code);
@@ -517,7 +533,8 @@ public class UserController {
 			User u = (User) request.getSession().getAttribute("user");
 			House h = propertyService.getRoom(house.getHouse_floornumber(),
 					house.getHouse_roomnumber());
-			if(h!=null) u = userService.complete(u, user, h.getHouse_id());
+			if (h != null)
+				u = userService.complete(u, user, h.getHouse_id());
 			request.getSession().setAttribute("user", u);
 
 		} catch (Exception e) {
@@ -652,22 +669,24 @@ public class UserController {
 	 * @param file
 	 * @return
 	 */
-	@RequestMapping(value = "/user/uploadPicture", method = { RequestMethod.POST, RequestMethod.GET })
-	public void uploadPicture(HttpServletResponse response, HttpServletRequest request,
-			@RequestParam MultipartFile file) {
+	@RequestMapping(value = "/user/uploadPicture", method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public void uploadPicture(HttpServletResponse response,
+			HttpServletRequest request, @RequestParam MultipartFile file) {
 		try {
 			HttpSession session = request.getSession();
 			if (session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				user.setUser_head(UploadPicture.uploadHead(request, file,
 						user.getUser_head()));
-				String imagePath =" 0`" + request.getContextPath() + user.getUser_head();
+				String imagePath = " 0`" + request.getContextPath()
+						+ user.getUser_head();
 				userService.update(user);
 				PrintWriter out = response.getWriter();
 				out.print(imagePath);
 				out.flush();
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
