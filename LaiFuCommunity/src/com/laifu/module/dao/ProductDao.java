@@ -28,4 +28,6 @@ public interface ProductDao extends IBaseDao<Product, Integer> {
 	
 	void removeProduct(Integer id) throws Exception;
 
+	List<Product> getSumByCategorySecond(Integer id) throws Exception;
+
 }

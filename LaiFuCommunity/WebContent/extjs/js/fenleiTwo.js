@@ -70,6 +70,9 @@ Ext.onReady(function() {
         }, {
             text : '修改二级分类',
             handler : modify
+        },{
+            text : '删除二级分类',
+            handler : remove
         }, {
             text : '刷新',
             handler : function() {
@@ -307,6 +310,42 @@ Ext.onReady(function() {
                 Ext.Msg.alert('提示', '二级分类数据加载失败' + form.status);
             }
         });
+    }
+    
+    function remove() {
+        var gridList = getGridList();
+        var num = gridList.length;
+        if (num == 0) {
+            return;
+        }
+        Ext.MessageBox.confirm("提示", "您确定要删除所选二级分类吗？", function(btnId) {
+            if (btnId == 'yes') {
+                var msgTip = Ext.MessageBox.show({
+                    title : '提示',
+                    width : 250,
+                    msg : '正在删除二级分类，请稍后......'
+                });
+                Ext.Ajax.request({
+                    url : '/LaiFuCommunity/marketManage/categorySecond/remove',
+                    params : {
+                        ids : gridList
+                    },
+                    method : 'POST',
+                    success : function(response, action) {
+                        var result = JSON.parse(response.responseText);
+                        if(result.returnResult==200){
+                            Ext.Msg.alert('提示', '删除二级分类成功');
+                            initValueStore.reload();
+                        }else
+                            Ext.Msg.alert('提示', result.returnDetail);
+                    },
+                    failure : function(response, options) {
+                        msgTip.hide();
+                        Ext.Msg.alert('提示', '删除二级分类请求失败！');
+                    }
+                });
+            }
+        })
     }
 
     function getGridList() {

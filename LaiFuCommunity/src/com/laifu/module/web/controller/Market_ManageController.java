@@ -63,6 +63,12 @@ public class Market_ManageController {
 		return marketManagerService.updateCategory(id,category_name);
 	}
 	
+	/*删除一级分类*/
+	@RequestMapping(value = "/marketManage/categories/remove", method = { RequestMethod.POST})
+	@ResponseBody
+	public ReturnData removeCategories(Integer[] ids) throws Exception {
+		return marketManagerService.removeCategories(ids);
+	}
 	/*后台一级分类相关接口完*/
 
 	
@@ -92,6 +98,13 @@ public class Market_ManageController {
 	@ResponseBody
 	public ReturnData getCategorySecond(int id) throws Exception {
 		return marketManagerService.getCategorySecond(id);
+	}
+	
+	/*删除二级分类*/
+	@RequestMapping(value = "/marketManage/categorySecond/remove", method = { RequestMethod.POST})
+	@ResponseBody
+	public ReturnData removeCategorySecond(Integer[] ids) throws Exception {
+		return marketManagerService.removeCategorySecond(ids);
 	}
 	/*后台二级分类相关接口完*/
 	
@@ -169,6 +182,7 @@ public class Market_ManageController {
 	@RequestMapping(value = "/marketManage/uploadPicture", method = { RequestMethod.POST, RequestMethod.GET })
 	public void uploadPicture(HttpServletResponse response, HttpServletRequest request,
 			@RequestParam MultipartFile file) {
+		String bathpath = request.getContextPath();
 		try {
 			String imagepath = UploadPicture.uploadHead(request, file,"product_photo.png");
 			response.getWriter().print(imagepath);
@@ -186,7 +200,7 @@ public class Market_ManageController {
 		return marketManagerService.updateProduct(id, prouduct_name_add, prouduct_price_add, number_add, product_place_add, is_imported_add, category_id_add, categorysecond_id_add, prouduct_discount_add, photo_lujing_add);
 	}
 	
-	 /*更新商品数据*/
+	 /*删除商品数据*/
 		@RequestMapping(value = "/marketManage/product/remove", method = { RequestMethod.POST})
 		@ResponseBody
 		public ReturnData removeProduct(Integer[] ids) throws Exception {

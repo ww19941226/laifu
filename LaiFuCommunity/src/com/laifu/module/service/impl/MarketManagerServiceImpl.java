@@ -1,6 +1,7 @@
 package com.laifu.module.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -148,6 +149,30 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 		}
 		return returnData;
 	}
+	
+	@Override
+	public ReturnData removeCategories(Integer[] ids) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			JSONArray jsonArray = new JSONArray();
+			for (int i = 0; i < ids.length; i++) {
+				jsonArray = (JSONArray) getAllCategorySecondForManageSp(ids[i]).getReturnData();
+				if(jsonArray.size() > 0){
+					returnData.setReturnResult(301);
+					returnData.setReturnDetail("该一级分类下还有二级分类，请先删除该一级分类下的二级分类。");
+					return returnData;
+				}
+			}
+			for(int i=0;i<ids.length;i++){
+				categoryDao.removeCategory(ids[i]);
+			}
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("删除一级分类失败");
+		}
+		return returnData;
+	}
 
 	/* 二级分类后台管理系统相关 */
 	/* 获取二级分类列表 */
@@ -241,6 +266,31 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 			// TODO: handle exception
 			returnData.setReturnResult(300);
 			returnData.setReturnDetail("更新失败！");
+		}
+		return returnData;
+	}
+	
+	@Override
+	public ReturnData removeCategorySecond(Integer[] ids) throws Exception {
+		ReturnData returnData = new ReturnData();
+		try {
+			List<Product> list = new ArrayList();
+			for (int i = 0; i < ids.length; i++) {
+				list = productDao.getSumByCategorySecond(ids[i]);
+				if(list.size() > 0){
+					returnData.setReturnResult(301);
+					returnData.setReturnDetail("该二级分类下还有商品，请先删除该二级分类下的所有商品。");
+					return returnData;
+				}
+			}
+			for(int i=0;i<ids.length;i++){
+				categorySecondDao.removeCategory(ids[i]);
+			}
+			returnData.setReturnResult(200);
+		} catch (Exception e) {
+			e.printStackTrace();
+			returnData.setReturnResult(300);
+			returnData.setReturnDetail("删除二级分类失败");
 		}
 		return returnData;
 	}

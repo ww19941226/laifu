@@ -115,4 +115,8 @@ public interface MarketManagerService extends IBaseService<Product, Integer> {
 			throws Exception;
 
 	public void saveProduct1(Product product);
+
+	ReturnData removeCategories(Integer[] ids) throws Exception;
+
+	ReturnData removeCategorySecond(Integer[] ids) throws Exception;
 }

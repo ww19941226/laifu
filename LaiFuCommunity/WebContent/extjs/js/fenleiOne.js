@@ -55,7 +55,10 @@ Ext.onReady(function() {
         }, {
             text : '修改一级分类',
             handler : modify
-        }, {
+        },{
+            text : '删除一级分类',
+            handler : remove
+        },{
             text : '刷新',
             handler : function() {
                 initValueGrid.store.reload();
@@ -258,6 +261,42 @@ Ext.onReady(function() {
             }
         });
     }
+    
+    function remove() {
+        var gridList = getGridList();
+        var num = gridList.length;
+        if (num == 0) {
+            return;
+        }
+        Ext.MessageBox.confirm("提示", "您确定要删除所选一级分类吗？", function(btnId) {
+            if (btnId == 'yes') {
+                var msgTip = Ext.MessageBox.show({
+                    title : '提示',
+                    width : 250,
+                    msg : '正在删除一级分类，请稍后......'
+                });
+                Ext.Ajax.request({
+                    url : '/LaiFuCommunity/marketManage/categories/remove',
+                    params : {
+                        ids : gridList
+                    },
+                    method : 'POST',
+                    success : function(response, action) {
+                        var result = JSON.parse(response.responseText);
+                        if(result.returnResult==200){
+                            Ext.Msg.alert('提示', '删除一级分类成功');
+                            initValueStore.reload();
+                        }else
+                            Ext.Msg.alert('提示', result.returnDetail);
+                    },
+                    failure : function(response, options) {
+                        msgTip.hide();
+                        Ext.Msg.alert('提示', '删除商品请求失败！');
+                    }
+                });
+            }
+        })
+    }
 
     function getGridList() {
         var recs = initValueGrid.getSelectionModel().getSelection();
@@ -267,7 +306,7 @@ Ext.onReady(function() {
         } else {
             for (var i = 0; i < recs.length; i++) {
                 var rec = recs[i];
-                list.push(rec.get('id'))
+                list.push(rec.get('category_id'))
             }
         }
         return list;

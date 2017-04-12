@@ -54,4 +54,10 @@ public class CategorySecondDaoImpl extends BaseDaoImpl<CategorySecond, Integer>
 		getSession().update(categorySecond);
 	}
 
+	@Override
+	public void removeCategory(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		CategorySecond categorySecond = findBycsid(id);
+		getSession().delete(categorySecond);
+	}
 }

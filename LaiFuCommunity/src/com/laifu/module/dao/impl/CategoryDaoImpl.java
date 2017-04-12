@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.laifu.common.dao.impl.BaseDaoImpl;
 import com.laifu.module.dao.CategoryDao;
 import com.laifu.module.entity.Category;
+import com.laifu.module.entity.Product;
 
 @Repository("CategoryDao")
 public class CategoryDaoImpl extends BaseDaoImpl<Category, Integer> implements
@@ -46,6 +47,13 @@ public class CategoryDaoImpl extends BaseDaoImpl<Category, Integer> implements
 	public void updateCategory(Category category) throws Exception {
 		// TODO Auto-generated method stub
 		getSession().update(category);
+	}
+	
+	@Override
+	public void removeCategory(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		Category category = findBycid(id);
+		getSession().delete(category);
 	}
 
 }

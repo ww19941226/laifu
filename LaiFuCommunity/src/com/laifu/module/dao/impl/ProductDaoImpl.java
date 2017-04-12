@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.laifu.common.dao.impl.BaseDaoImpl;
 import com.laifu.module.dao.ProductDao;
+import com.laifu.module.entity.CategorySecond;
 import com.laifu.module.entity.Product;
 
 @Repository("ProductDao")
@@ -97,5 +98,12 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Integer> implements
 		// TODO Auto-generated method stub
 		Product product = findByPid(id);
 		getSession().delete(product);
+	}
+	
+	@Override
+	public List<Product> getSumByCategorySecond(Integer id) throws Exception {
+		String hqlString = "from Product where categorySecond.categorysecond_id=" + id;
+
+		return (List<Product>) getSession().createQuery(hqlString).list();
 	}
 }
