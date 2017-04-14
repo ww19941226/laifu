@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.laifu.common.exception.UserException;
 import com.laifu.common.pagination.Page;
+import com.laifu.common.utils.MD5;
 import com.laifu.common.utils.UploadPicture;
 import com.laifu.module.entity.Community;
 import com.laifu.module.entity.Complains;
@@ -86,6 +87,8 @@ public class SystemAdminController {
 		try {
 			// System.out.println(user.getUser_account());
 			// System.out.println(user.getUser_password());
+			MD5 md5 = new MD5();
+			user.setUser_password(md5.EncoderByMd5(user.getUser_password()));
 			User u = userService.login(user, 0);
 			String code;
 			if (u != null)
@@ -500,19 +503,22 @@ public class SystemAdminController {
 	 */
 	@RequestMapping(value = "/sysadmin/login", method = { RequestMethod.POST })
 	public String login(HttpServletRequest request,
+			HttpServletResponse response,
 			@ModelAttribute("command") @Valid User user) {
 		try {
+			MD5 md5 = new MD5();
+			user.setUser_password(md5.EncoderByMd5(user.getUser_password()));
 			User u = userService.login(user, 0);
 
 			if (u != null) {
 				int type = u.getUser_type();
 				request.getSession().setAttribute("admin",
 						userService.getUserVoByAccount(u.getUser_account()));
-				/*
-				 * if(type == 4) { return "redirect:/sysadmin/sysadmin"; } else
-				 * if(type == 3) { return "redirect:/comadmin/comadmin"; } else
-				 */if (type == 2) {
+
+				if (type == 3) {
 					return "redirect:/property/property";
+				} else if (type == 2) {
+					return "redirect:/sysadmin/redirect";
 				}
 			}
 
@@ -521,6 +527,18 @@ public class SystemAdminController {
 		}
 
 		return "redirect:/sysadmin/sysadmin_login";
+	}
+
+	@RequestMapping(value = "/sysadmin/redirect", method = { RequestMethod.GET })
+	public void redirect(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			response.sendRedirect(request.getContextPath()
+					+ "/extjs/index.html");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

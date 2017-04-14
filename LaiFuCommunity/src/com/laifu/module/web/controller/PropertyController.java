@@ -639,7 +639,7 @@ public class PropertyController {
 	public String gotoIndex(HttpServletRequest request) {
 		System.out.println("gotoindex");
 		UserVo vo = (UserVo) request.getSession().getAttribute("admin");
-		if (vo == null || vo.getUsertype().getUsertype_id() != 2)
+		if (vo == null)
 			return "redirect:/sysadmin/sysadmin_login";
 		return "/property/property";
 	}

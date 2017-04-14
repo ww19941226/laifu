@@ -60,6 +60,7 @@ public class UrlFilter implements Filter {
 						|| url.indexOf("/tld/") != -1 || url
 						.indexOf("/Android/") != -1)) {
 			if (url.indexOf("/sysadmin/") != -1
+					|| url.indexOf("/extjs/index") != -1
 					|| url.indexOf("/property/") != -1
 					|| url.indexOf("/usertype/") != -1
 					|| url.indexOf("/people/") != -1
