@@ -1,6 +1,7 @@
 package com.laifu.module.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class Cart implements Serializable {
 	}
 
 	public double getTotal() {
+		BigDecimal b = new BigDecimal(total);
+		total = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 		return total;
 	}
 
