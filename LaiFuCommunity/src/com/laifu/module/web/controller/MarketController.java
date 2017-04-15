@@ -372,7 +372,7 @@ public class MarketController {
 		for (OrderItems orderItems : sets) {
 			int number = orderItems.getProduct().getNumber()
 					- orderItems.getOrderItems_count();
-			int deal = orderItems.getProduct().getNumber()
+			int deal = orderItems.getProduct().getProduct_deal()
 					+ orderItems.getOrderItems_count();
 			Product product = orderItems.getProduct();
 			product.setNumber(number);
