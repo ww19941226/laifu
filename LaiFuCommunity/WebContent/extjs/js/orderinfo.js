@@ -302,7 +302,7 @@ Ext.onReady(function() {
         dataIndex : 'prouduct_photo1',
         sortable : true,
         renderer:function(value, cellmeta, record, rowIndex, columnIndex, store){
-            return '<input id="show" type="image" width="70px" height="70px"  src="'+record.data.prouduct_photo1+'"/>'
+            return '<input id="show" type="image" width="70px" height="70px"  src="/LaiFuCommunity/'+record.data.prouduct_photo1+'"/>'
         }
     },{
         header : "商品名称",

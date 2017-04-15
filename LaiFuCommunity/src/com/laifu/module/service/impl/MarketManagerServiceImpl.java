@@ -333,6 +333,7 @@ public class MarketManagerServiceImpl extends BaseServiceImpl<Product, Integer>
 			returnData.setReturnData(pageData);
 			returnData.setReturnResult(200);
 		} catch (Exception e) {
+			e.printStackTrace();
 			returnData.setReturnResult(300);
 			returnData.setReturnDetail("数据获取失败");
 		}
