@@ -214,7 +214,6 @@
 		</div>
 		<div id="msg">已成功加入购物车！</div>
 		<div class="right_dingdan" title="我的订单"></div>
-		<div class="right_choujiang" title="积分抽奖"></div>
 	</div>
 </div>
 <%@ include file="footer.jsp" %>

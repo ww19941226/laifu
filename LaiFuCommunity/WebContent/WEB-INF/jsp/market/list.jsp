@@ -58,7 +58,7 @@
 <div class="hot_content">
 <c:forEach items="${page.items }" var="sp">
     <div class="hot_content_content fl">
-        <img src="${pageContext.request.contextPath}/${pageContext.request.contextPath}/images/sp.jpg"/>
+        <img src="${pageContext.request.contextPath}/${pageContext.request.contextPath}/${sp.product_photo1 }"/>
         <p class="hot_content_content_ms">${sp.product_name }</p>
         <p class="hot_content_content_dj">销量:${sp.product_deal }</p>
         <p class="hot_content_content_dj">单价:￥<c:out value="${sp.product_price*sp.product_discount/10}"></c:out></p>
@@ -86,7 +86,6 @@
 		</div>
 		<div id="msg">已成功加入购物车！</div>
 		<div class="right_dingdan" title="我的订单"></div>
-		<div class="right_choujiang" title="积分抽奖"></div>
 	</div>
 </div>
 <%@ include file="footer.jsp" %>
