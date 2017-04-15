@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-<div class="banner_bg">
+<%-- <div class="banner_bg">
     <div class="index_banner_outer">
         <div class="index_banner_left fl">
             <a href="banner1">
@@ -94,7 +94,7 @@
         </div>
         <div class="cf"></div>
     </div>
-</div>
+</div> --%>
 <div style="width: 1200px;margin: 55px auto 5px;color: #FF8989;font-size: 22px">
     新进商品
 </div>

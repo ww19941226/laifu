@@ -69,7 +69,7 @@
         </div>
     </div>
 </div>
-<div class="banner_bg">
+<%-- <div class="banner_bg">
     <div class="index_banner_outer">
         <div class="index_banner_left fl">
             <a href="banner1">
@@ -109,7 +109,7 @@
         </div>
         <div class="cf"></div>
     </div>
-</div>
+</div> --%>
 <div class="index_cuxiao_outer">
     <div class="index_cuxiao_img fl">
         <a href="<c:url value='/market/cuxiao/'/>">
